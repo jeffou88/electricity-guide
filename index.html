@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>電的旅程｜電壓、電流、電阻與生活中的電</title>
+<meta name="description" content="互動式科普教學：電壓、電流、電阻、串並聯、電路板電阻、功率發熱、家用電工、三相電、低週波按摩器、電蚊拍與觸電安全。">
+<meta name="theme-color" content="#060a13">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060a13;--bg2:#0a1120;--panel:#0e1728;--panel2:#121e33;--line:#1d2c45;--line2:#28405f;
+  --blue:#3cc8ff;--blue2:#1e8fff;--amber:#ffb53c;--amber2:#ff8a00;--red:#ff4d5e;--green:#3ee08f;--pink:#ff5fa2;
+  --text:#e6eefb;--muted:#93a6c2;--dim:#5d708d;--radius:18px;--nav:256px;
+  --sans:"Noto Sans TC","Noto Sans CJK TC","PingFang TC","Microsoft JhengHei","Heiti TC",system-ui,sans-serif;
+  --serif:"Noto Serif TC","Noto Serif CJK TC","Songti TC","PMingLiU",serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.8;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:radial-gradient(1200px 600px at 80% -10%,rgba(30,143,255,.10),transparent 60%),radial-gradient(900px 500px at -10% 40%,rgba(255,181,60,.05),transparent 60%);background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:linear-gradient(rgba(60,200,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(60,200,255,.035) 1px,transparent 1px);background-size:40px 40px}
+a{color:var(--blue)}
+button,input,select{font-family:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.mono{font-family:var(--mono)}
+b,strong{color:#fff}
+.hl-b{color:var(--blue)}.hl-a{color:var(--amber)}.hl-r{color:var(--red)}.hl-g{color:var(--green)}
+
+/* ---------- NAV ---------- */
+#nav{position:fixed;top:0;left:0;bottom:0;width:var(--nav);z-index:40;padding:26px 18px 20px;display:flex;flex-direction:column;
+  background:linear-gradient(180deg,rgba(10,17,32,.92),rgba(6,10,19,.92));border-right:1px solid var(--line);backdrop-filter:blur(10px)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);margin:0 6px 22px}
+.brand-mark{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:radial-gradient(circle at 30% 30%,#2a6bff,#0b1f44);box-shadow:0 0 18px rgba(60,200,255,.45),inset 0 0 0 1px rgba(60,200,255,.5)}
+.brand-name{font-family:var(--serif);font-weight:900;font-size:20px;letter-spacing:.12em}
+.brand-sub{display:block;font-size:11px;color:var(--muted);letter-spacing:.08em;font-family:var(--sans);font-weight:400}
+#nav ol{list-style:none;margin:0;padding:0;flex:1;overflow:auto}
+#nav li a{display:flex;gap:10px;align-items:baseline;padding:9px 12px;margin:2px 0;border-radius:10px;color:var(--muted);text-decoration:none;font-size:14.5px;line-height:1.45;transition:background .25s,color .25s;position:relative}
+#nav li a .n{font-family:var(--mono);font-size:12px;color:var(--dim);min-width:20px}
+#nav li a:hover{background:rgba(60,200,255,.06);color:var(--text)}
+#nav li a.active{background:linear-gradient(90deg,rgba(60,200,255,.16),rgba(60,200,255,.02));color:#fff}
+#nav li a.active .n{color:var(--blue)}
+#nav li a.active::before{content:"";position:absolute;left:-18px;top:8px;bottom:8px;width:3px;border-radius:3px;background:var(--blue);box-shadow:0 0 10px var(--blue)}
+.nav-progress{height:4px;border-radius:4px;background:var(--line);overflow:hidden;margin:14px 6px 8px}
+.nav-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--amber));box-shadow:0 0 10px var(--blue)}
+.nav-foot{font-size:11.5px;color:var(--dim);margin:0 6px;line-height:1.5}
+#topbar{display:none}
+
+/* ---------- LAYOUT ---------- */
+main,footer{position:relative;z-index:1;margin-left:var(--nav)}
+.chapter{max-width:1120px;margin:0 auto;padding:96px 40px 40px}
+.ch-head{display:flex;gap:22px;align-items:flex-end;margin-bottom:26px}
+.ch-num{font-family:var(--mono);font-size:64px;line-height:.9;font-weight:700;color:transparent;-webkit-text-stroke:1.5px rgba(60,200,255,.55);text-shadow:0 0 24px rgba(60,200,255,.25)}
+.ch-kicker{font-size:13px;letter-spacing:.2em;color:var(--amber);margin:0 0 4px}
+h2{font-family:var(--serif);font-weight:900;font-size:clamp(28px,3.4vw,40px);line-height:1.25;margin:0;letter-spacing:.04em}
+h3{font-size:20px;margin:0 0 10px;line-height:1.4}
+h4{font-size:16px;margin:0 0 6px;color:var(--blue)}
+p{margin:0 0 12px}
+.lead{font-size:17.5px;color:#c9d6ea;max-width:820px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:linear-gradient(180deg,rgba(18,30,51,.85),rgba(14,23,40,.85));border:1px solid var(--line);border-radius:var(--radius);padding:22px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.card.glow{box-shadow:0 0 0 1px rgba(60,200,255,.12),0 20px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04)}
+.card-title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;color:var(--muted);letter-spacing:.06em;margin-bottom:14px}
+.card-title .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 10px var(--blue)}
+.mt{margin-top:22px}.mt-s{margin-top:12px}
+canvas{display:block;width:100%}
+.cv{border-radius:14px;background:radial-gradient(ellipse at center,#0b1528,#060b16);border:1px solid var(--line)}
+.note{font-size:13px;color:var(--muted)}
+.tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--muted);margin:0 4px 4px 0}
+
+/* ---------- CONTROLS ---------- */
+.ctrl{margin:14px 0}
+.ctrl-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px;font-size:14.5px}
+.ctrl-row .val{font-family:var(--mono);color:var(--amber);font-weight:700;font-size:15px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;cursor:pointer;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(90deg,var(--blue2) var(--p,50%),var(--line) var(--p,50%))}
+input[type=range]::-moz-range-track{height:6px;border-radius:6px;background:var(--line)}
+input[type=range]::-moz-range-progress{height:6px;border-radius:6px;background:var(--blue2)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;margin-top:-8px;background:#fff;border:4px solid var(--blue);box-shadow:0 0 12px rgba(60,200,255,.8)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:4px solid var(--blue);box-shadow:0 0 12px rgba(60,200,255,.8)}
+input[type=range].amber::-webkit-slider-runnable-track{background:linear-gradient(90deg,var(--amber2) var(--p,50%),var(--line) var(--p,50%))}
+input[type=range].amber::-webkit-slider-thumb{border-color:var(--amber);box-shadow:0 0 12px rgba(255,181,60,.8)}
+input[type=range].amber::-moz-range-progress{background:var(--amber2)}
+input[type=range].amber::-moz-range-thumb{border-color:var(--amber)}
+.meter{height:6px;border-radius:6px;background:var(--line);overflow:hidden;margin:11px 0}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--amber),var(--red));transition:width .15s}
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;color:var(--muted);padding:8px 14px;border-radius:9px;cursor:pointer;font-size:14px;transition:.2s}
+.seg button.on{background:linear-gradient(180deg,#1f6fd6,#1557a8);color:#fff;box-shadow:0 0 14px rgba(30,143,255,.45)}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(60,200,255,.45);background:rgba(60,200,255,.08);color:#dff4ff;padding:10px 18px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:500;transition:.2s;text-decoration:none}
+.btn:hover{background:rgba(60,200,255,.18);box-shadow:0 0 18px rgba(60,200,255,.35)}
+.btn.amber{border-color:rgba(255,181,60,.55);background:rgba(255,181,60,.10);color:#ffe7bf}
+.btn.amber:hover{background:rgba(255,181,60,.2);box-shadow:0 0 18px rgba(255,181,60,.35)}
+.btn.red{border-color:rgba(255,77,94,.55);background:rgba(255,77,94,.10);color:#ffd5da}
+.btn.red:hover{background:rgba(255,77,94,.2)}
+.btn.big{padding:14px 26px;font-size:17px;border-radius:14px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+select{background:var(--bg2);color:var(--text);border:1px solid var(--line2);border-radius:10px;padding:7px 10px;font-size:14px}
+
+/* formula */
+.formula{font-family:var(--mono);font-size:clamp(17px,2.2vw,24px);text-align:center;padding:14px 10px;border-radius:14px;background:rgba(0,0,0,.25);border:1px dashed var(--line2);letter-spacing:.02em}
+.formula .v{color:var(--amber)}.formula .i{color:var(--blue)}.formula .r{color:var(--pink)}
+.readouts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ro{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.ro small{display:block;color:var(--muted);font-size:12px}
+.ro span{font-family:var(--mono);font-size:19px;font-weight:700}
+
+/* quiz + life */
+.quiz{margin-top:26px;border:1px solid rgba(60,200,255,.25);background:linear-gradient(135deg,rgba(30,143,255,.08),rgba(14,23,40,.6));border-radius:var(--radius);padding:22px}
+.quiz-tag{font-size:12px;letter-spacing:.2em;color:var(--blue);font-weight:700}
+.quiz-q{font-size:17px;font-weight:700;margin:6px 0 14px}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quiz-opts button{text-align:left;border:1px solid var(--line2);background:rgba(0,0,0,.2);color:var(--text);padding:12px 14px;border-radius:12px;cursor:pointer;font-size:15px;line-height:1.5;transition:.2s}
+.quiz-opts button:hover:not(:disabled){border-color:var(--blue);background:rgba(60,200,255,.08)}
+.quiz-opts button.right{border-color:var(--green);background:rgba(62,224,143,.12)}
+.quiz-opts button.wrong{border-color:var(--red);background:rgba(255,77,94,.12);animation:shake .4s}
+.quiz-opts button:disabled{cursor:default}
+.quiz-fb{margin-top:12px;font-size:15px;min-height:0;display:none;padding:12px 14px;border-radius:12px}
+.quiz-fb.show{display:block}
+.quiz-fb.ok{background:rgba(62,224,143,.08);border:1px solid rgba(62,224,143,.3)}
+.quiz-fb.no{background:rgba(255,77,94,.08);border:1px solid rgba(255,77,94,.3)}
+@keyframes shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.life{margin-top:18px;border-radius:var(--radius);padding:20px 22px;background:linear-gradient(135deg,rgba(255,181,60,.09),rgba(14,23,40,.5));border:1px solid rgba(255,181,60,.25);border-left:4px solid var(--amber)}
+.life h4{color:var(--amber);font-size:15px;letter-spacing:.12em;display:flex;align-items:center;gap:8px}
+.life ul{margin:6px 0 0;padding-left:20px}.life li{margin:4px 0}
+.warn{border-radius:14px;padding:16px 18px;background:rgba(255,77,94,.08);border:1px solid rgba(255,77,94,.3)}
+.warn h4{color:#ff8a96}
+ul.clean{padding-left:20px;margin:6px 0}ul.clean li{margin:5px 0}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* ---------- HERO ---------- */
+#hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden}
+#heroCv{position:absolute;inset:0;width:100%;height:100%}
+.hero-inner{position:relative;z-index:2;max-width:1120px;margin:0 auto;padding:80px 40px;width:100%}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.25em;color:var(--blue);border:1px solid rgba(60,200,255,.3);padding:6px 14px;border-radius:999px;background:rgba(6,10,19,.6);backdrop-filter:blur(4px)}
+.hero-title{font-family:var(--serif);font-weight:900;font-size:clamp(56px,10vw,128px);line-height:1.05;margin:22px 0 14px;letter-spacing:.12em;
+  background:linear-gradient(180deg,#fff 20%,#9fdcff 60%,#3cc8ff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 30px rgba(60,200,255,.35))}
+.hero-title em{font-style:normal;background:linear-gradient(180deg,#fff2d6,#ffb53c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{font-size:clamp(17px,2vw,21px);color:#c3d2e8;max-width:620px;margin-bottom:28px}
+.hero-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+.chip{font-size:13px;color:var(--muted);padding:6px 12px;border-radius:10px;background:rgba(14,23,40,.7);border:1px solid var(--line);backdrop-filter:blur(4px)}
+.chip b{color:var(--amber);font-family:var(--mono)}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;font-size:12px;color:var(--muted);letter-spacing:.2em;text-align:center}
+.scroll-hint i{display:block;width:2px;height:34px;margin:8px auto 0;background:linear-gradient(var(--blue),transparent);animation:drip 1.8s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ---------- CH1 water ---------- */
+.water-svg{width:100%;height:auto;display:block}
+.flowdash{stroke-dasharray:10 14;animation:flow 1s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-24}}
+.analogy{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.analogy div{border-radius:12px;padding:10px 12px;background:rgba(0,0,0,.22);border:1px solid var(--line);font-size:14px;line-height:1.55}
+.analogy b{display:block;font-size:15px}
+.locked{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+
+/* CH2 table */
+table.data{width:100%;border-collapse:collapse;font-size:14px}
+table.data th,table.data td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--mono);white-space:nowrap}
+table.data th{color:var(--muted);font-family:var(--sans);font-weight:500;font-size:13px}
+table.data td:first-child,table.data th:first-child{text-align:left;font-family:var(--sans)}
+.table-wrap{overflow-x:auto}
+
+/* CH3 PCB */
+.pcb-svg{width:100%;height:auto;display:block;border-radius:16px}
+.rhot{cursor:pointer}
+.rhot .rbody{transition:filter .2s}
+.rhot:hover .rbody,.rhot:focus .rbody{filter:drop-shadow(0 0 6px #ffd27a) drop-shadow(0 0 12px #ffb53c)}
+.rhot .ring{animation:ringp 2s infinite;transform-box:fill-box;transform-origin:center}
+@keyframes ringp{0%{opacity:.9;transform:scale(.7)}100%{opacity:0;transform:scale(1.8)}}
+.rhot:focus{outline:none}
+.legend-list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.legend-list button{border:1px solid var(--line2);background:rgba(0,0,0,.2);color:var(--text);border-radius:10px;padding:8px 10px;font-size:13.5px;cursor:pointer;text-align:left}
+.legend-list button:hover{border-color:var(--amber)}
+.legend-list b{color:var(--amber);font-family:var(--mono);margin-right:4px}
+
+/* modal */
+#modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,5,12,.72);backdrop-filter:blur(6px)}
+#modal.open{display:flex;animation:fadein .25s}
+@keyframes fadein{from{opacity:0}}
+.modal-box{width:min(760px,100%);max-height:92vh;overflow:auto;background:linear-gradient(180deg,#111d33,#0b1424);border:1px solid var(--line2);border-radius:20px;padding:24px;position:relative;box-shadow:0 0 0 1px rgba(60,200,255,.1),0 30px 80px rgba(0,0,0,.6);animation:pop .3s cubic-bezier(.2,.9,.3,1.2)}
+@keyframes pop{from{transform:scale(.94) translateY(10px);opacity:0}}
+.modal-x{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:10px;border:1px solid var(--line2);background:rgba(0,0,0,.3);color:var(--text);font-size:20px;cursor:pointer;line-height:1}
+.modal-box h3{padding-right:40px;font-size:22px}
+.modal-box .badge{display:inline-block;font-family:var(--mono);background:var(--amber);color:#1a1000;font-weight:700;border-radius:6px;padding:1px 8px;margin-right:8px;font-size:15px}
+
+/* color code */
+.rc-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:center}
+.band-row{display:flex;align-items:center;gap:8px;margin:8px 0;flex-wrap:wrap}
+.band-row .lbl{width:74px;font-size:13px;color:var(--muted);flex-shrink:0}
+.sw{width:26px;height:26px;border-radius:7px;border:2px solid rgba(255,255,255,.15);cursor:pointer;padding:0;position:relative;transition:transform .15s}
+.sw:hover{transform:scale(1.12)}
+.sw.on{border-color:#fff;box-shadow:0 0 0 2px var(--blue),0 0 12px var(--blue)}
+.rc-value{font-family:var(--mono);font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--amber);text-shadow:0 0 18px rgba(255,181,60,.4);text-align:center}
+
+/* CH4 appliances */
+.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.app{border:1px solid var(--line2);background:rgba(0,0,0,.22);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px;transition:.2s}
+.app.has{border-color:rgba(255,181,60,.6);background:rgba(255,181,60,.07)}
+.app-top{display:flex;align-items:center;gap:8px}
+.app-ico{font-size:22px;width:30px;text-align:center}
+.app-name{font-size:14px;font-weight:700;line-height:1.3}
+.app-w{font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+.app-ctl{display:flex;align-items:center;justify-content:space-between}
+.app-ctl button{width:32px;height:32px;border-radius:9px;border:1px solid var(--line2);background:var(--bg2);color:var(--text);font-size:18px;cursor:pointer;line-height:1}
+.app-ctl button:hover{border-color:var(--blue)}
+.app-ctl span{font-family:var(--mono);font-size:16px;font-weight:700}
+.load-bar{height:16px;border-radius:10px;background:var(--line);position:relative;overflow:visible;margin:10px 0 24px}
+.load-bar i{position:absolute;left:0;top:0;bottom:0;border-radius:10px;width:0;transition:width .35s,background .35s}
+.load-bar .mark{position:absolute;top:-6px;bottom:-6px;width:2px;background:#fff;left:66.6%}
+.load-bar .mark::after{content:"額定 15A";position:absolute;top:26px;left:-26px;font-size:11px;color:var(--muted);white-space:nowrap}
+.status{padding:12px 14px;border-radius:12px;font-size:15px;transition:.3s}
+.status.ok{background:rgba(62,224,143,.08);border:1px solid rgba(62,224,143,.3)}
+.status.mid{background:rgba(255,181,60,.08);border:1px solid rgba(255,181,60,.35)}
+.status.bad{background:rgba(255,77,94,.12);border:1px solid rgba(255,77,94,.45);animation:pulseb 1s infinite}
+@keyframes pulseb{50%{box-shadow:0 0 22px rgba(255,77,94,.35)}}
+
+/* CH5 panel */
+.panel-svg{width:100%;height:auto;display:block}
+.brk{cursor:pointer}
+.brk .handle{transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.brk.off .handle{transform:translateY(20px)}
+.brk:hover .bbody,.brk:focus .bbody{stroke:var(--amber);stroke-width:2.5}
+.brk.sel .bbody{stroke:var(--blue);stroke-width:3}
+.brk:focus{outline:none}
+.brk.flash .bbody{animation:flashb .5s 3}
+@keyframes flashb{50%{fill:#5a1a22}}
+.info-box{min-height:150px}
+.log{font-family:var(--mono);font-size:13px;background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:12px;padding:10px 12px;max-height:120px;overflow:auto;color:#b7c7de}
+.wires{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wire-card{border-radius:14px;padding:16px;background:rgba(0,0,0,.22);border:1px solid var(--line);border-top:4px solid}
+.wire-card .sw-line{height:8px;border-radius:6px;margin:6px 0 10px}
+
+/* CH6 */
+.muscle-wrap{display:grid;grid-template-columns:1fr;gap:12px}
+.feel{font-size:14.5px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.25);border:1px solid var(--line)}
+
+/* CH7 */
+.blocks{display:flex;align-items:stretch;gap:0;flex-wrap:nowrap;overflow-x:auto;padding:6px 2px 10px}
+.blk{flex:1 1 0;min-width:120px;border:1px solid var(--line2);border-radius:14px;padding:12px;background:rgba(0,0,0,.25);text-align:center;position:relative}
+.blk svg{width:44px;height:44px;display:block;margin:0 auto 6px}
+.blk b{display:block;font-size:14.5px}
+.blk .vl{font-family:var(--mono);font-size:12.5px;color:var(--amber);margin-top:4px;line-height:1.4}
+.blk small{display:block;font-size:12px;color:var(--muted);line-height:1.45;margin-top:4px}
+.arrow{flex:0 0 34px;align-self:center;height:4px;position:relative;background:repeating-linear-gradient(90deg,var(--blue) 0 6px,transparent 6px 12px);background-size:24px 4px;animation:arr .6s linear infinite}
+.arrow::after{content:"";position:absolute;right:-2px;top:-5px;border:7px solid transparent;border-left:9px solid var(--blue);border-right:0}
+@keyframes arr{to{background-position:24px 0}}
+.blk.hot{border-color:rgba(255,181,60,.6);box-shadow:0 0 18px rgba(255,181,60,.18)}
+
+/* CH8 */
+.danger-scale{display:flex;height:14px;border-radius:8px;overflow:hidden;margin:8px 0 4px}
+.danger-scale span{flex:1}
+.level-card{border-radius:14px;padding:16px;transition:.3s;border:1px solid var(--line2);background:rgba(0,0,0,.25)}
+.level-card .big{font-family:var(--mono);font-size:36px;font-weight:700;line-height:1.1}
+.body-svg{width:100%;max-width:280px;margin:0 auto;display:block;height:auto}
+.checklist{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.checklist label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.22);border:1px solid var(--line);cursor:pointer;font-size:14.5px;line-height:1.55;transition:.2s}
+.checklist input{accent-color:var(--green);width:18px;height:18px;margin-top:3px;flex-shrink:0}
+.checklist label:has(input:checked){border-color:rgba(62,224,143,.45);background:rgba(62,224,143,.06)}
+
+footer{border-top:1px solid var(--line);padding:40px;text-align:center;color:var(--muted);font-size:14px;background:rgba(6,10,19,.8)}
+footer .disc{display:inline-block;padding:12px 18px;border-radius:12px;border:1px solid rgba(255,181,60,.35);background:rgba(255,181,60,.06);color:#ffe2b0;font-size:15px;margin-bottom:12px}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1100px){.chapter{padding:84px 28px 30px}}
+@media (max-width:960px){
+  :root{--nav:0px}
+  #topbar{display:flex;position:fixed;top:0;left:0;right:0;height:56px;z-index:50;align-items:center;justify-content:space-between;padding:0 14px;background:rgba(6,10,19,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  #topbar .brand{margin:0}
+  #topbar .brand-mark{width:30px;height:30px}
+  #menuBtn{width:42px;height:42px;border-radius:11px;border:1px solid var(--line2);background:var(--bg2);color:var(--text);display:grid;place-items:center;cursor:pointer}
+  #topbar .cur{font-size:13px;color:var(--muted);flex:1;text-align:right;margin-right:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #nav{top:56px;bottom:auto;width:100%;max-height:calc(100vh - 56px);padding:12px 16px 16px;transform:translateY(-120%);transition:transform .35s cubic-bezier(.2,.8,.2,1);border-right:0;border-bottom:1px solid var(--line);z-index:45;box-shadow:0 20px 40px rgba(0,0,0,.5)}
+  #nav.open{transform:none}
+  #nav .brand{display:none}
+  #nav li a.active::before{left:-4px}
+  html{scroll-padding-top:70px}
+  #hero{padding-top:56px}
+  .grid2,.rc-wrap{grid-template-columns:1fr}
+  .grid3{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  body{font-size:15.5px}
+  .chapter{padding:70px 16px 24px}
+  .hero-inner{padding:60px 20px}
+  .ch-num{font-size:46px}
+  .ch-head{gap:14px}
+  .card{padding:16px;border-radius:16px}
+  .quiz-opts,.wires,.checklist,.grid3{grid-template-columns:1fr}
+  .readouts{grid-template-columns:repeat(3,1fr);gap:6px}
+  .ro{padding:8px}.ro span{font-size:15px}
+  .analogy{grid-template-columns:1fr}
+  .legend-list{grid-template-columns:1fr 1fr}
+  .blocks{flex-direction:column;overflow:visible}
+  .blk{min-width:0}
+  .arrow{flex:0 0 26px;width:4px;height:26px;align-self:center;background:repeating-linear-gradient(180deg,var(--blue) 0 6px,transparent 6px 12px);background-size:4px 24px;animation:arrv .6s linear infinite}
+  .arrow::after{right:-5px;top:auto;bottom:-6px;border:7px solid transparent;border-top:9px solid var(--blue);border-bottom:0}
+  @keyframes arrv{to{background-position:0 24px}}
+  .modal-box{padding:18px;border-radius:16px}
+  footer{padding:30px 16px}
+  .band-row .lbl{width:100%}
+}
+</style>
+</head>
+<body>
+<header id="topbar">
+  <a class="brand" href="#hero"><span class="brand-mark"><svg width="18" height="18" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="#ffd27a"/></svg></span><span class="brand-name">電的旅程</span></a>
+  <span class="cur" id="curCh">序章</span>
+  <button id="menuBtn" aria-label="開啟章節選單" aria-expanded="false" aria-controls="nav"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e6eefb" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+</header>
+
+<nav id="nav" aria-label="章節導覽">
+  <a class="brand" href="#hero"><span class="brand-mark"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="#ffd27a"/></svg></span><span><span class="brand-name">電的旅程</span><span class="brand-sub">互動式電學科普</span></span></a>
+  <ol>
+    <li><a href="#hero"><span class="n">00</span>序章：出發</a></li>
+    <li><a href="#ch1"><span class="n">01</span>電壓、電流、電阻是什麼</a></li>
+    <li><a href="#ch2"><span class="n">02</span>串聯與並聯</a></li>
+    <li><a href="#ch3"><span class="n">03</span>電路板上為何那麼多電阻</a></li>
+    <li><a href="#ch4"><span class="n">04</span>功率與發熱</a></li>
+    <li><a href="#ch5"><span class="n">05</span>家用電工基礎</a></li>
+    <li><a href="#ch6"><span class="n">06</span>低週波按摩器原理</a></li>
+    <li><a href="#ch7"><span class="n">07</span>電蚊拍原理</a></li>
+    <li><a href="#ch8"><span class="n">08</span>觸電安全</a></li>
+  </ol>
+  <div class="nav-progress"><i id="progBar"></i></div>
+  <div class="nav-foot">已完成測驗 <b id="quizCount" class="hl-a">0</b> / 8</div>
+</nav>
+
+<main>
+<!-- ================= HERO ================= -->
+<section id="hero">
+  <canvas id="heroCv" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <span class="hero-kicker"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="#3cc8ff"/></svg>互動式電學科普</span>
+    <h1 class="hero-title">電的<em>旅程</em></h1>
+    <p class="hero-sub">跟著一顆顆電子出發，從電壓、電流、電阻，一路走到電路板、家裡的配電箱、按摩器與電蚊拍——最後學會怎麼安全地與電相處。</p>
+    <div class="btns">
+      <a class="btn big amber" href="#ch1">開始旅程 →</a>
+      <a class="btn big" href="#ch8">直接看觸電安全</a>
+    </div>
+    <div class="hero-chips">
+      <span class="chip"><b>8</b> 個章節</span>
+      <span class="chip"><b>15+</b> 個互動模擬</span>
+      <span class="chip"><b>8</b> 題隨堂測驗</span>
+      <span class="chip">適合國中以上</span>
+    </div>
+  </div>
+  <div class="scroll-hint">向下捲動<i></i></div>
+</section>
+
+<!-- ================= CH1 ================= -->
+<section class="chapter" id="ch1" data-title="電壓、電流、電阻">
+  <div class="ch-head reveal"><div class="ch-num">01</div><div><p class="ch-kicker">CHAPTER 01</p><h2>電壓、電流、電阻是什麼</h2></div></div>
+  <p class="lead reveal">電看不見，但可以用「水」來想像：<b class="hl-a">電壓</b>像水塔的高度差，推動水往下流；<b class="hl-b">電流</b>是每秒流過的水量；<b style="color:var(--pink)">電阻</b>則像水管變窄的地方，阻礙水的流動。</p>
+
+  <div class="grid2 mt">
+    <div class="card reveal">
+      <div class="card-title"><span class="dot"></span>水塔比喻（會跟著右邊的滑桿變化）</div>
+      <svg class="water-svg" viewBox="0 0 520 300" role="img" aria-label="水塔與水管比喻電路">
+        <defs>
+          <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fd6ff"/><stop offset="1" stop-color="#1e6fd6"/></linearGradient>
+          <clipPath id="tankClip"><rect x="34" y="34" width="92" height="112" rx="6"/></clipPath>
+        </defs>
+        <!-- legs -->
+        <g stroke="#3a4d6b" stroke-width="5"><line x1="44" y1="150" x2="34" y2="285"/><line x1="116" y1="150" x2="126" y2="285"/><line x1="40" y1="200" x2="120" y2="240"/><line x1="120" y1="200" x2="40" y2="240"/></g>
+        <rect x="30" y="30" width="100" height="120" rx="9" fill="#0d1a2e" stroke="#4a6283" stroke-width="3"/>
+        <g clip-path="url(#tankClip)"><rect id="wWater" x="34" y="80" width="92" height="66" fill="url(#wg)" opacity=".9"/></g>
+        <line id="wLevel" x1="140" y1="80" x2="170" y2="80" stroke="#ffb53c" stroke-width="2" stroke-dasharray="4 3"/>
+        <line x1="155" y1="80" x2="155" y2="232" stroke="#ffb53c" stroke-width="1.5" id="wHeight"/>
+        <text x="162" y="160" fill="#ffb53c" font-size="15" font-weight="700">水位高 = 電壓</text>
+        <!-- pipe -->
+        <path d="M80 150 V235 H500" fill="none" stroke="#3a4d6b" stroke-width="32" stroke-linejoin="round"/>
+        <path d="M80 150 V235 H500" fill="none" stroke="#1d5fb8" stroke-width="24" stroke-linejoin="round"/>
+        <path id="wDash" class="flowdash" d="M80 150 V235 H500" fill="none" stroke="#bfefff" stroke-width="4" stroke-linejoin="round" opacity=".85"/>
+        <!-- constriction -->
+        <rect id="wNarT" x="250" y="223" width="110" height="6" fill="#3a4d6b"/>
+        <rect id="wNarB" x="250" y="241" width="110" height="6" fill="#3a4d6b"/>
+        <text x="290" y="284" fill="#ff8fc0" font-size="15" font-weight="700" text-anchor="middle">管子變窄 = 電阻</text>
+        <text x="438" y="284" fill="#7fd8ff" font-size="15" font-weight="700" text-anchor="middle">水流量 = 電流</text>
+        <!-- wheel -->
+        <g transform="translate(470 180)"><g id="wWheel"><circle r="34" fill="none" stroke="#ffb53c" stroke-width="3"/><g stroke="#ffb53c" stroke-width="3"><line x1="-34" y1="0" x2="34" y2="0"/><line x1="0" y1="-34" x2="0" y2="34"/><line x1="-24" y1="-24" x2="24" y2="24"/><line x1="-24" y1="24" x2="24" y2="-24"/></g><circle r="6" fill="#ffb53c"/></g></g>
+        <text x="470" y="132" fill="#ffd27a" font-size="13" text-anchor="middle">水車 ≈ 燈泡</text>
+      </svg>
+      <div class="analogy">
+        <div><b class="hl-a">電壓 V（伏特）</b>推動電荷的「壓力差」，像水位高低差。</div>
+        <div><b class="hl-b">電流 I（安培）</b>每秒流過導線截面的電荷量，像水流量。</div>
+        <div><b style="color:var(--pink)">電阻 R（歐姆 Ω）</b>阻礙電流的程度，像水管窄處。</div>
+      </div>
+      <div class="table-wrap mt"><table class="data"><tr><th>生活中的數值</th><th>電壓</th><th>電流（約）</th></tr>
+        <tr><td>AA 電池</td><td>1.5 V</td><td>—</td></tr>
+        <tr><td>手機鋰電池</td><td>3.7 V</td><td>0.2～3 A</td></tr>
+        <tr><td>USB 充電</td><td>5～20 V</td><td>0.5～5 A</td></tr>
+        <tr><td>LED 指示燈</td><td>約 2～3 V</td><td>2～20 mA</td></tr>
+        <tr><td>台灣家用插座</td><td>110 V</td><td>依電器而定</td></tr>
+        <tr><td>吹風機（1200 W）</td><td>110 V</td><td>約 11 A</td></tr>
+      </table></div>
+    </div>
+
+    <div class="card glow reveal" id="ohmCard">
+      <div class="card-title"><span class="dot"></span>歐姆定律模擬器</div>
+      <canvas id="ohmCv" class="cv" style="height:250px" aria-label="電路動畫：電池、燈泡、電阻"></canvas>
+      <div class="ctrl"><div class="ctrl-row"><span>電壓 V</span><span class="val" id="ohmVv">12.0 V</span></div><input type="range" id="ohmV" class="amber" min="0" max="24" step="0.5" value="12" aria-label="電壓"></div>
+      <div class="ctrl"><div class="ctrl-row"><span>電阻 R</span><span class="val" id="ohmRv" style="color:var(--pink)">60 Ω</span></div><input type="range" id="ohmR" min="10" max="400" step="5" value="60" aria-label="電阻"></div>
+      <div class="ctrl"><div class="ctrl-row"><span>電流 I <span class="locked">🔒 由 V ÷ R 自動算出</span></span><span class="val" id="ohmIv" style="color:var(--blue)">0.200 A</span></div><input type="range" id="ohmI" min="0" max="2.4" step="0.001" value="0.2" disabled aria-label="電流（自動計算）" style="opacity:.75;cursor:not-allowed"></div>
+      <div class="formula" id="ohmF"></div>
+      <p class="note mt-s">藍色光點代表<b>電子</b>：電壓越高越亮、電阻越大流得越慢。小知識：電子帶負電，實際移動方向與習慣上的「電流方向」相反；而且電子本身漂移得很慢，是「電場」以接近光速的速度傳遞，所以開關一按燈就亮。</p>
+    </div>
+  </div>
+
+  <div class="quiz reveal" data-quiz="1"></div>
+  <div class="life reveal"><h4>💡 生活中的例子</h4><ul>
+    <li>手電筒電池用久了，電壓從 1.5 V 慢慢下降，電流變小，燈泡就變暗。</li>
+    <li>手機的「快充」會提高充電電壓或電流（例如 9 V、2 A），讓每秒送進電池的能量變多。</li>
+    <li>電線用銅做，是因為銅的電阻很小；而吹風機裡的電熱絲刻意用電阻較大的合金來發熱。</li>
+  </ul></div>
+</section>
+
+<!-- ================= CH2 ================= -->
+<section class="chapter" id="ch2" data-title="串聯與並聯">
+  <div class="ch-head reveal"><div class="ch-num">02</div><div><p class="ch-kicker">CHAPTER 02</p><h2>串聯與並聯</h2></div></div>
+  <p class="lead reveal"><b>串聯</b>：元件排成一條路，電流處處相同，電壓被「分掉」。<b>並聯</b>：元件各走各的路，每條支路電壓相同，電流被「分流」。切換看看燈泡亮度和數字怎麼變。</p>
+  <div class="card glow mt reveal">
+    <div class="btns" style="justify-content:space-between;align-items:center">
+      <div class="seg" id="spMode"><button class="on" data-v="s">串聯</button><button data-v="p">並聯</button></div>
+      <div class="seg" id="spN"><button data-v="2">2 顆燈泡</button><button class="on" data-v="3">3 顆燈泡</button></div>
+    </div>
+    <canvas id="spCv" class="cv mt-s" style="height:300px" aria-label="串並聯電路動畫"></canvas>
+    <div class="grid2 mt-s">
+      <div>
+        <div class="ctrl"><div class="ctrl-row"><span>電源電壓</span><span class="val" id="spVv">12 V</span></div><input type="range" id="spV" class="amber" min="1" max="24" step="1" value="12"></div>
+        <div class="ctrl"><div class="ctrl-row"><span>R₁ 燈泡 1</span><span class="val" id="spR1v">20 Ω</span></div><input type="range" id="spR1" min="5" max="100" step="1" value="20"></div>
+        <div class="ctrl"><div class="ctrl-row"><span>R₂ 燈泡 2</span><span class="val" id="spR2v">40 Ω</span></div><input type="range" id="spR2" min="5" max="100" step="1" value="40"></div>
+        <div class="ctrl" id="spR3c"><div class="ctrl-row"><span>R₃ 燈泡 3</span><span class="val" id="spR3v">60 Ω</span></div><input type="range" id="spR3" min="5" max="100" step="1" value="60"></div>
+      </div>
+      <div>
+        <div class="formula" id="spF" style="font-size:16px"></div>
+        <div class="table-wrap mt-s"><table class="data" id="spT"></table></div>
+        <p class="note mt-s" id="spNote"></p>
+      </div>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz="2"></div>
+  <div class="life reveal"><h4>💡 生活中的例子</h4><ul>
+    <li>家裡的插座、電燈都是<b>並聯</b>：每台電器都拿到 110 V，關掉一台不影響其他台。</li>
+    <li>舊式聖誕燈串常是<b>串聯</b>，一顆燈絲燒斷，整串就熄滅。</li>
+    <li>遙控器放兩顆 1.5 V 電池「頭尾相接」是串聯，得到 3 V。</li>
+  </ul></div>
+</section>
+
+<!-- ================= CH3 ================= -->
+<section class="chapter" id="ch3" data-title="電路板上的電阻">
+  <div class="ch-head reveal"><div class="ch-num">03</div><div><p class="ch-kicker">CHAPTER 03</p><h2>為什麼電路板上有那麼多電阻</h2></div></div>
+  <p class="lead reveal">打開任何電子產品，常會看到密密麻麻的小黑塊標著「R」。電阻雖然便宜又簡單，卻能限流、分壓、穩定訊號、延遲、匹配與量測。<b class="hl-a">點擊電路板上發光的電阻</b>看看它們各自的工作。</p>
+  <div class="card glow mt reveal">
+    <svg class="pcb-svg" id="pcb" viewBox="0 0 800 450" role="img" aria-label="電路板示意圖，可點擊電阻">
+      <defs>
+        <linearGradient id="pcbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f4a35"/><stop offset="1" stop-color="#0a3326"/></linearGradient>
+        <pattern id="pcbdots" width="16" height="16" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#1d6b4f"/></pattern>
+        <radialGradient id="ledglow"><stop offset="0" stop-color="#ff5a5a" stop-opacity=".9"/><stop offset="1" stop-color="#ff5a5a" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect x="6" y="6" width="788" height="438" rx="22" fill="url(#pcbg)" stroke="#1f7a58" stroke-width="2"/>
+      <rect x="6" y="6" width="788" height="438" rx="22" fill="url(#pcbdots)"/>
+      <g fill="#0a2a1f" stroke="#c9a24a" stroke-width="3"><circle cx="30" cy="30" r="9"/><circle cx="770" cy="30" r="9"/><circle cx="30" cy="420" r="9"/><circle cx="770" cy="420" r="9"/></g>
+      <!-- traces -->
+      <g fill="none" stroke="#c9963f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".75">
+        <path d="M120 110 H210"/><path d="M250 110 H330 V170 H340"/>
+        <path d="M600 90 H560 V140 H560"/><path d="M560 180 V200 H470"/><path d="M560 150 V160"/>
+        <path d="M120 330 H200"/><path d="M200 330 V290 H230"/><path d="M270 290 H300 V250 H340"/><path d="M200 330 V370"/>
+        <path d="M470 280 H520 V320 H540"/><path d="M580 320 H620"/><path d="M640 320 V350"/>
+        <path d="M470 230 H640 V180 H660"/><path d="M700 180 H740"/>
+        <path d="M70 410 H560 V380"/><path d="M600 380 V410 H740"/>
+        <path d="M340 200 H300 V200"/><path d="M470 250 H500"/>
+      </g>
+      <g fill="none" stroke="#8fd6ff" stroke-width="2.5" opacity=".0" id="pcbFlowBase"></g>
+      <!-- MCU -->
+      <g>
+        <g fill="#c9c9c9">
+          <rect x="330" y="150" width="12" height="4"/><rect x="330" y="170" width="12" height="4"/><rect x="330" y="190" width="12" height="4"/><rect x="330" y="210" width="12" height="4"/><rect x="330" y="230" width="12" height="4"/><rect x="330" y="250" width="12" height="4"/><rect x="330" y="270" width="12" height="4"/>
+          <rect x="468" y="150" width="12" height="4"/><rect x="468" y="170" width="12" height="4"/><rect x="468" y="190" width="12" height="4"/><rect x="468" y="210" width="12" height="4"/><rect x="468" y="230" width="12" height="4"/><rect x="468" y="250" width="12" height="4"/><rect x="468" y="270" width="12" height="4"/>
+        </g>
+        <rect x="340" y="140" width="130" height="150" rx="8" fill="#151a22" stroke="#2c3442"/>
+        <circle cx="356" cy="156" r="5" fill="#2c3442"/>
+        <text x="405" y="210" text-anchor="middle" fill="#9aa7bb" font-family="monospace" font-size="18" font-weight="700">MCU</text>
+        <text x="405" y="232" text-anchor="middle" fill="#5d6a7d" font-family="monospace" font-size="11">微控制器</text>
+      </g>
+      <!-- LED -->
+      <circle cx="90" cy="110" r="38" fill="url(#ledglow)" id="pcbLedGlow"/>
+      <g><rect x="74" y="98" width="30" height="24" rx="4" fill="#e9e9e9"/><rect x="80" y="102" width="18" height="16" rx="3" fill="#ff3b3b"/></g>
+      <text x="90" y="150" text-anchor="middle" fill="#cfe9dd" font-size="13">LED</text>
+      <!-- sensor NTC -->
+      <g><rect x="600" y="74" width="54" height="34" rx="16" fill="#2a6b9e" stroke="#7fc3ee"/><text x="627" y="96" text-anchor="middle" fill="#fff" font-size="11" font-family="monospace">NTC</text></g>
+      <text x="627" y="128" text-anchor="middle" fill="#cfe9dd" font-size="13">溫度感測</text>
+      <!-- button -->
+      <g><rect x="66" y="306" width="54" height="50" rx="6" fill="#2b2f36" stroke="#7a828f"/><circle cx="93" cy="331" r="14" fill="#14171c" stroke="#555"/></g>
+      <text x="93" y="378" text-anchor="middle" fill="#cfe9dd" font-size="13">按鈕</text>
+      <!-- capacitor -->
+      <g><rect x="626" y="348" width="30" height="40" rx="5" fill="#2d4a8a" stroke="#88a8e8"/><rect x="626" y="348" width="9" height="40" rx="3" fill="#9fb6e6" opacity=".6"/></g>
+      <text x="641" y="405" text-anchor="middle" fill="#cfe9dd" font-size="12">電容 C</text>
+      <!-- connector -->
+      <g><rect x="740" y="150" width="40" height="70" rx="4" fill="#d9d9d9"/><rect x="748" y="160" width="24" height="10" fill="#555"/><rect x="748" y="178" width="24" height="10" fill="#555"/><rect x="748" y="196" width="24" height="10" fill="#555"/></g>
+      <text x="760" y="240" text-anchor="middle" fill="#cfe9dd" font-size="12">高速訊號</text>
+      <!-- power in -->
+      <g><rect x="22" y="392" width="48" height="36" rx="4" fill="#1b1b1b" stroke="#666"/><circle cx="46" cy="410" r="9" fill="#444"/></g>
+      <text x="46" y="388" text-anchor="middle" fill="#cfe9dd" font-size="12">電源</text>
+      <text x="740" y="400" text-anchor="end" fill="#cfe9dd" font-size="12">→ 負載</text>
+      <text x="400" y="40" text-anchor="middle" fill="#e8f5ee" opacity=".55" font-family="monospace" font-size="13" letter-spacing="3">ELECTRIC JOURNEY · REV 1.0</text>
+      <!-- resistors -->
+      <g id="pcbRes"></g>
+    </svg>
+    <div class="legend-list" id="pcbLegend"></div>
+  </div>
+
+  <div class="card mt reveal" id="rcCard">
+    <div class="card-title"><span class="dot"></span>電阻色碼解碼器</div>
+    <div class="rc-wrap">
+      <div>
+        <div class="seg" id="rcMode" style="margin-bottom:8px"><button class="on" data-v="4">4 環</button><button data-v="5">5 環</button></div>
+        <div id="rcBands"></div>
+      </div>
+      <div>
+        <svg viewBox="0 0 360 120" style="width:100%;height:auto" aria-label="色環電阻">
+          <line x1="0" y1="60" x2="360" y2="60" stroke="#b9b9b9" stroke-width="5"/>
+          <path d="M70 34 Q70 22 90 22 H120 Q130 30 140 30 H220 Q230 30 240 22 H270 Q290 22 290 34 V86 Q290 98 270 98 H240 Q230 90 220 90 H140 Q130 90 120 98 H90 Q70 98 70 86 Z" fill="#e3c89a" stroke="#b79b6c" stroke-width="2"/>
+          <g id="rcSvgBands"></g>
+          <path d="M80 34 H280" stroke="#fff" stroke-opacity=".25" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+        <div class="rc-value" id="rcVal">4.7 kΩ</div>
+        <p class="note" style="text-align:center" id="rcTol">誤差 ±5%</p>
+      </div>
+    </div>
+    <p class="note">讀法：最靠近一端的色環先讀；金色、銀色多半是最後一環（誤差）。口訣：<b>黑棕紅橙黃綠藍紫灰白</b> 對應 0～9。</p>
+  </div>
+
+  <div class="quiz reveal" data-quiz="3"></div>
+  <div class="life reveal"><h4>💡 生活中的例子</h4><ul>
+    <li>遙控器、充電器上的小指示燈，旁邊一定有一顆限流電阻，否則 LED 會瞬間燒毀。</li>
+    <li>電子溫度計用「熱敏電阻＋固定電阻」分壓，晶片讀電壓就知道溫度。</li>
+    <li>鍵盤、遊戲手把的每顆按鍵，都靠上拉／下拉電阻讓訊號穩定；手機電池的電量計則靠毫歐姆級的分流電阻量測充放電電流。</li>
+  </ul></div>
+</section>
+
+<!-- ================= CH4 ================= -->
+<section class="chapter" id="ch4" data-title="功率與發熱">
+  <div class="ch-head reveal"><div class="ch-num">04</div><div><p class="ch-kicker">CHAPTER 04</p><h2>功率與發熱</h2></div></div>
+  <p class="lead reveal"><b>功率</b>是每秒消耗或轉換的能量：<span class="mono hl-a">P = V × I</span>（瓦特 W）。電流流過導線也會發熱，發熱功率 <span class="mono hl-a">P = I² × R</span>——電流變 2 倍，發熱變 4 倍！這就是延長線過載危險的原因。</p>
+  <div class="card glow mt reveal">
+    <div class="card-title"><span class="dot"></span>延長線負載模擬器（110 V，額定 15 A／1650 W）</div>
+    <canvas id="cordCv" class="cv" style="height:200px" aria-label="延長線發熱示意"></canvas>
+    <div class="grid2 mt-s">
+      <div>
+        <p class="note" style="margin-bottom:8px">點 ＋ 把電器插上延長線：</p>
+        <div class="apps" id="apps"></div>
+      </div>
+      <div>
+        <div class="readouts">
+          <div class="ro"><small>總功率</small><span id="cordP" class="hl-a">0 W</span></div>
+          <div class="ro"><small>總電流 I = P ÷ V</small><span id="cordI" class="hl-b">0.0 A</span></div>
+          <div class="ro"><small>線材發熱（相對額定）</small><span id="cordH">0%</span></div>
+        </div>
+        <div class="load-bar"><i id="cordBar"></i><span class="mark"></span></div>
+        <div class="status ok" id="cordStatus">目前沒有負載。</div>
+        <div class="btns mt-s"><button class="btn" id="cordReset">全部拔掉</button></div>
+        <p class="note mt-s">註：電器標示多為額定（最大）功率，實際耗電會隨模式變化。發熱相對值以 (I ÷ 15 A)² 估算，因為同一條線的發熱與電流平方成正比。</p>
+      </div>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz="4"></div>
+  <div class="life reveal"><h4>💡 生活中的例子</h4><ul>
+    <li>電費單上的「度」就是 1 kWh（千瓦小時）。1200 W 吹風機吹 30 分鐘 = 1.2 kW × 0.5 h = 0.6 度。</li>
+    <li>電暖器、電熱水壺、吹風機這類「電熱」電器功率大，建議<b>直接插牆上插座</b>，不要共用延長線。</li>
+    <li>延長線不要捲成一捆使用、不要串接，插頭插座若發燙或有焦痕應立即停用更換。</li>
+  </ul></div>
+</section>
+<!-- ================= CH5 ================= -->
+<section class="chapter" id="ch5" data-title="家用電工基礎">
+  <div class="ch-head reveal"><div class="ch-num">05</div><div><p class="ch-kicker">CHAPTER 05</p><h2>家用電工基礎</h2></div></div>
+  <p class="lead reveal">家裡的電從台電的變壓器進來，先到<b>配電箱（俗稱電箱）</b>，再分成好幾個迴路。配電箱裡的開關是全家的安全守門員。<b class="hl-a">點擊下方開關</b>認識它們，或按按鈕模擬事故。</p>
+
+  <div class="grid2 mt">
+    <div class="card glow reveal">
+      <div class="card-title"><span class="dot"></span>互動配電箱</div>
+      <svg class="panel-svg" id="panelSvg" viewBox="0 0 520 440" role="img" aria-label="家用配電箱">
+        <defs><linearGradient id="cab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3446"/><stop offset="1" stop-color="#1b2230"/></linearGradient></defs>
+        <rect x="8" y="8" width="504" height="424" rx="16" fill="url(#cab)" stroke="#43516b" stroke-width="2"/>
+        <rect x="22" y="22" width="476" height="396" rx="10" fill="#151b26" stroke="#2d3850"/>
+        <g stroke-width="4" fill="none">
+          <path d="M330 22 V70 H300" stroke="#ff4d5e"/><path d="M360 22 V90 H300" stroke="#e6eefb"/><path d="M390 22 V110 H300" stroke="#ff4d5e"/>
+        </g>
+        <text x="420" y="50" fill="#93a6c2" font-size="12">台電進線</text>
+        <text x="420" y="68" fill="#ff8a96" font-size="11">L1 火線</text><text x="420" y="84" fill="#e6eefb" font-size="11">N 中性線</text><text x="420" y="100" fill="#ff8a96" font-size="11">L2 火線</text>
+        <text x="420" y="122" fill="#93a6c2" font-size="11">單相三線</text><text x="420" y="138" fill="#93a6c2" font-size="11">110 / 220 V</text>
+        <rect x="30" y="58" width="460" height="10" fill="#3a4559" opacity=".5"/>
+        <rect x="30" y="238" width="460" height="10" fill="#3a4559" opacity=".5"/>
+        <path id="busTop" d="M90 185 V215 H440" stroke="#ffb53c" stroke-width="3" fill="none" opacity=".6"/>
+        <g id="brks"></g>
+        <g id="sparkG"></g>
+        <text x="260" y="408" text-anchor="middle" fill="#5d708d" font-size="12">示意圖；實際配置依各住宅設計而異</text>
+      </svg>
+      <div class="btns mt-s">
+        <button class="btn amber" id="simOver">模擬過載</button>
+        <button class="btn red" id="simShort">模擬短路</button>
+        <button class="btn" id="simLeak">模擬漏電</button>
+        <button class="btn" id="simReset">全部復歸</button>
+      </div>
+    </div>
+    <div class="reveal" style="display:flex;flex-direction:column;gap:16px">
+      <div class="card info-box" id="panelInfo"></div>
+      <div class="card"><div class="card-title"><span class="dot"></span>事件紀錄</div><div class="log" id="panelLog">系統正常，所有迴路供電中。</div></div>
+    </div>
+  </div>
+
+  <div class="grid3 mt reveal">
+    <div class="card"><h4>⚡ 過載保護</h4><p class="note" style="font-size:14.5px">電流長時間超過額定（例如 20 A 迴路跑 30 A），開關內的<b>雙金屬片</b>受熱彎曲而跳脫。電流越大跳得越快，屬於「熱動」保護。</p></div>
+    <div class="card"><h4>💥 短路保護</h4><p class="note" style="font-size:14.5px">火線直接碰到中性線，電阻極小，電流瞬間可達數百甚至上千安培。開關內的<b>電磁線圈</b>在極短時間內把它跳開，屬於「電磁」保護。</p></div>
+    <div class="card"><h4>💧 漏電保護</h4><p class="note" style="font-size:14.5px"><b>漏電斷路器</b>比較火線「出去」與中性線「回來」的電流；正常應相等。若差值達動作電流（家用常見 30 mA 或 15 mA），代表有電流經人體或外殼流到地，會在約 0.1 秒內跳脫。</p></div>
+  </div>
+
+  <div class="grid2 mt">
+    <div class="card reveal">
+      <div class="card-title"><span class="dot"></span>台灣的 110 V 與 220 V</div>
+      <svg viewBox="0 0 400 190" style="width:100%;height:auto" aria-label="單相三線示意">
+        <g fill="none" stroke="#ffb53c" stroke-width="3">
+          <path d="M60 20 c30 0 30 25 0 25 c30 0 30 25 0 25 c30 0 30 25 0 25 c30 0 30 25 0 25 c30 0 30 25 0 25 c30 0 30 25 0 25"/>
+        </g>
+        <line x1="60" y1="20" x2="250" y2="20" stroke="#ff4d5e" stroke-width="3"/>
+        <line x1="60" y1="95" x2="250" y2="95" stroke="#e6eefb" stroke-width="3"/>
+        <line x1="60" y1="170" x2="250" y2="170" stroke="#ff4d5e" stroke-width="3"/>
+        <text x="10" y="100" fill="#93a6c2" font-size="12">變壓器</text>
+        <text x="256" y="25" fill="#ff8a96" font-size="13">L1</text><text x="256" y="100" fill="#e6eefb" font-size="13">N（中心接地）</text><text x="256" y="175" fill="#ff8a96" font-size="13">L2</text>
+        <g font-family="monospace" font-size="14" font-weight="700">
+          <path d="M150 24 V91" stroke="#3cc8ff" stroke-width="1.5"/><text x="156" y="62" fill="#3cc8ff">110 V</text>
+          <path d="M150 99 V166" stroke="#3cc8ff" stroke-width="1.5"/><text x="156" y="138" fill="#3cc8ff">110 V</text>
+          <path d="M215 24 V166" stroke="#ffb53c" stroke-width="1.5"/><text x="221" y="138" fill="#ffb53c" transform="rotate(0)">220 V</text>
+        </g>
+      </svg>
+      <p class="note" style="font-size:14.5px">一般住宅多為<b>單相三線</b>供電：兩條火線（L1、L2）加一條中性線（N）。火線對中性線是 <b class="hl-b">110 V</b>，供一般插座與照明；L1 與 L2 相位相反，兩者之間是 <b class="hl-a">220 V</b>，供冷氣、烘衣機、IH 爐、電熱水器等大功率電器。同樣功率下用 220 V，電流只有一半，線路發熱較少。</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-title"><span class="dot"></span>火線、中性線、地線</div>
+      <div class="wires" style="grid-template-columns:1fr">
+        <div class="wire-card" style="border-top-color:#ff4d5e"><b>火線（L, Live）</b><div class="sw-line" style="background:linear-gradient(90deg,#222,#d33)"></div><span class="note" style="font-size:14px">對地有電壓（約 110 V）的導線，危險來源。開關與保險裝置應接在火線上，關掉時電器才真正不帶電。常見為黑色或紅色。</span></div>
+        <div class="wire-card" style="border-top-color:#e6eefb"><b>中性線（N, Neutral）</b><div class="sw-line" style="background:#e6eefb"></div><span class="note" style="font-size:14px">電流的回路，在變壓器端接地，平時對地電壓接近 0 V——但線路有負載或配線錯誤時仍可能帶電，<b>不可當作安全線</b>。常見為白色。</span></div>
+        <div class="wire-card" style="border-top-color:#3ee08f"><b>地線（E／PE, Earth）</b><div class="sw-line" style="background:repeating-linear-gradient(90deg,#2bbf5f 0 14px,#e4d43a 14px 22px)"></div><span class="note" style="font-size:14px">平時沒有電流。電器外殼一旦漏電，地線提供低阻抗路徑讓電流流入大地，並使漏電斷路器跳脫，保護觸碰外殼的人。三孔插頭的圓腳就是地線，<b>不可拔掉</b>。常見為綠色或綠黃色。</span></div>
+      </div>
+      <p class="note mt-s">顏色為常見慣例，舊屋或施工不一定照規矩，任何線路都應先驗電再碰。</p>
+    </div>
+  </div>
+
+  <div class="card glow mt reveal">
+    <div class="card-title"><span class="dot"></span>三相電：三個相位差 120° 的正弦波</div>
+    <canvas id="tpCv" class="cv" style="height:300px" aria-label="三相正弦波與旋轉相量動畫"></canvas>
+    <div class="btns mt-s" style="align-items:center;justify-content:space-between">
+      <div class="seg" id="tpSpeed"><button data-v="0.15">極慢</button><button class="on" data-v="0.4">慢動作</button><button data-v="1">較快</button></div>
+      <div class="seg" id="tpPow"><button class="on" data-v="1">顯示瞬時功率</button><button data-v="0">隱藏</button></div>
+    </div>
+    <p class="note mt-s">動畫為慢動作示意，台灣電網實際頻率為 60 Hz（每秒 60 個循環）。下方功率圖：單相負載的瞬時功率會在 0 與最大值之間脈動；三相平衡負載三相相加後是<b>一條平直的線</b>。</p>
+    <div class="grid3 mt-s">
+      <div><h4>① 功率平穩</h4><p class="note" style="font-size:14.5px">三相瞬時總功率恆定，馬達轉矩平順、振動與噪音小。</p></div>
+      <div><h4>② 省線材</h4><p class="note" style="font-size:14.5px">三條線（或加一條中性線）就能送出單相需要更多導線才能送的功率，平衡時中性線幾乎沒有電流，同功率用銅量較少。</p></div>
+      <div><h4>③ 馬達天生會轉</h4><p class="note" style="font-size:14.5px">三相電流自然產生「旋轉磁場」（就像上方旋轉的相量），感應馬達結構簡單、可自行啟動、耐用。</p></div>
+    </div>
+    <p class="note mt-s" style="font-size:14.5px">台灣常見低壓三相：<b>三相三線 220 V</b>，以及工廠常用的<b>三相四線 220/380 V</b>——相線對中性線 220 V，相線之間 380 V（≈ 220 × √3）。工廠、大樓中央空調、電梯、大型冷凍設備多使用三相電。</p>
+  </div>
+
+  <div class="quiz reveal" data-quiz="5"></div>
+  <div class="life reveal"><h4>💡 生活中的例子</h4><ul>
+    <li>跳電時：先把該迴路上的大功率電器關掉或拔掉，再把開關「先往下推到底、再往上推」復歸；若一直跳，可能是線路或電器故障，請找合格電工。</li>
+    <li>漏電斷路器上有一顆「T」測試鈕，建議每月按一次確認會跳脫。</li>
+    <li>大樓的電梯、抽水馬達與中央空調主機，背後都是三相電。</li>
+  </ul></div>
+</section>
+
+<!-- ================= CH6 ================= -->
+<section class="chapter" id="ch6" data-title="低週波按摩器">
+  <div class="ch-head reveal"><div class="ch-num">06</div><div><p class="ch-kicker">CHAPTER 06</p><h2>低週波按摩器原理</h2></div></div>
+  <p class="lead reveal">神經和肌肉本身就靠微小的電訊號運作。低週波按摩器透過貼片送出<b>很短（約數十到數百微秒）的電脈衝</b>，每秒 1～100 次左右，刺激皮膚下的神經，讓人產生麻、拍打感或讓肌肉收縮。</p>
+  <div class="grid2 mt">
+    <div class="card glow reveal">
+      <div class="card-title"><span class="dot"></span>脈衝波形模擬器</div>
+      <canvas id="tensCv" class="cv" style="height:190px" aria-label="脈衝波形"></canvas>
+      <div class="ctrl"><div class="ctrl-row"><span>頻率</span><span class="val" id="tFv">5 Hz</span></div><input type="range" id="tF" min="1" max="100" step="1" value="5"></div>
+      <div class="ctrl"><div class="ctrl-row"><span>脈衝寬度</span><span class="val" id="tWv">200 μs</span></div><input type="range" id="tW" min="50" max="400" step="10" value="200"></div>
+      <div class="ctrl"><div class="ctrl-row"><span>強度</span><span class="val" id="tIv">40 %</span></div><input type="range" id="tI" class="amber" min="0" max="100" step="1" value="40"></div>
+      <p class="note">波形為「雙相」脈衝：先正後負，讓淨電荷接近零，減少皮膚刺激。圖中脈衝寬度已放大以便觀看。</p>
+    </div>
+    <div class="card reveal">
+      <div class="card-title"><span class="dot"></span>肌肉反應示意</div>
+      <canvas id="muscleCv" class="cv" style="height:190px" aria-label="肌肉收縮動畫"></canvas>
+      <div class="feel mt-s" id="tFeel"></div>
+      <div class="grid2 mt-s" style="gap:12px">
+        <div><h4>TENS 經皮神經電刺激</h4><p class="note" style="font-size:14px">刺激感覺神經，以「麻感」干擾疼痛訊號（閘門控制理論），也可能促進身體釋放腦內啡，常用於緩解肌肉痠痛。</p></div>
+        <div><h4>EMS 肌肉電刺激</h4><p class="note" style="font-size:14px">強度較高，直接讓運動神經興奮、肌肉收縮，用於復健或肌力訓練。頻率高時一次次收縮會「融合」成持續收縮。</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="warn mt reveal">
+    <h4>⚠️ 使用安全（請務必遵守）</h4>
+    <ul class="clean">
+      <li><b>裝有心律調節器、植入式心臟去顫器或其他植入式電子醫療器材者禁止使用。</b></li>
+      <li>孕婦（特別是腹部、腰部）、癲癇病史、心臟病患者使用前須先諮詢醫師。</li>
+      <li>不可貼在<b>胸前心臟附近、頭部、眼睛、頸部前側</b>（頸動脈竇），也不要讓電流穿越胸腔（例如左右胸各貼一片）。</li>
+      <li>避開傷口、發炎、皮膚病、靜脈曲張與感覺遲鈍的部位；不要在泡澡、睡覺、開車時使用。</li>
+      <li>從最低強度開始慢慢調高；刺痛、灼熱或不適立即停止。貼片要完整貼合，不要開機時撕貼。</li>
+    </ul>
+    <p class="note" style="margin:0">之所以安全，是因為平均電流很小、脈衝極短、輸出受限，且電流只在兩片貼片之間的局部組織流動；這些前提一旦被破壞（錯誤位置、改裝、劣質產品），風險就會升高。</p>
+  </div>
+  <div class="quiz reveal" data-quiz="6"></div>
+  <div class="life reveal"><h4>💡 生活中的例子</h4><ul>
+    <li>復健科的「電療」多是 TENS 或干擾波治療，由專業人員設定參數。</li>
+    <li>市售肩頸低週波貼片、腹部 EMS 腰帶，原理相同，但輸出與使用時間受到法規限制。</li>
+    <li>醫院的心電圖（ECG）則是反過來「讀取」心臟自己產生的微小電訊號。</li>
+  </ul></div>
+</section>
+
+<!-- ================= CH7 ================= -->
+<section class="chapter" id="ch7" data-title="電蚊拍原理">
+  <div class="ch-head reveal"><div class="ch-num">07</div><div><p class="ch-kicker">CHAPTER 07</p><h2>電蚊拍原理</h2></div></div>
+  <p class="lead reveal">兩顆 1.5 V 電池，怎麼變成能「啪」一聲電死蚊子的數千伏特？關鍵是<b>振盪 → 升壓 → 倍壓整流 → 電容儲能</b>。</p>
+  <div class="card mt reveal">
+    <div class="card-title"><span class="dot"></span>電路方塊圖</div>
+    <div class="blocks" id="swBlocks">
+      <div class="blk"><svg viewBox="0 0 44 44"><rect x="8" y="12" width="26" height="22" rx="3" fill="none" stroke="#3cc8ff" stroke-width="2.5"/><rect x="34" y="18" width="4" height="10" fill="#3cc8ff"/><rect x="11" y="15" width="10" height="16" fill="#3ee08f"/></svg><b>電池</b><div class="vl">3 V 直流</div><small>2 顆 AA 或鋰電池</small></div>
+      <div class="arrow"></div>
+      <div class="blk"><svg viewBox="0 0 44 44"><path d="M4 22 Q9 6 14 22 T24 22 T34 22 T44 22" fill="none" stroke="#3cc8ff" stroke-width="2.5"/></svg><b>振盪電路</b><div class="vl">直流 → 交流</div><small>電晶體快速開關，約數十 kHz</small></div>
+      <div class="arrow"></div>
+      <div class="blk"><svg viewBox="0 0 44 44"><g fill="none" stroke="#ffb53c" stroke-width="2.5"><path d="M10 6 c8 0 8 8 0 8 c8 0 8 8 0 8 c8 0 8 8 0 8 c8 0 8 8 0 8"/><path d="M34 4 c-6 0 -6 4 0 4 c-6 0 -6 4 0 4 c-6 0 -6 4 0 4 c-6 0 -6 4 0 4 c-6 0 -6 4 0 4 c-6 0 -6 4 0 4 c-6 0 -6 4 0 4 c-6 0 -6 4 0 4 c-6 0 -6 4 0 4"/></g><line x1="21" y1="4" x2="21" y2="40" stroke="#93a6c2" stroke-width="2"/><line x1="24" y1="4" x2="24" y2="40" stroke="#93a6c2" stroke-width="2"/></svg><b>升壓變壓器</b><div class="vl">→ 數百 V 交流</div><small>次級線圈圈數遠多於初級</small></div>
+      <div class="arrow"></div>
+      <div class="blk hot"><svg viewBox="0 0 44 44"><g stroke="#ffb53c" stroke-width="2.5" fill="none"><path d="M6 14 H16 M16 8 V20 M16 14 L26 8 V20 Z"/><line x1="6" y1="30" x2="38" y2="30"/><line x1="12" y1="36" x2="32" y2="36"/><line x1="22" y1="20" x2="22" y2="30"/></g></svg><b>倍壓整流＋電容</b><div class="vl">→ 約 2,000～4,000 V 直流</div><small>二極體與電容層層疊加電壓並儲存</small></div>
+      <div class="arrow"></div>
+      <div class="blk hot"><svg viewBox="0 0 44 44"><g stroke="#ffd27a" stroke-width="1.6"><path d="M8 8 H36 V36 H8 Z" fill="none"/><path d="M8 15 H36 M8 22 H36 M8 29 H36 M15 8 V36 M22 8 V36 M29 8 V36"/></g></svg><b>金屬網</b><div class="vl">內外網間有高壓</div><small>蚊子跨接兩層網 → 放電</small></div>
+    </div>
+  </div>
+  <div class="grid2 mt">
+    <div class="card glow reveal">
+      <div class="card-title"><span class="dot"></span>試試看</div>
+      <canvas id="swCv" class="cv" style="height:300px" aria-label="電蚊拍放電動畫"></canvas>
+      <div class="btns mt-s" style="align-items:center">
+        <button class="btn amber big" id="swBtn">⚡ 打蚊子</button>
+        <span class="note">已擊落：<b id="swCount" class="hl-a mono">0</b> 隻</span>
+      </div>
+    </div>
+    <div class="card reveal">
+      <h3>數千伏特，為什麼通常不致命？</h3>
+      <p style="font-size:15px">傷害人體的是<b>流過身體的電流與能量</b>，不是電壓數字本身。電蚊拍的電容很小，儲存的能量只有零點幾焦耳等級：</p>
+      <div class="formula" style="font-size:16px">E = ½ C V² = ½ × 0.1 μF × (3000 V)² ≈ <span class="v">0.45 J</span></div>
+      <ul class="clean" style="font-size:15px">
+        <li>電容一放電，電壓就迅速下降，放電時間極短（微秒～毫秒）。</li>
+        <li>升壓電路輸出能力很弱，持續供應的電流被限制在很小的範圍，需要一兩秒才能重新充滿。</li>
+        <li>相比之下，家用插座 110 V 能<b>持續</b>供應數十安培，反而危險得多。</li>
+      </ul>
+      <div class="warn"><h4>⚠️ 但還是不要碰</h4><ul class="clean" style="font-size:14.5px;margin:0">
+        <li>會劇烈刺痛、肌肉抽動，可能因驚嚇跌倒受傷。</li>
+        <li>裝有心律調節器者、幼兒、寵物應遠離。</li>
+        <li>火花可能點燃瓦斯、殺蟲劑噴霧等易燃氣體，不要在附近使用。</li>
+        <li>關掉電源後，電容仍可能殘留電荷；網子變形或劣質改裝品風險更高。</li>
+      </ul></div>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz="7"></div>
+  <div class="life reveal"><h4>💡 生活中的例子</h4><ul>
+    <li>捕蚊燈用紫外光吸引蚊子，內部同樣是高壓電網。</li>
+    <li>相機閃光燈也是「升壓＋電容儲能」：先慢慢充電，再瞬間釋放出強光。</li>
+    <li>冬天脫毛衣的靜電可達數千伏特，但電荷極少，所以只是「啪」一下刺痛。</li>
+  </ul></div>
+</section>
+
+<!-- ================= CH8 ================= -->
+<section class="chapter" id="ch8" data-title="觸電安全">
+  <div class="ch-head reveal"><div class="ch-num">08</div><div><p class="ch-kicker">CHAPTER 08</p><h2>觸電安全</h2></div></div>
+  <p class="lead reveal">觸電的傷害取決於<b>流過身體的電流大小、路徑（是否經過心臟）與時間</b>。而電流 = 電壓 ÷ 人體電阻，皮膚潮濕時電阻大幅降低，同樣 110 V 可能從「刺麻」變成「致命」。</p>
+  <div class="grid2 mt">
+    <div class="card glow reveal">
+      <div class="card-title"><span class="dot"></span>人體電流與反應（交流 50/60 Hz，手到手路徑，示意）</div>
+      <svg class="body-svg" id="bodySvg" viewBox="0 0 300 300" aria-label="人體電流路徑">
+        <g fill="#1a2740" stroke="#3b5577" stroke-width="2">
+          <circle cx="150" cy="44" r="26"/>
+          <path d="M112 80 H188 Q200 80 202 94 L206 180 Q206 188 198 188 H102 Q94 188 94 180 L98 94 Q100 80 112 80 Z"/>
+          <path d="M112 84 L40 120 Q30 126 22 120 L18 112 Q20 104 30 100 L104 74"/>
+          <path d="M188 84 L260 120 Q270 126 278 120 L282 112 Q280 104 270 100 L196 74"/>
+          <path d="M108 186 L104 286 H128 L146 190"/><path d="M192 186 L196 286 H172 L154 190"/>
+        </g>
+        <path id="bodyPath" d="M24 112 L104 92 Q150 152 196 92 L276 112" fill="none" stroke="#3cc8ff" stroke-width="5" stroke-linecap="round" stroke-dasharray="8 10" opacity=".9"/>
+        <g id="heart" transform="translate(138 118)"><path d="M12 22 C-6 8 0 -4 12 4 C24 -4 30 8 12 22 Z" fill="#ff4d5e"/></g>
+        <circle cx="22" cy="114" r="12" fill="none" stroke="#ffb53c" stroke-width="2" opacity=".7"/><circle cx="278" cy="114" r="12" fill="none" stroke="#ffb53c" stroke-width="2" opacity=".7"/>
+        <text x="22" y="146" text-anchor="middle" fill="#93a6c2" font-size="11">接觸點</text><text x="278" y="146" text-anchor="middle" fill="#93a6c2" font-size="11">接觸點</text>
+      </svg>
+      <div class="ctrl"><div class="ctrl-row"><span>流過身體的電流</span><span class="val" id="bcV">1.0 mA</span></div><input type="range" id="bc" class="amber" min="0" max="1000" step="1" value="250" aria-label="人體電流"></div>
+      <div class="danger-scale" style="background:linear-gradient(90deg,#2b7a55 0 17.5%,#3ee08f 17.5% 42.5%,#c9d84a 42.5% 50%,#ffb53c 50% 62%,#ff8a00 62% 67.5%,#ff4d5e 67.5% 75%,#d01c38 75% 100%)"></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--dim);font-family:var(--mono)"><span>0.1</span><span>1</span><span>10</span><span>100</span><span>1000 mA</span></div>
+    </div>
+    <div class="reveal" style="display:flex;flex-direction:column;gap:16px">
+      <div class="level-card" id="lvCard"><div class="big" id="lvNum">1 mA</div><h3 id="lvTitle" style="margin-top:6px"></h3><p id="lvDesc" style="margin:0;font-size:15px"></p></div>
+      <div class="card">
+        <div class="card-title"><span class="dot"></span>算算看：I = V ÷ R</div>
+        <div class="btns" style="gap:8px;align-items:center"><span class="note" style="width:42px">電壓</span><div class="seg" id="calcV"><button data-v="12">12 V</button><button class="on" data-v="110">110 V</button><button data-v="220">220 V</button></div></div>
+        <div class="btns mt-s" style="gap:8px;align-items:center"><span class="note" style="width:42px">皮膚</span><div class="seg" id="calcR"><button class="on" data-v="100000">乾燥 ≈100 kΩ</button><button data-v="10000">流汗 ≈10 kΩ</button><button data-v="1000">潮濕／破皮 ≈1 kΩ</button></div></div>
+        <div class="formula mt-s" id="calcF" style="font-size:17px"></div>
+        <p class="note mt-s">人體電阻為粗估示意，實際會隨接觸面積、壓力、時間與電壓變化；電壓高時皮膚可能被擊穿，電阻更低。這就是為什麼「手濕不要碰電」。</p>
+      </div>
+    </div>
+  </div>
+  <div class="grid2 mt">
+    <div class="card reveal">
+      <h3>為什麼說「電流」才是關鍵？</h3>
+      <p style="font-size:15px">肌肉與心臟由電訊號控制，外來電流會干擾它們：讓肌肉痙攣、無法放手，或打亂心臟節律造成<b>心室顫動</b>（心臟只顫抖不泵血，數分鐘內致命）。所以傷害程度直接看「多少電流、流多久、經過哪裡」。</p>
+      <p style="font-size:15px">但電壓決定能推多少電流過身體：靜電、電蚊拍電壓高卻能量小；家用 110 V／220 V 能持續供電，<b>絕對不可輕忽</b>。這也是漏電斷路器選擇 30 mA 等級的原因——在進入危險區前就切斷。</p>
+      <div class="warn mt-s"><h4>🚨 看到有人觸電</h4><ol class="clean" style="font-size:14.5px;margin:0;padding-left:20px">
+        <li><b>先斷電</b>：關總開關或拔插頭。不要直接用手拉人！</li>
+        <li>無法斷電時，站在乾燥絕緣物上，用乾燥木棍、塑膠物把電線挑開。</li>
+        <li>撥打 <b>119</b>；若無意識、無正常呼吸，立即 CPR 並使用 AED。</li>
+        <li>即使看似沒事，也建議就醫檢查（可能有內部灼傷或心律異常）。</li>
+      </ol></div>
+    </div>
+    <div class="card reveal">
+      <h3>居家用電安全檢查表 <span class="note" id="ckCount">0 / 10</span></h3>
+      <div class="meter" style="margin:6px 0 14px"><i id="ckBar" style="background:linear-gradient(90deg,var(--blue),var(--green))"></i></div>
+      <ul class="checklist" id="checklist" style="grid-template-columns:1fr"></ul>
+    </div>
+  </div>
+  <div class="quiz reveal" data-quiz="8"></div>
+  <div class="life reveal"><h4>💡 生活中的例子</h4><ul>
+    <li>浴室吹頭髮：手要擦乾、遠離浴缸與洗手台，浴室插座應有漏電斷路器保護。</li>
+    <li>拔插頭要握住插頭本體，不要拉電線；電線被家具壓住或被寵物咬破要立即更換。</li>
+    <li>颱風淹水後，電器與插座泡過水，務必請合格電工檢查後再通電。</li>
+  </ul></div>
+</section>
+</main>
+
+<footer>
+  <div class="disc">⚠️ 內容為科普教學，實際電工作業請交由合格電工</div>
+  <p style="margin:6px 0">緊急狀況請撥 119　·　電路問題請聯絡台電或合格電器承裝業</p>
+  <p style="margin:0;color:var(--dim);font-size:12.5px">電的旅程 · 互動式電學科普 · 圖表與數值為教學示意，人體反應閾值參考 IEC 60479 等常見資料之概略值</p>
+</footer>
+
+<div id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-box"><button class="modal-x" id="modalX" aria-label="關閉">×</button><div id="modalBody"></div></div></div>
+<script>
+(function(){
+'use strict';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x)), lerp=(a,b,t)=>a+(b-a)*t, TAU=Math.PI*2;
+const BLUE='#3cc8ff', AMBER='#ffb53c', RED='#ff4d5e', PINK='#ff5fa2', GREEN='#3ee08f';
+const fmt=(x,d)=>Number(x).toFixed(d);
+const fmtN=x=>Math.round(x).toLocaleString('en-US');
+
+/* ---------- range fill ---------- */
+function fillRange(r){const p=(r.value-r.min)/(r.max-r.min)*100;r.style.setProperty('--p',p+'%');}
+$$('input[type=range]').forEach(r=>{fillRange(r);r.addEventListener('input',()=>fillRange(r));});
+
+/* ---------- canvas registry ---------- */
+const canv=new Map();
+function resizeOne(o){const r=o.cv.getBoundingClientRect();const d=Math.min(window.devicePixelRatio||1,2);
+  const w=Math.max(1,Math.round(r.width)),h=Math.max(1,Math.round(r.height));
+  if(w!==o.w||h!==o.h||d!==o.d){o.w=w;o.h=h;o.d=d;o.cv.width=Math.round(w*d);o.cv.height=Math.round(h*d);if(o.onResize)o.onResize();}}
+const ro=('ResizeObserver' in window)?new ResizeObserver(es=>es.forEach(e=>{const o=canv.get(e.target);if(o)resizeOne(o);})):null;
+function regCanvas(cv,onResize){const o={cv,ctx:cv.getContext('2d'),w:0,h:0,d:1};canv.set(cv,o);resizeOne(o);o.onResize=onResize;if(onResize)queueMicrotask(onResize);if(ro)ro.observe(cv);return o;}
+window.addEventListener('resize',()=>canv.forEach(resizeOne));
+function begin(o){const c=o.ctx;c.setTransform(o.d,0,0,o.d,0,0);c.globalCompositeOperation='source-over';c.globalAlpha=1;c.clearRect(0,0,o.w,o.h);return c;}
+
+/* ---------- animation loop (only visible) ---------- */
+const anims=[];
+const visIO=new IntersectionObserver(es=>es.forEach(e=>{anims.forEach(a=>{if(a.el===e.target)a.vis=e.isIntersecting;});}),{rootMargin:'120px'});
+function anim(el,fn){const a={el,fn,vis:false};anims.push(a);visIO.observe(el);return a;}
+let lastT=performance.now(),T=0,modalAnim=null;
+function frame(now){const dt=Math.min(0.05,Math.max(0,(now-lastT)/1000));lastT=now;T+=dt;
+  for(const a of anims){if(a.vis)a.fn(dt,T);}
+  if(modalAnim)modalAnim(dt,T);
+  requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
+
+/* ---------- glow sprites ---------- */
+function hexA(hex,a){const n=parseInt(hex.slice(1),16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';}
+const spriteCache={};
+function sprite(color){if(spriteCache[color])return spriteCache[color];const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d');
+  const gr=g.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.14,hexA(color,1));gr.addColorStop(.4,hexA(color,.32));gr.addColorStop(1,hexA(color,0));
+  g.fillStyle=gr;g.fillRect(0,0,64,64);return spriteCache[color]=c;}
+function glow(c,x,y,r,color,alpha){c.globalAlpha=alpha==null?1:alpha;c.drawImage(sprite(color),x-r,y-r,r*2,r*2);c.globalAlpha=1;}
+function mkPath(pts){let L=0;const seg=[];for(let i=1;i<pts.length;i++){const l=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);seg.push(l);L+=l;}return {pts,seg,L};}
+function at(P,d){if(P.L<=0)return P.pts[0];for(let i=0;i<P.seg.length;i++){if(d<=P.seg[i]){const t=P.seg[i]?d/P.seg[i]:0,a=P.pts[i],b=P.pts[i+1];return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];}d-=P.seg[i];}return P.pts[P.pts.length-1];}
+function flow(c,P,phase,spacing,color,alpha,r){if(P.L<=0)return;let s=((phase%spacing)+spacing)%spacing;for(;s<P.L;s+=spacing){const q=at(P,s);glow(c,q[0],q[1],r,color,alpha);}}
+function stroke(c,pts,color,w){c.beginPath();c.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)c.lineTo(pts[i][0],pts[i][1]);c.strokeStyle=color;c.lineWidth=w;c.lineJoin='round';c.lineCap='round';c.stroke();}
+function rrect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function drawBulb(c,x,y,b,r){r=r||17;
+  if(b>0.01){c.globalCompositeOperation='lighter';const R=r+70*b;const g=c.createRadialGradient(x,y,0,x,y,R);g.addColorStop(0,'rgba(255,230,160,'+(0.9*b)+')');g.addColorStop(.3,'rgba(255,181,60,'+(0.45*b)+')');g.addColorStop(1,'rgba(255,140,0,0)');c.fillStyle=g;c.beginPath();c.arc(x,y,R,0,TAU);c.fill();c.globalCompositeOperation='source-over';}
+  c.beginPath();c.arc(x,y,r,0,TAU);c.fillStyle='rgba('+Math.round(lerp(20,255,b))+','+Math.round(lerp(30,226,b))+','+Math.round(lerp(50,160,b))+','+(0.25+0.6*b)+')';c.fill();
+  c.lineWidth=2;c.strokeStyle=b>0.05?'#ffe2a8':'#5d708d';c.stroke();
+  c.beginPath();c.moveTo(x-r*.5,y+r*.25);for(let i=0;i<=6;i++){c.lineTo(x-r*.5+i*r/6,y+(i%2?-r*.25:r*.1));}c.strokeStyle=b>0.05?'#fff6dc':'#7d8da6';c.lineWidth=1.6;c.stroke();}
+function drawBattery(c,x,y,vertical,label){c.save();c.translate(x,y);if(!vertical)c.rotate(-Math.PI/2);
+  c.fillStyle='#0a1222';c.fillRect(-20,-16,40,32);
+  c.strokeStyle=AMBER;c.lineWidth=3;c.beginPath();c.moveTo(-16,-8);c.lineTo(16,-8);c.stroke();
+  c.lineWidth=5;c.beginPath();c.moveTo(-8,6);c.lineTo(8,6);c.stroke();
+  c.fillStyle=AMBER;c.font='bold 13px sans-serif';c.textAlign='left';c.fillText('+',20,-6);c.fillText('−',14,14);c.restore();
+  if(label){c.fillStyle='#ffd27a';c.font='bold 13px ui-monospace,monospace';c.textAlign='right';c.fillText(label,x-26,y+5);}}
+function drawZig(c,x1,y1,x2,y2,color){const L=Math.hypot(x2-x1,y2-y1),ang=Math.atan2(y2-y1,x2-x1);c.save();c.translate(x1,y1);c.rotate(ang);
+  c.fillStyle='#0a1222';c.fillRect(-2,-12,L+4,24);c.beginPath();c.moveTo(0,0);const n=6;for(let i=0;i<n;i++){c.lineTo((i+.5)*L/n,i%2?9:-9);}c.lineTo(L,0);c.strokeStyle=color;c.lineWidth=2.5;c.lineJoin='round';c.stroke();c.restore();}
+
+/* ---------- nav / reveal / progress ---------- */
+const nav=$('#nav'),menuBtn=$('#menuBtn');
+menuBtn.addEventListener('click',()=>{const o=nav.classList.toggle('open');menuBtn.setAttribute('aria-expanded',o);});
+$$('#nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');}));
+const navLinks=$$('#nav li a');
+const secIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));
+  $('#curCh').textContent=id==='hero'?'序章':(e.target.id.replace('ch','第 ')+' 章・'+(e.target.dataset.title||''));}}),{rootMargin:'-45% 0px -50% 0px'});
+$$('#hero, .chapter').forEach(s=>secIO.observe(s));
+const revIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');revIO.unobserve(e.target);}}),{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+$$('.reveal').forEach(el=>revIO.observe(el));
+const progBar=$('#progBar');
+function onScroll(){const h=document.documentElement;const p=h.scrollTop/(h.scrollHeight-h.clientHeight||1);progBar.style.width=(p*100).toFixed(1)+'%';}
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* ---------- quizzes ---------- */
+const QUIZ={
+ 1:{q:'電壓維持不變，把電路的電阻加倍，電流會變成？',o:['變成 2 倍','變成一半','不變','變成 4 倍'],a:1,ok:'正確！I = V ÷ R，R 變 2 倍，I 就變一半。可以在上方模擬器把電阻拉大驗證。',no:'再想想：I = V ÷ R，分母變大，結果會變小。'},
+ 2:{q:'家裡的電燈、冰箱、電視是怎麼連接的？',o:['串聯，大家電流相同','並聯，每台都拿到 110 V','一半串聯、一半並聯','看電器品牌而定'],a:1,ok:'沒錯！並聯讓每台電器都獲得相同的 110 V，而且可以各自開關、互不影響。',no:'如果是串聯，關掉一台其他也會停，電壓也會被分掉。家用電路是並聯。'},
+ 3:{q:'按鈕接到 MCU 輸入腳，卻沒有上拉或下拉電阻，按鈕「沒按」時會怎樣？',o:['穩定讀到 1','穩定讀到 0','腳位浮接，讀值隨雜訊亂跳','MCU 會立刻燒毀'],a:2,ok:'正確！沒有電阻把腳位「拉」到固定電位，輸入腳就像天線一樣容易受雜訊影響，讀值不穩定。',no:'提示：點開電路板上的 R3（上拉電阻），切換「無上拉」看看。'},
+ 4:{q:'額定 15 A 的延長線（110 V），同時插 1200 W 吹風機與 1500 W 電暖器，總電流約多少？',o:['約 5 A，很安全','約 15 A，剛剛好','約 24.5 A，嚴重過載','約 2.7 A'],a:2,ok:'正確！(1200 + 1500) ÷ 110 ≈ 24.5 A，遠超過 15 A；電線發熱約為額定時的 (24.5 ÷ 15)² ≈ 2.7 倍，有起火風險。',no:'用 I = P ÷ V 計算：2700 W ÷ 110 V ≈ 24.5 A。'},
+ 5:{q:'漏電斷路器主要靠偵測什麼來判斷漏電？',o:['電壓是否超過 110 V','火線與中性線的電流是否不相等','開關溫度是否過高','插的電器是否太多'],a:1,ok:'正確！正常時火線送出多少電流，中性線就送回多少；出現差值代表有電流從別的路徑（例如人體）流到地。',no:'過載、溫度是無熔絲開關的工作；漏電斷路器看的是「出去」與「回來」的電流差。'},
+ 6:{q:'下列哪個位置「不應該」貼低週波按摩器的貼片？',o:['肩膀斜方肌','小腿肚','胸前心臟附近','大腿前側'],a:2,ok:'正確！電流不可通過心臟附近，也要避開頭部、眼睛與頸部前側。',no:'肩、腿是常見的使用部位；胸前心臟附近、頭部與頸部前側應避免。'},
+ 7:{q:'電蚊拍有數千伏特，卻通常不致命，主要原因是？',o:['電壓其實是假的','電容儲能小、電流受限且放電極短','人體完全不導電','蚊子會吸收所有的電'],a:1,ok:'正確！E = ½CV²，小電容只儲存零點幾焦耳，升壓電路也無法持續供應大電流。但還是會痛，別碰！',no:'電壓確實很高，關鍵在「能量多少」與「能持續供應多少電流」。'},
+ 8:{q:'看到有人觸電倒在電器旁，第一步該做什麼？',o:['立刻用手把他拉開','先切斷電源（關開關或拔插頭）','潑水幫他降溫','先拍照存證'],a:1,ok:'正確！先斷電、確保自身安全再救人，接著撥 119，必要時進行 CPR 並使用 AED。',no:'直接用手拉，你也會成為電流路徑的一部分；水更會導電。一定要先斷電！'}
+};
+let quizDone=0;
+$$('.quiz').forEach(box=>{const d=QUIZ[box.dataset.quiz];if(!d)return;
+  box.innerHTML='<div class="quiz-tag">隨堂測驗 · 第 '+box.dataset.quiz+' 題</div><div class="quiz-q">'+d.q+'</div><div class="quiz-opts">'+d.o.map((t,i)=>'<button type="button" data-i="'+i+'">'+String.fromCharCode(65+i)+'. '+t+'</button>').join('')+'</div><div class="quiz-fb" role="status" aria-live="polite"></div>';
+  const fb=$('.quiz-fb',box);let solved=false;
+  $$('button',box).forEach(b=>b.addEventListener('click',()=>{if(solved)return;const i=+b.dataset.i;
+    if(i===d.a){solved=true;b.classList.add('right');$$('button',box).forEach(x=>x.disabled=true);fb.className='quiz-fb show ok';fb.innerHTML='✅ '+d.ok;quizDone++;$('#quizCount').textContent=quizDone;}
+    else{b.classList.add('wrong');b.disabled=true;fb.className='quiz-fb show no';fb.innerHTML='❌ '+d.no+'　再選一次看看！';}}));
+});
+
+/* ================= HERO ================= */
+(function(){const cv=$('#heroCv');let traces=[],bg=null;
+  const o=regCanvas(cv,build);
+  function build(){const w=o.w,h=o.h,g=40;traces=[];bg=document.createElement('canvas');bg.width=w*o.d;bg.height=h*o.d;const b=bg.getContext('2d');b.scale(o.d,o.d);
+    const n=Math.round(clamp(w*h/16000,18,90));let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return seed/2147483647;};
+    const dirs=[[1,0],[0,1],[-1,0],[0,-1]];
+    for(let k=0;k<n;k++){let x=Math.round(rnd()*w/g)*g,y=Math.round(rnd()*h/g)*g;const pts=[[x,y]];let d=Math.floor(rnd()*4);const segs=2+Math.floor(rnd()*4);
+      for(let s=0;s<segs;s++){const len=(2+Math.floor(rnd()*6))*g;x+=dirs[d][0]*len;y+=dirs[d][1]*len;pts.push([x,y]);d=(d+(rnd()<.5?1:3))%4;}
+      const P=mkPath(pts);traces.push({P,speed:40+rnd()*110,phase:rnd()*500,amber:rnd()<.18,sp:60+rnd()*60});
+      b.beginPath();b.moveTo(pts[0][0],pts[0][1]);pts.forEach(p=>b.lineTo(p[0],p[1]));b.strokeStyle='rgba(60,200,255,.13)';b.lineWidth=2;b.stroke();
+      [pts[0],pts[pts.length-1]].forEach(p=>{b.beginPath();b.arc(p[0],p[1],4.5,0,TAU);b.fillStyle='#0a1630';b.fill();b.strokeStyle='rgba(60,200,255,.45)';b.lineWidth=1.5;b.stroke();});}
+    for(let k=0;k<4;k++){const cx=Math.round(rnd()*w/g)*g,cy=Math.round(rnd()*h/g)*g;b.fillStyle='rgba(16,26,46,.9)';b.strokeStyle='rgba(60,200,255,.25)';b.lineWidth=1.5;rrect(b,cx-30,cy-22,60,44,5);b.fill();b.stroke();
+      b.fillStyle='rgba(60,200,255,.25)';for(let i=0;i<5;i++){b.fillRect(cx-24+i*12,cy-28,4,6);b.fillRect(cx-24+i*12,cy+22,4,6);}}
+  }
+  anim(cv,(dt,t)=>{const c=begin(o),w=o.w,h=o.h;if(bg)c.drawImage(bg,0,0,w,h);
+    c.globalCompositeOperation='lighter';
+    for(const tr of traces){tr.phase+=tr.speed*dt;flow(c,tr.P,tr.phase,tr.sp,tr.amber?AMBER:BLUE,.85,tr.amber?8:7);}
+    c.globalCompositeOperation='source-over';
+    const mob=w<700;const g=c.createLinearGradient(0,0,w,0);g.addColorStop(0,'rgba(6,10,19,'+(mob?.78:.88)+')');g.addColorStop(mob?1:.62,'rgba(6,10,19,'+(mob?.55:.15)+')');g.addColorStop(1,'rgba(6,10,19,'+(mob?.55:0)+')');c.fillStyle=g;c.fillRect(0,0,w,h);
+    const g2=c.createLinearGradient(0,h*.7,0,h);g2.addColorStop(0,'rgba(6,10,19,0)');g2.addColorStop(1,'rgba(6,10,19,1)');c.fillStyle=g2;c.fillRect(0,h*.7,w,h*.3);
+  });
+})();
+
+/* ================= CH1 OHM ================= */
+(function(){const cv=$('#ohmCv'),o=regCanvas(cv);const sV=$('#ohmV'),sR=$('#ohmR'),sI=$('#ohmI');
+  let V=12,R=60,I=.2,phase=0,wheelA=0,dashO=0;
+  const wWater=$('#wWater'),wLevel=$('#wLevel'),wH=$('#wHeight'),wT=$('#wNarT'),wB=$('#wNarB'),wDash=$('#wDash'),wWheel=$('#wWheel');wDash.style.animation='none';
+  function upd(){V=+sV.value;R=+sR.value;I=V/R;$('#ohmVv').textContent=fmt(V,1)+' V';$('#ohmRv').textContent=R+' Ω';$('#ohmIv').textContent=fmt(I,3)+' A';sI.value=I;fillRange(sI);
+    $('#ohmF').innerHTML='<span class="v">V</span> = <span class="i">I</span> × <span class="r">R</span><br><span class="v">'+fmt(V,1)+' V</span> = <span class="i">'+fmt(I,3)+' A</span> × <span class="r">'+R+' Ω</span>';
+    const hh=6+104*V/24;wWater.setAttribute('y',146-hh);wWater.setAttribute('height',hh);wLevel.setAttribute('y1',146-hh);wLevel.setAttribute('y2',146-hh);wH.setAttribute('y1',146-hh);
+    const th=1+10*(R-10)/390;wT.setAttribute('height',th);wB.setAttribute('y',247-th);wB.setAttribute('height',th);}
+  sV.addEventListener('input',upd);sR.addEventListener('input',upd);upd();
+  const speed=()=>300*I/(I+0.4);
+  anim($('.water-svg'),dt=>{const v=speed();wheelA+=v*dt*1.2;dashO-=v*dt*.5;wWheel.setAttribute('transform','rotate('+(wheelA%360).toFixed(1)+')');wDash.style.strokeDashoffset=dashO.toFixed(1);wDash.style.opacity=V>0?.85:0;});
+  anim(cv,(dt)=>{const c=begin(o),w=o.w,h=o.h;const L=86,Rr=w-50,Tp=44,B=h-40,cy=(Tp+B)/2;
+    const P=mkPath([[L,cy+16],[L,B],[Rr,B],[Rr,Tp],[L,Tp],[L,cy-16]]);
+    stroke(c,P.pts,'#24456e',4);
+    phase+=speed()*dt;
+    c.globalCompositeOperation='lighter';
+    if(V>0)flow(c,P,phase,24,BLUE,.25+.75*V/24,4+5*V/24);
+    c.globalCompositeOperation='source-over';
+    drawBattery(c,L,cy,true,fmt(V,1)+' V');
+    const b=1-Math.exp(-(V*I)/3);drawBulb(c,(L+Rr)/2,Tp,b,18);
+    drawZig(c,Rr,cy-34,Rr,cy+34,PINK);c.fillStyle='#ff9cc8';c.font='bold 13px ui-monospace,monospace';c.textAlign='right';c.fillText(R+' Ω',Rr-16,cy+5);
+    const ax=(L+Rr)/2;c.beginPath();c.arc(ax,B,17,0,TAU);c.fillStyle='#0a1222';c.fill();c.strokeStyle=BLUE;c.lineWidth=2;c.stroke();c.fillStyle=BLUE;c.font='bold 14px sans-serif';c.textAlign='center';c.fillText('A',ax,B+5);
+    c.font='bold 13px ui-monospace,monospace';c.fillText(fmt(I,3)+' A',ax,B+34>h?B-24:B+32);
+    c.fillStyle='#93a6c2';c.font='12px sans-serif';c.textAlign='center';c.fillText('燈泡功率 P = '+fmt(V*I,1)+' W',(L+Rr)/2,Tp-26<12?14:Tp-26);
+    c.textAlign='left';c.fillStyle='#5d708d';c.fillText('● 電子',L+10,B-10);
+  });
+})();
+
+/* ================= CH2 SERIES/PARALLEL ================= */
+(function(){const cv=$('#spCv'),o=regCanvas(cv);let mode='s',n=3;const ph=[];
+  const sub=['₁','₂','₃'];
+  function vals(){const V=+$('#spV').value,R=[+$('#spR1').value,+$('#spR2').value,+$('#spR3').value].slice(0,n);let Rt,I,Vi,Ii;
+    if(mode==='s'){Rt=R.reduce((a,b)=>a+b,0);I=V/Rt;Ii=R.map(()=>I);Vi=R.map(r=>I*r);}else{Rt=1/R.reduce((a,b)=>a+1/b,0);Ii=R.map(r=>V/r);Vi=R.map(()=>V);I=V/Rt;}
+    return {V,R,Rt,I,Vi,Ii,Pi:R.map((r,k)=>Vi[k]*Ii[k])};}
+  function seg(id,cb){$$('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{$$('#'+id+' button').forEach(x=>x.classList.toggle('on',x===b));cb(b.dataset.v);upd();}));}
+  seg('spMode',v=>mode=v);seg('spN',v=>n=+v);
+  ['spV','spR1','spR2','spR3'].forEach(id=>$('#'+id).addEventListener('input',upd));
+  function upd(){const s=vals();$('#spVv').textContent=s.V+' V';[1,2,3].forEach(k=>$('#spR'+k+'v').textContent=$('#spR'+k).value+' Ω');$('#spR3c').style.display=n===3?'':'none';
+    const names=s.R.map((r,k)=>'R'+sub[k]);
+    $('#spF').innerHTML=mode==='s'?'R<sub>總</sub> = '+names.join(' + ')+' = <span class="r">'+fmt(s.Rt,1)+' Ω</span><br>I = V ÷ R<sub>總</sub> = <span class="i">'+fmt(s.I,3)+' A</span>（處處相同）'
+      :'1/R<sub>總</sub> = '+names.map(x=>'1/'+x).join(' + ')+'<br>R<sub>總</sub> = <span class="r">'+fmt(s.Rt,1)+' Ω</span>，I<sub>總</sub> = <span class="i">'+fmt(s.I,3)+' A</span>';
+    let t='<tr><th>元件</th><th>電阻</th><th>電壓</th><th>電流</th><th>功率</th></tr>';
+    s.R.forEach((r,k)=>{t+='<tr><td>燈泡 '+(k+1)+'</td><td>'+r+' Ω</td><td class="hl-a">'+fmt(s.Vi[k],2)+' V</td><td class="hl-b">'+fmt(s.Ii[k],3)+' A</td><td>'+fmt(s.Pi[k],2)+' W</td></tr>';});
+    t+='<tr><td><b>總計</b></td><td>'+fmt(s.Rt,1)+' Ω</td><td class="hl-a">'+s.V+' V</td><td class="hl-b">'+fmt(s.I,3)+' A</td><td>'+fmt(s.V*s.I,2)+' W</td></tr>';$('#spT').innerHTML=t;
+    $('#spNote').innerHTML=mode==='s'?'串聯：各燈泡電壓相加 = 電源電壓（'+s.Vi.map(v=>fmt(v,2)).join(' + ')+' = '+s.V+' V）。電阻大的燈泡分到較多電壓，功率 P = I²R 也較大，所以<b>較亮</b>。'
+      :'並聯：各支路電流相加 = 總電流（'+s.Ii.map(v=>fmt(v,3)).join(' + ')+' = '+fmt(s.I,3)+' A）。電阻小的燈泡電流大，P = V²/R 較大，所以<b>較亮</b>；總電阻比任何一顆都小。';}
+  upd();
+  const spd=I=>Math.min(650,240*I);
+  anim(cv,dt=>{const c=begin(o),w=o.w,h=o.h,s=vals();const L=60,Rr=w-40,Tp=62,B=h-50,cy=(Tp+B)/2;const mob=w<520;
+    const segs=[];
+    if(mode==='s'){segs.push({pts:[[L,cy+16],[L,B],[Rr,B],[Rr,Tp],[L,Tp],[L,cy-16]],I:s.I});}
+    else{const xs=s.R.map((_,k)=>L+(Rr-L)*(k+1)/n);let rem=s.I,px=L;
+      segs.push({pts:[[L,cy+16],[L,B]],I:s.I});
+      xs.forEach((x,k)=>{segs.push({pts:[[px,B],[x,B]],I:rem});segs.push({pts:[[x,B],[x,Tp]],I:s.Ii[k]});rem-=s.Ii[k];px=x;});
+      rem=s.Ii[n-1];for(let k=n-1;k>=0;k--){const x0=k>0?xs[k-1]:L;segs.push({pts:[[xs[k],Tp],[x0,Tp]],I:rem});if(k>0)rem+=s.Ii[k-1];}
+      segs.push({pts:[[L,Tp],[L,cy-16]],I:s.I});}
+    segs.forEach(g=>stroke(c,g.pts,'#24456e',4));
+    c.globalCompositeOperation='lighter';
+    segs.forEach((g,i)=>{if(!g.P||g.key!==JSON.stringify(g.pts))g.P=mkPath(g.pts);ph[i]=(ph[i]||0)+spd(g.I)*dt;flow(c,g.P,ph[i],22,BLUE,.3+.7*s.V/24,4+4*s.V/24);});
+    c.globalCompositeOperation='source-over';
+    drawBattery(c,L,cy,true,s.V+' V');
+    s.R.forEach((r,k)=>{let x,y;if(mode==='s'){x=L+(Rr-L)*(k+1)/(n+1);y=Tp;}else{x=L+(Rr-L)*(k+1)/n;y=cy;}
+      const b=1-Math.exp(-s.Pi[k]/0.9);drawBulb(c,x,y,b,16);
+      c.font='bold 12.5px ui-monospace,monospace';let ly,lx;
+      if(mode==='s'){c.textAlign='center';ly=y+40+((Rr-L)/(n+1)<85?(k%2)*52:0);lx=x;}else if((Rr-L)/n>=110){c.textAlign='right';ly=y-12;lx=x-24;}else{c.textAlign='center';ly=y+38;lx=x;c.fillStyle='rgba(8,14,26,.88)';rrect(c,x-30,ly-14,60,52,6);c.fill();}
+      c.fillStyle='#ff9cc8';c.fillText('R'+sub[k]+' '+r+'Ω',lx,ly);
+      c.fillStyle='#ffd27a';c.fillText(fmt(s.Vi[k],1)+'V',lx,ly+16);c.fillStyle='#7fd8ff';c.fillText(fmt(s.Ii[k],2)+'A',lx,ly+32);});
+    c.fillStyle='#93a6c2';c.font='12.5px sans-serif';c.textAlign='left';c.fillText(mode==='s'?(mob?'串聯：電流處處相同':'串聯：只有一條路，電流處處相同'):(mob?'並聯：電流分流':'並聯：電流在分岔點分流'),14,24);
+    c.textAlign='right';c.fillStyle='#7fd8ff';c.font='bold 12.5px ui-monospace,monospace';c.fillText('I總 = '+fmt(s.I,3)+' A',w-14,24);
+  });
+})();
+
+/* ================= CH3 PCB ================= */
+const modal=$('#modal'),modalBody=$('#modalBody');let lastFocus=null;
+function openModal(html,init){lastFocus=document.activeElement;modalBody.innerHTML=html;modal.classList.add('open');document.body.style.overflow='hidden';modalAnim=null;if(init)init();$('#modalX').focus();
+  $$('#modal input[type=range]').forEach(r=>{fillRange(r);r.addEventListener('input',()=>fillRange(r));});}
+function closeModal(){modal.classList.remove('open');document.body.style.overflow='';modalAnim=null;if(lastFocus)lastFocus.focus();}
+$('#modalX').addEventListener('click',closeModal);
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
+function segBind(root,id,cb){$$('#'+id+' button',root).forEach(b=>b.addEventListener('click',()=>{$$('#'+id+' button',root).forEach(x=>x.classList.toggle('on',x===b));cb(b.dataset.v);}));}
+function modalCanvas(id){const cv=$('#'+id);const o={cv,ctx:cv.getContext('2d'),w:0,h:0,d:1};resizeOne(o);return o;}
+function ctl(id,label,min,max,step,val,cls){return '<div class="ctrl"><div class="ctrl-row"><span>'+label+'</span><span class="val" id="'+id+'v"></span></div><input type="range" id="'+id+'" '+(cls?'class="'+cls+'" ':'')+'min="'+min+'" max="'+max+'" step="'+step+'" value="'+val+'"></div>';}
+const E12=[1.0,1.2,1.5,1.8,2.2,2.7,3.3,3.9,4.7,5.6,6.8,8.2];
+function nextE12(r){if(r<=0)return 0;const d=Math.pow(10,Math.floor(Math.log10(r)));for(let k=0;k<3;k++){const dd=d*Math.pow(10,k);for(const e of E12){if(e*dd>=r-1e-9)return e*dd;}}return r;}
+function ohmStr(r){if(r>=1e6)return +(r/1e6).toFixed(2)+' MΩ';if(r>=1e3)return +(r/1e3).toFixed(2)+' kΩ';return +r.toFixed(2)+' Ω';}
+
+const RES=[
+ {id:'R1',x:230,y:110,rot:0,t:'led',name:'LED 限流'},
+ {id:'R2',x:560,y:160,rot:90,t:'div',name:'分壓（感測器）'},
+ {id:'R3',x:250,y:290,rot:0,t:'pull',name:'上拉／下拉'},
+ {id:'R4',x:560,y:320,rot:0,t:'rc',name:'RC 延遲／濾波'},
+ {id:'R5',x:680,y:180,rot:0,t:'term',name:'終端匹配'},
+ {id:'R6',x:580,y:380,rot:0,t:'shunt',name:'電流偵測（分流）'}];
+(function(){const g=$('#pcbRes');let h='';
+  RES.forEach(r=>{const big=r.t==='shunt';const w=big?44:36,hh=big?20:16;
+    h+='<g class="rhot" tabindex="0" role="button" aria-label="'+r.id+' '+r.name+'，點擊查看說明" data-t="'+r.t+'" transform="translate('+r.x+' '+r.y+') rotate('+r.rot+')">'+
+      '<circle class="ring" r="24" fill="none" stroke="#ffb53c" stroke-width="2"/>'+
+      '<g class="rbody"><rect x="'+(-w/2-4)+'" y="'+(-hh/2)+'" width="8" height="'+hh+'" fill="#d8d8d8"/><rect x="'+(w/2-4)+'" y="'+(-hh/2)+'" width="8" height="'+hh+'" fill="#d8d8d8"/>'+
+      '<rect x="'+(-w/2+3)+'" y="'+(-hh/2)+'" width="'+(w-6)+'" height="'+hh+'" fill="#161616"/>'+
+      '<text x="0" y="4" text-anchor="middle" fill="#f2f2f2" font-family="monospace" font-size="10" font-weight="700" '+(r.rot?'transform="rotate(-90)"':'')+'>'+(big?'R010':r.id)+'</text></g>'+
+      '<rect x="-26" y="-26" width="52" height="52" fill="transparent"/></g>'+
+      (big?'<text x="'+(r.x+30)+'" y="'+(r.y+5)+'" fill="#ffd27a" font-size="12" font-weight="700" pointer-events="none">R6</text>':'');});
+  g.innerHTML=h;
+  $('#pcbLegend').innerHTML=RES.map(r=>'<button type="button" data-t="'+r.t+'"><b>'+r.id+'</b>'+r.name+'</button>').join('');
+  $$('#pcb .rhot, #pcbLegend button').forEach(el=>{el.addEventListener('click',()=>openRes(el.dataset.t));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openRes(el.dataset.t);}});});
+  const glowEl=$('#pcbLedGlow');anim($('#pcb'),(dt,t)=>{glowEl.setAttribute('opacity',(0.65+0.35*Math.sin(t*2.2)).toFixed(2));});
+})();
+
+function openRes(t){const W=WIDGET[t];if(W)openModal(W.html,W.init);}
+const WIDGET={
+ led:{html:'<h3><span class="badge">R1</span>LED 限流電阻</h3><p>LED 是二極體，一旦超過「順向電壓 V<sub>f</sub>」電流就會急遽上升，直接接電源會瞬間燒毀。串一顆電阻，讓多出來的電壓落在電阻上，就能把電流限制在安全值（一般指示燈約 2～20 mA）。</p>'+
+   '<div class="grid2"><div><div class="ctrl"><div class="ctrl-row"><span>電源電壓 V<sub>s</sub></span></div><div class="seg" id="ledVs"><button data-v="3.3">3.3 V</button><button class="on" data-v="5">5 V</button><button data-v="12">12 V</button></div></div>'+
+   '<div class="ctrl"><div class="ctrl-row"><span>LED 顏色（V<sub>f</sub>）</span></div><div class="seg" id="ledC"><button class="on" data-v="2.0" data-c="#ff3b3b">紅 2.0V</button><button data-v="2.2" data-c="#3ee05f">綠 2.2V</button><button data-v="3.0" data-c="#3c8bff">藍 3.0V</button><button data-v="3.1" data-c="#f4f7ff">白 3.1V</button></div></div>'+
+   ctl('ledI','目標電流 I',1,20,1,10,'amber')+'</div><div style="text-align:center"><svg viewBox="0 0 120 120" style="width:130px;height:130px"><defs><radialGradient id="lg2"><stop offset="0" id="lgs0" stop-color="#ff3b3b" stop-opacity="1"/><stop offset="1" id="lgs1" stop-color="#ff3b3b" stop-opacity="0"/></radialGradient></defs><circle id="ledHalo" cx="60" cy="52" r="56" fill="url(#lg2)"/><path id="ledDome" d="M40 70 V45 a20 20 0 0 1 40 0 V70 Z" fill="#ff3b3b" stroke="#fff" stroke-opacity=".4"/><rect x="34" y="70" width="52" height="8" rx="2" fill="#bbb"/><rect x="46" y="78" width="4" height="34" fill="#aaa"/><rect x="70" y="78" width="4" height="28" fill="#aaa"/></svg></div></div>'+
+   '<div class="formula" id="ledF"></div><p class="note mt-s" id="ledN"></p>',
+   init(){let Vs=5,Vf=2.0,col='#ff3b3b';const r=$('#ledI');
+    function u(){const I=+r.value/1000;$('#ledIv').textContent=r.value+' mA';
+      if(Vs<=Vf){$('#ledF').innerHTML='V<sub>s</sub> ≤ V<sub>f</sub>：電壓不夠，LED 不會亮';$('#ledN').textContent='電源電壓必須高於 LED 的順向電壓，例如藍光／白光 LED 用 3.3 V 驅動時餘裕很小。';$('#ledHalo').setAttribute('opacity',0);$('#ledDome').setAttribute('fill-opacity',.35);return;}
+      const R=(Vs-Vf)/I,Rs=nextE12(R),Ia=(Vs-Vf)/Rs,P=Ia*Ia*Rs;
+      $('#ledF').innerHTML='R = (<span class="v">V<sub>s</sub></span> − <span class="v">V<sub>f</sub></span>) ÷ <span class="i">I</span> = ('+Vs+' − '+Vf.toFixed(1)+') ÷ '+I.toFixed(3)+' = <span class="r">'+ohmStr(R)+'</span>';
+      $('#ledN').innerHTML='選用標準值（E12，取較大者較安全）：<b class="hl-a">'+ohmStr(Rs)+'</b> → 實際電流約 '+(Ia*1000).toFixed(1)+' mA；電阻功耗 P = I²R ≈ '+(P*1000).toFixed(1)+' mW'+(P>0.1?'，<b class="hl-r">超過 1/8 W，請選 1/4 W 以上的電阻</b>':'，一般 1/8 W 電阻即可')+'。';
+      const b=Ia*1000/20;$('#ledHalo').setAttribute('opacity',(0.15+0.85*b).toFixed(2));$('#ledDome').setAttribute('fill-opacity',(0.5+0.5*b).toFixed(2));}
+    segBind(modalBody,'ledVs',v=>{Vs=+v;u();});
+    $$('#ledC button').forEach(b=>b.addEventListener('click',()=>{$$('#ledC button').forEach(x=>x.classList.toggle('on',x===b));Vf=+b.dataset.v;col=b.dataset.c;$('#ledDome').setAttribute('fill',col);$('#lgs0').setAttribute('stop-color',col);$('#lgs1').setAttribute('stop-color',col);u();}));
+    r.addEventListener('input',u);u();}},
+ div:{html:'<h3><span class="badge">R2</span>分壓電路：讓晶片「讀懂」感測器</h3><p>微控制器只能量「電壓」。把固定電阻 R<sub>1</sub> 和會隨環境變化的感測電阻（這裡是 NTC 熱敏電阻，溫度越高電阻越小）串聯，中點電壓就會隨溫度改變，再交給 ADC（類比數位轉換器）轉成數字。</p>'+
+   '<div class="formula" style="font-size:17px">V<sub>out</sub> = V<sub>in</sub> × R<sub>NTC</sub> ÷ (R<sub>1</sub> + R<sub>NTC</sub>)</div>'+ctl('dvT','環境溫度',0,80,1,25,'amber')+
+   '<div class="readouts"><div class="ro"><small>R<sub>NTC</sub>（R₁ = 10 kΩ）</small><span id="dvR" style="color:var(--pink)"></span></div><div class="ro"><small>V<sub>out</sub>（V<sub>in</sub> = 3.3 V）</small><span id="dvV" class="hl-a"></span></div><div class="ro"><small>10-bit ADC 讀值</small><span id="dvA" class="hl-b"></span></div></div>'+
+   '<div class="meter" style="height:12px"><i id="dvBar" style="background:linear-gradient(90deg,#1e8fff,#3cc8ff)"></i></div><p class="note">0 ～ 1023 對應 0 ～ 3.3 V。程式再用查表或公式把 ADC 值換回溫度。NTC 參數：25 °C 時 10 kΩ，B 值 3950。</p>',
+   init(){const r=$('#dvT');function u(){const tc=+r.value,Tk=tc+273.15,Rn=10000*Math.exp(3950*(1/Tk-1/298.15)),V=3.3*Rn/(10000+Rn),A=Math.round(V/3.3*1023);
+     $('#dvTv').textContent=tc+' °C';$('#dvR').textContent=ohmStr(Rn);$('#dvV').textContent=V.toFixed(3)+' V';$('#dvA').textContent=A;$('#dvBar').style.width=(A/1023*100)+'%';}
+     r.addEventListener('input',u);u();}},
+ pull:{html:'<h3><span class="badge">R3</span>上拉／下拉電阻：讓訊號不再「飄」</h3><p>按鈕一端接地、一端接 MCU 輸入腳。按下時腳位 = 0 V；但<b>放開時腳位什麼都沒接</b>（浮接），會像天線一樣撿到雜訊，讀值亂跳。加一顆約 10 kΩ 的上拉電阻接到 3.3 V，放開時就穩定為高電位「1」；按下時電流經電阻流入地，腳位為「0」。下拉電阻則相反。</p>'+
+   '<div class="btns" style="align-items:center;justify-content:space-between"><div class="seg" id="puMode"><button class="on" data-v="none">無上拉電阻</button><button data-v="up">有 10 kΩ 上拉</button></div><button class="btn amber" id="puBtn" style="touch-action:none;user-select:none">按住按鈕</button></div>'+
+   '<canvas id="puCv" class="cv mt-s" style="height:150px"></canvas><div class="readouts mt-s"><div class="ro"><small>腳位電壓</small><span id="puV" class="hl-a"></span></div><div class="ro"><small>MCU 讀到</small><span id="puL"></span></div><div class="ro"><small>「沒按卻誤判按下」</small><span id="puE" class="hl-r">0 次</span></div></div>',
+   init(){const o=modalCanvas('puCv');let mode='none',pressed=false,v=1.6,buf=[],errs=0,lastLogic=1,drift=0;
+     segBind(modalBody,'puMode',m=>{mode=m;errs=0;});
+     const b=$('#puBtn');const dn=e=>{e.preventDefault();pressed=true;b.textContent='按下中…';};const up=()=>{pressed=false;b.textContent='按住按鈕';};
+     b.addEventListener('pointerdown',dn);b.addEventListener('pointerup',up);b.addEventListener('pointerleave',up);b.addEventListener('pointercancel',up);
+     b.addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();pressed=true;}});b.addEventListener('keyup',up);
+     let acc=0;
+     modalAnim=(dt,t)=>{resizeOne(o);acc+=dt;while(acc>1/60){acc-=1/60;
+         if(pressed)v=0.02*Math.random();else if(mode==='up')v=3.3-0.03*Math.random();else{drift+=(Math.random()-.5)*0.35;drift*=0.97;v=clamp(1.65+1.3*Math.sin(t*7.3)*Math.sin(t*1.7)+drift+(Math.random()-.5)*0.9,0,3.3);}
+         buf.push(v);if(buf.length>240)buf.shift();
+         const lg=v>2.0?1:(v<0.8?0:-1);if(!pressed&&lg===0&&lastLogic===1)errs++;if(lg!==-1)lastLogic=lg;}
+       const c=begin(o),w=o.w,h=o.h,y=V=>h-14-(V/3.3)*(h-32);
+       c.strokeStyle='rgba(255,255,255,.08)';c.setLineDash([4,4]);c.lineWidth=1;[0.8,2.0].forEach(q=>{c.beginPath();c.moveTo(0,y(q));c.lineTo(w,y(q));c.stroke();});c.setLineDash([]);
+       c.fillStyle='rgba(62,224,143,.06)';c.fillRect(0,y(3.3),w,y(2.0)-y(3.3));c.fillStyle='rgba(255,77,94,.05)';c.fillRect(0,y(2.0),w,y(0.8)-y(2.0));
+       c.fillStyle='#5d708d';c.font='11px sans-serif';c.textAlign='left';c.fillText('高電位「1」區',6,y(3.0));c.fillText('不確定區',6,y(1.3));c.fillText('低電位「0」區',6,y(0.25));
+       c.beginPath();buf.forEach((q,i)=>{const x=w-(buf.length-1-i)*(w/239);i?c.lineTo(x,y(q)):c.moveTo(x,y(q));});c.strokeStyle=AMBER;c.lineWidth=2;c.shadowColor=AMBER;c.shadowBlur=8;c.stroke();c.shadowBlur=0;
+       $('#puV').textContent=v.toFixed(2)+' V';const lg=v>2.0?'1':(v<0.8?'0':'？');const el=$('#puL');el.textContent=lg;el.style.color=lg==='？'?RED:(lg==='1'?GREEN:BLUE);$('#puE').textContent=errs+' 次';};}},
+ rc:{html:'<h3><span class="badge">R4</span>RC 電路：延遲與濾波</h3><p>電阻限制流進電容的電流，所以電容電壓不是瞬間到達，而是沿著曲線慢慢上升：V<sub>C</sub> = V × (1 − e<sup>−t/RC</sup>)。時間常數 <b>τ = R × C</b>：經過 1τ 充到約 63%，5τ 幾乎充滿。用途包括上電重置延遲、按鍵去彈跳，以及濾掉高頻雜訊的低通濾波器。</p>'+
+   '<div class="grid2"><div>'+ctl('rcR','電阻 R',1,20,1,10)+'</div><div>'+ctl('rcC','電容 C',10,220,10,100,'amber')+'</div></div>'+
+   '<canvas id="rcPlot" class="cv" style="height:200px"></canvas><div class="btns mt-s" style="align-items:center;justify-content:space-between"><button class="btn" id="rcGo">⟲ 重新充電</button><span class="note" id="rcInfo"></span></div>',
+   init(){const o=modalCanvas('rcPlot');let el=0;const D=2.6;
+     const tau=()=>(+$('#rcR').value*1000)*(+$('#rcC').value*1e-6);
+     const ts=t=>t<1?(t*1000).toFixed(0)+' ms':t.toFixed(2)+' s';
+     function u(){$('#rcRv').textContent=$('#rcR').value+' kΩ';$('#rcCv').textContent=$('#rcC').value+' μF';
+       const tt=tau();$('#rcInfo').innerHTML='τ = RC = <b class="hl-a">'+ts(tt)+'</b>　截止頻率 f<sub>c</sub> = 1/(2πRC) ≈ '+(1/(TAU*tt)).toFixed(2)+' Hz';el=0;}
+     ['rcR','rcC'].forEach(id=>$('#'+id).addEventListener('input',u));
+     $('#rcGo').addEventListener('click',()=>{el=0;});u();
+     modalAnim=dt=>{resizeOne(o);el=Math.min(el+dt,D+1.2);const tt=tau(),span=5*tt,c=begin(o),w=o.w,h=o.h,x0=40,x1=w-14,y0=h-28,y1=16;
+       const X=t=>x0+(t/span)*(x1-x0),Y=v=>y0-(v/5)*(y0-y1);
+       c.strokeStyle='#24456e';c.lineWidth=1;c.beginPath();c.moveTo(x0,y1);c.lineTo(x0,y0);c.lineTo(x1,y0);c.stroke();
+       c.fillStyle='#5d708d';c.font='11px ui-monospace,monospace';c.textAlign='center';
+       for(let k=1;k<=5;k++){const x=X(k*tt);c.strokeStyle='rgba(255,255,255,.06)';c.beginPath();c.moveTo(x,y1);c.lineTo(x,y0);c.stroke();c.fillText(k+'τ',x,y0+16);}
+       c.textAlign='right';c.fillText('5V',x0-6,Y(5)+4);c.fillText('0',x0-6,y0+4);
+       c.setLineDash([4,4]);c.strokeStyle='rgba(255,181,60,.5)';c.beginPath();c.moveTo(x0,Y(5*0.632));c.lineTo(X(tt),Y(5*0.632));c.lineTo(X(tt),y0);c.stroke();c.setLineDash([]);
+       c.fillStyle=AMBER;c.textAlign='left';c.fillText('63.2%',X(tt)+4,Y(5*0.632)-6);
+       const tn=Math.min(el/D,1)*span;c.beginPath();for(let i=0;i<=200;i++){const t=tn*i/200,v=5*(1-Math.exp(-t/tt));i?c.lineTo(X(t),Y(v)):c.moveTo(X(t),Y(v));}
+       c.strokeStyle=BLUE;c.lineWidth=2.5;c.shadowColor=BLUE;c.shadowBlur=10;c.stroke();c.shadowBlur=0;
+       const vn=5*(1-Math.exp(-tn/tt));c.globalCompositeOperation='lighter';glow(c,X(tn),Y(vn),12,BLUE,1);c.globalCompositeOperation='source-over';
+       c.fillStyle='#e6eefb';c.textAlign='right';c.font='bold 12px ui-monospace,monospace';c.fillText('Vc = '+vn.toFixed(2)+' V　t = '+ts(tn),x1,y1+12);};}},
+ term:{html:'<h3><span class="badge">R5</span>終端匹配電阻：消除訊號反射</h3><p>高速訊號（USB、HDMI、乙太網路、CAN 匯流排等）在導線上傳遞就像波浪。若線路末端的阻抗和導線的「特性阻抗」Z<sub>0</sub> 不一致，訊號會被反射回來，與後續訊號疊加造成<b>過衝與振鈴</b>，讓接收端誤判。在末端放一顆等於 Z<sub>0</sub> 的電阻（例如 50 Ω、CAN 匯流排兩端各 120 Ω），能量就被完整吸收。</p>'+
+   '<div class="seg" id="tmMode"><button class="on" data-v="0">無終端電阻</button><button data-v="1">加上 50 Ω 終端</button></div>'+
+   '<canvas id="tmCv" class="cv mt-s" style="height:230px"></canvas><p class="note mt-s">反射係數 Γ = (Z<sub>L</sub> − Z<sub>0</sub>) ÷ (Z<sub>L</sub> + Z<sub>0</sub>)：末端開路 Γ = +1（全反射），匹配時 Γ = 0（無反射）。</p>',
+   init(){const o=modalCanvas('tmCv');let term=false,tt=0;segBind(modalBody,'tmMode',v=>{term=v==='1';tt=0;});
+     modalAnim=dt=>{resizeOne(o);tt=(tt+dt)%3.2;const c=begin(o),w=o.w,h=o.h,x0=70,x1=w-70,ly=62,len=x1-x0;
+       const tp=tt/1.3;const inc=tp*len;const g=(x,p,a)=>a*Math.exp(-Math.pow((x-p)/16,2));
+       c.fillStyle='#132038';c.strokeStyle='#3b5577';rrect(c,10,ly-22,52,44,6);c.fill();c.stroke();rrect(c,x1+8,ly-22,52,44,6);c.fill();c.stroke();
+       c.fillStyle='#93a6c2';c.font='11px sans-serif';c.textAlign='center';c.fillText('發送端',36,ly+4);c.fillText('接收端',x1+34,ly+4);
+       c.fillText('傳輸線 Z₀ = 50 Ω',(x0+x1)/2,ly+40);
+       if(term){drawZig(c,x1-2,ly+12,x1-2,ly+46,AMBER);c.fillStyle=AMBER;c.fillText('50 Ω',x1-30,ly+36);}
+       c.beginPath();for(let x=x0;x<=x1;x+=2){let a=0;if(inc<=len+40)a+=g(x,inc,26);if(!term&&inc>len){const rp=len-(inc-len);a+=g(x,x0+rp,24);}
+         if(!term&&inc>len&&inc<len+60)a+=g(x,x1,26*(1-(inc-len)/60));const y=ly-a;x===x0?c.moveTo(x,y):c.lineTo(x,y);}
+       c.strokeStyle=BLUE;c.lineWidth=2.5;c.shadowColor=BLUE;c.shadowBlur=10;c.stroke();c.shadowBlur=0;
+       if(term&&inc>len-10&&inc<len+60){c.globalCompositeOperation='lighter';glow(c,x1-2,ly+28,26,AMBER,1-Math.abs(inc-len-20)/60);c.globalCompositeOperation='source-over';}
+       if(!term&&inc>len+10&&inc<2*len){c.fillStyle=RED;c.textAlign='center';c.font='bold 12px sans-serif';c.fillText('← 反射波',x0+(len-(inc-len))+10,ly-34);}
+       const py0=h-14,py1=ly+62,px0=40,px1=w-20;c.strokeStyle='#24456e';c.lineWidth=1;c.beginPath();c.moveTo(px0,py1);c.lineTo(px0,py0);c.lineTo(px1,py0);c.stroke();
+       c.fillStyle='#93a6c2';c.textAlign='left';c.font='11px sans-serif';c.fillText('接收端看到的波形',px0+6,py1+10);
+       const Yv=v=>py0-v*(py0-py1)*0.55;c.setLineDash([3,4]);c.strokeStyle='rgba(255,255,255,.18)';c.beginPath();c.moveTo(px0,Yv(1));c.lineTo(px1,Yv(1));c.stroke();c.setLineDash([]);
+       c.beginPath();for(let i=0;i<=300;i++){const x=px0+(px1-px0)*i/300,t=i/300*10-1.2;let v=0;if(t>0)v=term?1-Math.exp(-t*3):1-Math.exp(-t*0.55)*Math.cos(t*4.2)*1.0;i?c.lineTo(x,Yv(v)):c.moveTo(x,Yv(v));}
+       c.strokeStyle=term?GREEN:RED;c.lineWidth=2.2;c.stroke();c.fillStyle=term?GREEN:RED;c.textAlign='right';c.font='bold 12px sans-serif';c.fillText(term?'乾淨的方波邊緣':'過衝＋振鈴',px1,py1+10);};}},
+ shunt:{html:'<h3><span class="badge">R6</span>電流偵測：毫歐姆分流電阻</h3><p>想知道電流有多大？讓電流流過一顆非常小的電阻（例如 0.01 Ω = 10 mΩ），量它兩端的電壓，再用歐姆定律 I = V ÷ R 換算。電阻要很小，才不會浪費太多電壓、也不會太燙；但產生的電壓也很小（毫伏級），所以通常再接一顆放大器。</p>'+
+   ctl('shI','負載電流 I',0,10,0.1,3,'amber')+
+   '<div class="formula" id="shF" style="font-size:17px"></div><div class="readouts mt-s"><div class="ro"><small>分流電阻壓降</small><span id="shV" class="hl-a"></span></div><div class="ro"><small>電阻發熱 P = I²R</small><span id="shP" style="color:var(--pink)"></span></div><div class="ro"><small>放大 50 倍後給 ADC</small><span id="shA" class="hl-b"></span></div></div>'+
+   '<div class="meter" style="height:12px"><i id="shBar"></i></div><p class="note">常見於筆電電池電量計、行動電源、馬達驅動器與電源供應器的過電流保護。精密量測會用「四線式（Kelvin）」接法，避免焊點電阻造成誤差。</p>',
+   init(){const r=$('#shI');function u(){const I=+r.value,V=I*0.01,P=I*I*0.01,A=V*50;$('#shIv').textContent=I.toFixed(1)+' A';
+     $('#shF').innerHTML='<span class="v">V</span> = <span class="i">I</span> × <span class="r">R</span> = '+I.toFixed(1)+' A × 0.01 Ω = <span class="v">'+(V*1000).toFixed(0)+' mV</span>';
+     $('#shV').textContent=(V*1000).toFixed(0)+' mV';$('#shP').textContent=P.toFixed(2)+' W';$('#shA').textContent=A.toFixed(2)+' V';$('#shBar').style.width=(A/5*100)+'%';}
+     r.addEventListener('input',u);u();}}
+};
+
+/* ---------- color code ---------- */
+(function(){const C=[{n:'黑',c:'#111111',d:0,m:1},{n:'棕',c:'#7b3f12',d:1,m:10,t:1},{n:'紅',c:'#d42a2a',d:2,m:100,t:2},{n:'橙',c:'#f07a12',d:3,m:1e3},{n:'黃',c:'#f5d10f',d:4,m:1e4},{n:'綠',c:'#1f9e45',d:5,m:1e5,t:.5},{n:'藍',c:'#2160d8',d:6,m:1e6,t:.25},{n:'紫',c:'#8a3fd1',d:7,m:1e7,t:.1},{n:'灰',c:'#8a8a8a',d:8,t:.05},{n:'白',c:'#f2f2f2',d:9},{n:'金',c:'#c9a227',m:.1,t:5},{n:'銀',c:'#c0c0c0',m:.01,t:10}];
+  const by=n=>C.find(x=>x.n===n);let mode=4;
+  const digits=C.filter(x=>x.d!=null),first=digits.filter(x=>x.d>0),mult=C.filter(x=>x.m!=null),tol=C.filter(x=>x.t!=null);
+  let sel={4:['黃','紫','紅','金'],5:['棕','黑','黑','棕','棕']};
+  function defs(){return mode===4?[['第 1 環',first],['第 2 環',digits],['倍率',mult],['誤差',tol]]:[['第 1 環',first],['第 2 環',digits],['第 3 環',digits],['倍率',mult],['誤差',tol]];}
+  function render(){const d=defs();$('#rcBands').innerHTML=d.map((row,i)=>'<div class="band-row"><span class="lbl">'+row[0]+'</span>'+row[1].map(x=>'<button type="button" class="sw'+(sel[mode][i]===x.n?' on':'')+'" style="background:'+x.c+'" title="'+x.n+'" aria-label="'+row[0]+' '+x.n+'" data-i="'+i+'" data-n="'+x.n+'"></button>').join('')+'</div>').join('');
+    $$('#rcBands .sw').forEach(b=>b.addEventListener('click',()=>{sel[mode][+b.dataset.i]=b.dataset.n;render();}));calc();}
+  function calc(){const s=sel[mode].map(by);let v=0;const nd=mode===4?2:3;for(let i=0;i<nd;i++)v=v*10+s[i].d;v*=s[nd].m;
+    $('#rcVal').textContent=ohmStr(Math.round(v*1000)/1000);$('#rcTol').textContent='誤差 ±'+s[nd+1].t+'%　（'+sel[mode].join('・')+'）';
+    const xs=mode===4?[96,140,180,256]:[94,128,160,192,258];
+    $('#rcSvgBands').innerHTML=s.map((b,i)=>{const x=xs[i],big=x<125||x>235;return '<rect x="'+(x-6)+'" y="'+(big?22:30)+'" width="12" height="'+(big?76:60)+'" fill="'+b.c+'"/>';}).join('');}
+  $$('#rcMode button').forEach(b=>b.addEventListener('click',()=>{$$('#rcMode button').forEach(x=>x.classList.toggle('on',x===b));mode=+b.dataset.v;render();}));
+  render();
+})();
+
+/* ================= CH4 EXTENSION CORD ================= */
+(function(){const APPS=[['💨','吹風機',1200],['🔥','電暖器',1500],['🍚','電鍋',800],['📡','微波爐',1100],['📺','電視',150],['💻','筆電',65],['🌀','電風扇',45],['📱','手機充電',20]];
+  const cnt=APPS.map(()=>0);const box=$('#apps');
+  box.innerHTML=APPS.map((a,i)=>'<div class="app" data-i="'+i+'"><div class="app-top"><span class="app-ico" aria-hidden="true">'+a[0]+'</span><div><div class="app-name">'+a[1]+'</div><div class="app-w">'+a[2]+' W</div></div></div><div class="app-ctl"><button type="button" data-d="-1" aria-label="移除'+a[1]+'">−</button><span>0</span><button type="button" data-d="1" aria-label="加入'+a[1]+'">＋</button></div></div>').join('');
+  let P=0,I=0,ph=0,smoke=[];
+  function upd(){P=APPS.reduce((s,a,i)=>s+a[2]*cnt[i],0);I=P/110;const r=I/15;
+    $$('.app',box).forEach((el,i)=>{el.classList.toggle('has',cnt[i]>0);$('.app-ctl span',el).textContent=cnt[i];});
+    $('#cordP').textContent=fmtN(P)+' W';$('#cordI').textContent=I.toFixed(1)+' A';const hr=r*r*100;const hEl=$('#cordH');hEl.textContent=Math.round(hr)+'%';hEl.style.color=r>1?RED:(r>.8?AMBER:GREEN);
+    const bar=$('#cordBar');bar.style.width=Math.min(100,r/1.5*100)+'%';bar.style.background=r>1?'linear-gradient(90deg,#ffb53c,#ff4d5e)':(r>.8?'linear-gradient(90deg,#3ee08f,#ffb53c)':'linear-gradient(90deg,#1e8fff,#3ee08f)');
+    const st=$('#cordStatus');
+    if(P===0){st.className='status ok';st.textContent='目前沒有負載。';}
+    else if(r<=.8){st.className='status ok';st.innerHTML='✅ 負載正常：'+I.toFixed(1)+' A，約為額定的 '+Math.round(r*100)+'%。';}
+    else if(r<=1){st.className='status mid';st.innerHTML='⚠️ 接近上限（'+Math.round(r*100)+'%）：長時間使用電線會明顯發熱，不建議再增加電器。';}
+    else{st.className='status bad';st.innerHTML='🔥 <b>超過額定 '+Math.round((r-1)*100)+'%！</b>電線發熱約為額定時的 '+(r*r).toFixed(1)+' 倍，可能使絕緣劣化、熔化甚至起火。有過載保護的延長線會跳脫；請立即拔除大功率電器。';}}
+  box.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const i=+b.closest('.app').dataset.i;cnt[i]=clamp(cnt[i]+(+b.dataset.d),0,3);upd();});
+  $('#cordReset').addEventListener('click',()=>{cnt.fill(0);upd();});upd();
+  const o=regCanvas($('#cordCv'));
+  function heatColor(h){const stops=[[0,[58,77,107]],[.5,[90,110,140]],[.75,[255,181,60]],[1,[255,120,30]],[1.6,[255,60,60]]];h=clamp(h,0,1.6);
+    for(let i=1;i<stops.length;i++){if(h<=stops[i][0]){const t=(h-stops[i-1][0])/(stops[i][0]-stops[i-1][0]);const a=stops[i-1][1],b=stops[i][1];return 'rgb('+a.map((v,k)=>Math.round(lerp(v,b[k],t))).join(',')+')';}}return 'rgb(255,60,60)';}
+  anim($('#cordCv'),(dt,t)=>{const c=begin(o),w=o.w,h=o.h,r=I/15,heat=r*r;const mob=w<520;
+    const sx=mob?44:70,sy=h*.55,ex=w-(mob?150:220),ey=h*.5;const pts=[];
+    for(let i=0;i<=60;i++){const u=i/60;const x=lerp(sx,ex,u);const y=lerp(sy,ey,u)+Math.sin(u*Math.PI*2)*h*.16*(1-u*.3);pts.push([x,y]);}
+    const P_=mkPath(pts);
+    c.fillStyle='#1a2436';c.strokeStyle='#3b5577';c.lineWidth=2;rrect(c,10,sy-36,mob?30:44,72,8);c.fill();c.stroke();
+    c.fillStyle='#0a0f18';c.fillRect(mob?19:24,sy-14,3,12);c.fillRect(mob?27:38,sy-14,3,12);c.beginPath();c.arc(mob?25:32,sy+14,4,0,TAU);c.fill();
+    c.fillStyle='#93a6c2';c.font='11px sans-serif';c.textAlign='center';c.fillText('牆壁插座',mob?26:32,sy+52);
+    const flick=r>1?(0.75+0.25*Math.sin(t*20)*Math.sin(t*7)):1;
+    if(heat>.4){c.shadowColor=r>1?'rgba(255,60,60,.9)':'rgba(255,160,40,.8)';c.shadowBlur=clamp(heat*18,0,34)*flick;}
+    stroke(c,pts,heatColor(heat),mob?9:11);c.shadowBlur=0;
+    stroke(c,pts,'rgba(255,255,255,.08)',2);
+    ph+=Math.min(600,30*I)*dt;c.globalCompositeOperation='lighter';if(I>0)flow(c,P_,ph,26,r>1?'#ff8a5a':BLUE,.8,6);c.globalCompositeOperation='source-over';
+    const bx=ex,bw=w-bx-12,by=ey-28;c.fillStyle='#e7ebf1';rrect(c,bx,by,bw,56,10);c.fill();c.fillStyle='#c9d0da';rrect(c,bx,by+44,bw,12,6);c.fill();
+    const ns=mob?3:4,sw=(bw-20)/ns;let k=0;const plugged=[];APPS.forEach((a,i)=>{for(let j=0;j<cnt[i];j++)plugged.push(a[0]);});
+    for(let i=0;i<ns;i++){const x=bx+12+i*sw+sw/2;c.fillStyle='#3a4250';c.fillRect(x-7,by+12,3,10);c.fillRect(x+4,by+12,3,10);c.beginPath();c.arc(x,by+30,3,0,TAU);c.fill();
+      if(plugged[i]){c.font='18px sans-serif';c.textAlign='center';c.fillText(plugged[i],x,by+28);}}
+    c.fillStyle='#ff4d5e';c.beginPath();c.arc(bx+bw-10,by+10,3.5,0,TAU);c.fill();
+    if(plugged.length>ns){c.fillStyle='#93a6c2';c.font='11px sans-serif';c.textAlign='center';c.fillText('＋'+(plugged.length-ns)+' 個插頭（多孔延長線）',bx+bw/2,by+76);}
+    c.fillStyle='#93a6c2';c.font='11px sans-serif';c.textAlign='center';c.fillText('延長線 15A',bx+bw/2,by-8);
+    if(r>1&&Math.random()<dt*5*(r-0.9)){const q=at(P_,Math.random()*P_.L);smoke.push({x:q[0],y:q[1],life:0,vx:(Math.random()-.5)*10});}
+    smoke=smoke.filter(s=>(s.life+=dt)<1.6);smoke.forEach(s=>{s.y-=24*dt;s.x+=s.vx*dt;c.globalAlpha=0.2*(1-s.life/1.6);c.fillStyle='#9aa4b2';c.beginPath();c.arc(s.x,s.y,4+s.life*8,0,TAU);c.fill();});c.globalAlpha=1;
+    c.textAlign='left';c.font='bold 12px ui-monospace,monospace';c.fillStyle=heat>1?RED:(heat>.6?AMBER:'#7fd8ff');c.fillText('線溫示意：'+(heat<.3?'正常':heat<.65?'微溫':heat<1?'溫熱':'過熱！'),sx-20,18);
+  });
+})();
+
+/* ================= CH5 PANEL ================= */
+(function(){const B=[
+  {id:'main',x:40,y:80,w:110,h:110,p:2,name:'總開關',rate:'50A',hc:'#1b1f27',info:'<h3>總開關（主斷路器）</h3><p>控制全戶電源，是電源進入家中的第一道開關，額定容量最大。維修、淹水或緊急狀況時，先關這一個就能切斷全戶。它本身也具備過載與短路保護，是最後一道防線。</p><p class="note">本模擬中關掉總開關，所有迴路都會停電。</p>'},
+  {id:'elcb',x:170,y:80,w:110,h:110,p:2,name:'漏電斷路器',rate:'30mA',hc:'#2d6cdf',test:true,info:'<h3>漏電斷路器（ELCB）</h3><p>持續比較火線與中性線的電流。正常時兩者相等；若有電流經人體或外殼流到地，兩者出現差值，達動作電流（家用常見 30 mA，浴室等場所可用 15 mA）即在約 0.1 秒內跳脫。</p><p>浴室、廚房、陽台與戶外等潮濕場所的插座迴路依規定應有漏電保護。藍色的「T」是測試鈕，建議<b>每月按一次</b>確認會跳。</p><p class="note">此圖示意它保護「浴室／陽台」迴路。</p>'},
+  {id:'light',x:40,y:262,w:76,h:110,p:1,name:'照明',rate:'15A',hc:'#1b1f27',info:'<h3>照明迴路・無熔絲開關 15A</h3><p>無熔絲開關（NFB），俗稱「空氣開關」，取代舊式保險絲：跳脫後找出原因、把把手復歸即可，不必更換保險絲。內含<b>熱動元件</b>（雙金屬片，處理過載）與<b>電磁元件</b>（處理短路）。照明負載小，常用 15 A。</p>'},
+  {id:'living',x:126,y:262,w:76,h:110,p:1,name:'客廳插座',rate:'20A',hc:'#1b1f27',info:'<h3>客廳插座迴路・無熔絲開關 20A</h3><p>一般插座迴路常用 20 A（約可供 2,200 W，視線徑而定）。開關的額定必須配合電線的線徑，<b>不可為了不跳電而自行換成更大的開關</b>，否則電線過熱時開關也不會跳。</p>'},
+  {id:'kitchen',x:212,y:262,w:76,h:110,p:1,name:'廚房插座',rate:'20A',hc:'#1b1f27',info:'<h3>廚房插座迴路・20A</h3><p>電鍋、微波爐、快煮壺、烤箱都是高功率電器，同時使用最容易過載跳電。建議高功率廚房電器分散到不同迴路，或設置專用迴路。實際廚房插座也應有漏電保護（此處簡化）。</p>'},
+  {id:'ac',x:298,y:262,w:140,h:110,p:2,name:'冷氣 220V',rate:'2P 20A',hc:'#1b1f27',info:'<h3>冷氣專用迴路・220V 兩極開關</h3><p>冷氣、烘衣機、電熱水器等大功率電器常用 220 V 專用迴路。220 V 由兩條火線（L1、L2）供電，所以使用「兩極（2P）」開關，跳脫時兩條火線同時切斷。同樣功率下電流只有 110 V 的一半。</p>'}];
+  const state={};B.forEach(b=>state[b.id]=true);let sel='main',busy=false,heat=0,heatOn=false,sparkT=0,sparkAt=null;
+  const g=$('#brks');
+  g.innerHTML=B.map(b=>{const hw=b.p===2?40:20,sx=b.x+b.w/2-hw/2-4;
+    return '<g class="brk" id="b-'+b.id+'" tabindex="0" role="button" aria-label="'+b.name+' '+b.rate+'">'+
+      '<rect class="bbody" x="'+b.x+'" y="'+b.y+'" width="'+b.w+'" height="'+b.h+'" rx="7" fill="#dfe4eb" stroke="#8a94a6" stroke-width="1.5"/>'+
+      '<text x="'+(b.x+b.w/2)+'" y="'+(b.y+17)+'" text-anchor="middle" font-size="'+(b.w<90?11:12)+'" font-weight="700" fill="#1a2333">'+b.name+'</text>'+
+      '<rect x="'+sx+'" y="'+(b.y+26)+'" width="'+(hw+8)+'" height="50" rx="4" fill="#2a2f38"/>'+
+      '<text x="'+(sx-3)+'" y="'+(b.y+36)+'" text-anchor="end" font-size="8" fill="#3a4559">ON</text><text x="'+(sx-3)+'" y="'+(b.y+74)+'" text-anchor="end" font-size="8" fill="#3a4559">OFF</text>'+
+      '<g class="handle"><rect x="'+(sx+4)+'" y="'+(b.y+30)+'" width="'+hw+'" height="22" rx="3" fill="'+b.hc+'" stroke="#000" stroke-opacity=".4"/></g>'+
+      '<text x="'+(b.x+b.w/2)+'" y="'+(b.y+b.h-20)+'" text-anchor="middle" font-size="11" font-family="monospace" font-weight="700" fill="#2a3446">'+b.rate+'</text>'+
+      '<circle class="led" cx="'+(b.x+b.w/2)+'" cy="'+(b.y+b.h-8)+'" r="4" fill="#3ee08f"/>'+
+      (b.test?'<g class="tbtn" style="cursor:pointer"><circle cx="'+(b.x+b.w-14)+'" cy="'+(b.y+38)+'" r="9" fill="#3c8bff" stroke="#123"/><text x="'+(b.x+b.w-14)+'" y="'+(b.y+42)+'" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">T</text></g>':'')+
+      '</g>';}).join('');
+  const logEl=$('#panelLog');function log(m){const d=new Date();const ts=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+':'+String(d.getSeconds()).padStart(2,'0');logEl.innerHTML='<div>['+ts+'] '+m+'</div>'+logEl.innerHTML;}
+  function refresh(){B.forEach(b=>{const el=$('#b-'+b.id);el.classList.toggle('off',!state[b.id]);el.classList.toggle('sel',sel===b.id);
+      const powered=state[b.id]&&(b.id==='main'||state.main);$('.led',el).setAttribute('fill',!state[b.id]?'#ff4d5e':(powered?'#3ee08f':'#56606f'));});
+    const b=B.find(x=>x.id===sel);$('#panelInfo').innerHTML=b.info+'<div class="btns mt-s"><button class="btn'+(state[b.id]?' red':'')+'" id="pToggle">'+(state[b.id]?'手動切斷此開關':'復歸（送電）')+'</button>'+(heatOn?'':'')+'</div>'+
+      (sel==='kitchen'&&heatOn?'<div class="mt-s note">雙金屬片溫度</div><div class="meter" style="height:10px"><i id="heatBar" style="width:'+(heat*100)+'%"></i></div>':'');
+    $('#pToggle').addEventListener('click',()=>{if(busy)return;state[b.id]=!state[b.id];log(b.name+(state[b.id]?' 已復歸送電':' 手動切斷'));refresh();});}
+  function select(id){sel=id;refresh();}
+  B.forEach(b=>{const el=$('#b-'+b.id);el.addEventListener('click',e=>{if(e.target.closest('.tbtn')){test();return;}select(b.id);});el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(b.id);}});});
+  function trip(id,msg){state[id]=false;sel=id;const el=$('#b-'+id);el.classList.remove('flash');void el.getBoundingClientRect();el.classList.add('flash');log(msg);refresh();}
+  function test(){if(!state.elcb){log('漏電斷路器已在 OFF 位置，請先復歸');return;}trip('elcb','按下測試鈕 T：模擬 30 mA 漏電 → 漏電斷路器跳脫 ✔（功能正常）');}
+  $('#simOver').addEventListener('click',()=>{if(busy)return;if(!state.kitchen||!state.main){log('廚房迴路目前沒有供電，請先復歸');return;}busy=true;heat=0;heatOn=true;sel='kitchen';
+    log('廚房：電鍋 800 W + 微波爐 1100 W + 快煮壺 1500 W ≈ 3400 W → 約 31 A，超過 20 A 額定');refresh();});
+  $('#simShort').addEventListener('click',()=>{if(busy)return;if(!state.living||!state.main){log('客廳迴路目前沒有供電，請先復歸');return;}sparkT=0.5;sparkAt=B.find(b=>b.id==='living');trip('living','客廳插座短路！電流瞬間可達數百安培以上 → 電磁脫扣在數毫秒內跳脫');});
+  $('#simLeak').addEventListener('click',()=>{if(busy)return;if(!state.elcb||!state.main){log('漏電斷路器目前沒有供電，請先復歸');return;}trip('elcb','陽台洗衣機外殼漏電：火線 10.000 A、中性線 9.965 A，差 35 mA ≥ 30 mA → 漏電斷路器跳脫');});
+  $('#simReset').addEventListener('click',()=>{B.forEach(b=>state[b.id]=true);busy=false;heatOn=false;heat=0;log('全部開關復歸，恢復供電');refresh();});
+  const spark=$('#sparkG'),bus=$('#busTop');let bo=0;
+  anim($('#panelSvg'),(dt,t)=>{bo-=dt*40;bus.setAttribute('stroke-dasharray','8 8');bus.setAttribute('stroke-dashoffset',bo.toFixed(1));bus.setAttribute('opacity',state.main?.7:.15);
+    if(heatOn){heat=Math.min(1,heat+dt/2.6);const hb=$('#heatBar');if(hb)hb.style.width=(heat*100)+'%';const body=$('#b-kitchen .bbody');body.setAttribute('fill','rgb('+Math.round(lerp(223,255,heat))+','+Math.round(lerp(228,170,heat))+','+Math.round(lerp(235,120,heat))+')');
+      if(heat>=1){heatOn=false;busy=false;body.setAttribute('fill','#dfe4eb');trip('kitchen','雙金屬片受熱彎曲 → 廚房迴路過載跳脫（熱動保護，約數秒～數分鐘，電流越大越快）');}}
+    if(sparkT>0){sparkT-=dt;const b=sparkAt;let h='';for(let k=0;k<4;k++){let x=b.x+b.w/2,y=b.y+b.h/2;let d='M'+x+' '+y;for(let i=0;i<6;i++){x+=(Math.random()-.5)*40;y+=(Math.random()-.5)*40;d+=' L'+x.toFixed(0)+' '+y.toFixed(0);}h+='<path d="'+d+'" stroke="'+(k%2?'#fff':'#ffd27a')+'" stroke-width="'+(k%2?1.5:3)+'" fill="none" opacity="'+Math.max(0,sparkT*2).toFixed(2)+'"/>';}
+      h+='<circle cx="'+(b.x+b.w/2)+'" cy="'+(b.y+b.h/2)+'" r="'+(60*(0.5-sparkT)+10)+'" fill="#ffd27a" opacity="'+Math.max(0,sparkT).toFixed(2)+'"/>';spark.innerHTML=h;if(sparkT<=0)spark.innerHTML='';}
+  });
+  refresh();
+})();
+
+/* ================= THREE PHASE ================= */
+(function(){const cv=$('#tpCv'),o=regCanvas(cv);let sp=.4,showP=true,th=0;const COL=[AMBER,BLUE,PINK],NM=['L1','L2','L3'];
+  $$('#tpSpeed button').forEach(b=>b.addEventListener('click',()=>{$$('#tpSpeed button').forEach(x=>x.classList.toggle('on',x===b));sp=+b.dataset.v;}));
+  $$('#tpPow button').forEach(b=>b.addEventListener('click',()=>{$$('#tpPow button').forEach(x=>x.classList.toggle('on',x===b));showP=b.dataset.v==='1';}));
+  anim(cv,dt=>{th+=dt*TAU*sp;const c=begin(o),w=o.w,h=o.h,mob=w<560;
+    const wavH=showP?h*.62:h;const R=Math.min(wavH/2-22,mob?w*.17:120);const cx=R+(mob?14:30),cy=wavH/2;const x0=cx+R+(mob?16:40),x1=w-14;
+    c.strokeStyle='#1d2c45';c.lineWidth=1;c.beginPath();c.arc(cx,cy,R,0,TAU);c.stroke();c.beginPath();c.moveTo(cx-R-6,cy);c.lineTo(cx+R+6,cy);c.moveTo(cx,cy-R-6);c.lineTo(cx,cy+R+6);c.stroke();
+    c.strokeStyle='#1d2c45';c.beginPath();c.moveTo(x0,cy);c.lineTo(x1,cy);c.stroke();
+    const kx=TAU/((x1-x0)/1.6);
+    for(let k=0;k<3;k++){const a=th-k*TAU/3;const px=cx+R*Math.cos(a),py=cy-R*Math.sin(a);
+      c.beginPath();for(let x=x0;x<=x1;x+=2){const y=cy-R*Math.sin(a-(x-x0)*kx);x===x0?c.moveTo(x,y):c.lineTo(x,y);}c.strokeStyle=COL[k];c.lineWidth=2.2;c.globalAlpha=.9;c.stroke();c.globalAlpha=1;
+      c.setLineDash([3,4]);c.strokeStyle=hexA(COL[k],.45);c.lineWidth=1;c.beginPath();c.moveTo(px,py);c.lineTo(x0,py);c.stroke();c.setLineDash([]);
+      c.strokeStyle=COL[k];c.lineWidth=3;c.beginPath();c.moveTo(cx,cy);c.lineTo(px,py);c.stroke();
+      const ang=Math.atan2(py-cy,px-cx);c.fillStyle=COL[k];c.beginPath();c.moveTo(px,py);c.lineTo(px-10*Math.cos(ang-.4),py-10*Math.sin(ang-.4));c.lineTo(px-10*Math.cos(ang+.4),py-10*Math.sin(ang+.4));c.closePath();c.fill();
+      c.globalCompositeOperation='lighter';glow(c,x0,py,9,COL[k],1);c.globalCompositeOperation='source-over';
+      c.font='bold 12px ui-monospace,monospace';c.textAlign='center';c.fillText(NM[k],cx+(R+14)*Math.cos(a),cy-(R+14)*Math.sin(a)+4);}
+    c.fillStyle='#93a6c2';c.font='11.5px sans-serif';c.textAlign='left';c.fillText('旋轉相量（相差 120°）',mob?4:10,14);c.textAlign='right';c.fillText('← 現在　　過去 →',x1,14);
+    if(showP){const py0=h-12,py1=wavH+14;c.strokeStyle='#1d2c45';c.beginPath();c.moveTo(x0,py0);c.lineTo(x1,py0);c.stroke();const sc=(py0-py1)/1.6;
+      for(let k=0;k<3;k++){c.beginPath();for(let x=x0;x<=x1;x+=2){const s=Math.sin(th-k*TAU/3-(x-x0)*kx);const y=py0-s*s*sc;x===x0?c.moveTo(x,y):c.lineTo(x,y);}c.strokeStyle=hexA(COL[k],.5);c.lineWidth=1.3;c.stroke();}
+      c.beginPath();c.moveTo(x0,py0-1.5*sc);c.lineTo(x1,py0-1.5*sc);c.strokeStyle='#ffffff';c.lineWidth=2.5;c.shadowColor='#fff';c.shadowBlur=8;c.stroke();c.shadowBlur=0;
+      c.fillStyle='#e6eefb';c.textAlign='left';c.font='bold 11.5px sans-serif';c.fillText('三相總功率（恆定）',x0+4,py0-1.5*sc-6);
+      c.fillStyle='#93a6c2';c.font='11px sans-serif';c.textAlign='right';c.fillText('各相功率（脈動）',x1,py0-4);
+      c.textAlign='left';c.fillText('瞬時功率',mob?4:10,py1+12);}
+  });
+})();
+
+/* ================= CH6 TENS ================= */
+(function(){const o=regCanvas($('#tensCv')),om=regCanvas($('#muscleCv'));const sF=$('#tF'),sW=$('#tW'),sI=$('#tI');
+  let f=5,W=200,In=40,act=0,flash=0,clock=0;
+  function upd(){f=+sF.value;W=+sW.value;In=+sI.value;$('#tFv').textContent=f+' Hz';$('#tWv').textContent=W+' μs';$('#tIv').textContent=In+' %';
+    const drive=(In/100)*(W/250);let s;
+    if(In<5)s='強度太低，幾乎沒有感覺。';
+    else{s=drive<0.15?'<b class="hl-b">感覺神經層級</b>：有微微的刺麻感，肌肉尚未明顯收縮（多數 TENS 止痛使用此範圍）。':'<b class="hl-a">運動神經層級</b>：肌肉開始收縮（EMS 效果）。';
+      s+=f<=10?'<br>低頻（≤10 Hz）：一下一下像拍打、敲擊，肌肉跟著每個脈衝抽動。':f<=30?'<br>中頻（10～30 Hz）：抽動變密集，像快速震動。':'<br>較高頻（>30 Hz）：單次收縮來不及放鬆就融合成持續緊繃（強直收縮），感覺為連續的麻感。';}
+    $('#tFeel').innerHTML=s;}
+  [sF,sW,sI].forEach(r=>r.addEventListener('input',upd));upd();
+  anim($('#tensCv'),(dt)=>{const prev=clock;clock+=dt;const n=Math.floor(clock*f)-Math.floor(prev*f);
+    const drive=Math.max(0,(In/100)*(W/250)-0.15);if(n>0){flash=1;for(let i=0;i<n;i++)act=Math.min(1.15,act+drive*1.1*(1.2-act));}
+    const c=begin(o),w=o.w,h=o.h,x0=34,x1=w-10,mid=h/2,win=1;
+    c.strokeStyle='rgba(255,255,255,.05)';c.lineWidth=1;for(let i=0;i<=10;i++){const x=x0+(x1-x0)*i/10;c.beginPath();c.moveTo(x,14);c.lineTo(x,h-20);c.stroke();}
+    c.strokeStyle='#24456e';c.beginPath();c.moveTo(x0,mid);c.lineTo(x1,mid);c.stroke();
+    const A=(In/100)*(h/2-26),pw=2+W/400*7;c.beginPath();c.moveTo(x0,mid);
+    const tStart=clock-win;const k0=Math.ceil(tStart*f),k1=Math.floor(clock*f);
+    for(let k=k0;k<=k1;k++){const x=x0+((k/f)-tStart)/win*(x1-x0);if(x<x0||x+2*pw>x1)continue;c.lineTo(x,mid);c.lineTo(x,mid-A);c.lineTo(x+pw,mid-A);c.lineTo(x+pw,mid+A);c.lineTo(x+2*pw,mid+A);c.lineTo(x+2*pw,mid);}
+    c.lineTo(x1,mid);c.strokeStyle=BLUE;c.lineWidth=1.8;c.shadowColor=BLUE;c.shadowBlur=8;c.stroke();c.shadowBlur=0;
+    c.fillStyle='#5d708d';c.font='11px ui-monospace,monospace';c.textAlign='left';c.fillText('+',x0-16,mid-A+4);c.fillText('−',x0-16,mid+A+4);c.textAlign='right';c.fillText('最近 1 秒・'+f+' 個脈衝 →',x1,h-6);
+    c.textAlign='left';c.fillText('週期 '+(1000/f).toFixed(f>=10?1:0)+' ms',x0,h-6);});
+  anim($('#muscleCv'),(dt,t)=>{act*=Math.exp(-dt/0.11);flash*=Math.exp(-dt/0.06);const c=begin(om),w=om.w,h=om.h,cy=h*.56;
+    const L0=Math.min(w-80,420),L=L0*(1-0.2*act),T=26*(1+0.55*act),cx=w/2,xa=cx-L/2,xb=cx+L/2;
+    c.fillStyle='#2b3448';c.fillRect(cx-L0/2-34,cy-30,16,60);c.fillRect(cx+L0/2+18,cy-30,16,60);
+    c.strokeStyle='#d9cdb8';c.lineWidth=6;c.lineCap='round';c.beginPath();c.moveTo(cx-L0/2-18,cy);c.lineTo(xa+6,cy);c.moveTo(xb-6,cy);c.lineTo(cx+L0/2+18,cy);c.stroke();
+    const g=c.createLinearGradient(0,cy-T,0,cy+T);g.addColorStop(0,'#ff8fa0');g.addColorStop(.5,'#d93a52');g.addColorStop(1,'#7a1426');
+    c.beginPath();c.moveTo(xa,cy);c.bezierCurveTo(xa+L*.25,cy-T*1.25,xb-L*.25,cy-T*1.25,xb,cy);c.bezierCurveTo(xb-L*.25,cy+T*1.25,xa+L*.25,cy+T*1.25,xa,cy);c.fillStyle=g;c.fill();
+    c.save();c.clip();c.strokeStyle='rgba(255,220,225,.25)';c.lineWidth=1;for(let i=-4;i<=4;i++){c.beginPath();c.moveTo(xa,cy);c.quadraticCurveTo(cx,cy+i*T*.28,xb,cy);c.stroke();}c.restore();
+    const ex=[cx-L*.22,cx+L*.22];ex.forEach(x=>{c.fillStyle='rgba(200,215,235,.85)';rrect(c,x-18,cy-T*1.05-24,36,20,5);c.fill();c.fillStyle='#3c5a80';c.fillRect(x-2,cy-T*1.05-34,4,10);
+      if(flash>.05&&In>0){c.globalCompositeOperation='lighter';glow(c,x,cy-T*1.05-14,26,BLUE,flash*(In/100));c.globalCompositeOperation='source-over';}});
+    c.strokeStyle='rgba(60,90,128,.8)';c.lineWidth=1.5;c.beginPath();c.moveTo(ex[0],cy-T*1.05-34);c.quadraticCurveTo(cx,10,ex[1],cy-T*1.05-34);c.stroke();
+    c.fillStyle='#93a6c2';c.font='11.5px sans-serif';c.textAlign='left';c.fillText('收縮程度',10,h-12);c.fillStyle='#1d2c45';c.fillRect(70,h-21,100,8);c.fillStyle=AMBER;c.fillRect(70,h-21,100*Math.min(1,act),8);
+    c.textAlign='right';c.fillStyle='#5d708d';c.fillText('貼片 ⇄ 貼片',w-10,h-12);});
+})();
+
+/* ================= CH7 SWATTER ================= */
+(function(){const o=regCanvas($('#swCv'));let st='fly',stT=0,Vc=3000,mx=0,my=0,kills=0,bolts=[];const btn=$('#swBtn');
+  btn.addEventListener('click',()=>{if(st!=='fly')return;st='attack';stT=0;btn.disabled=true;btn.style.opacity=.5;});
+  anim($('#swCv'),(dt,t)=>{const c=begin(o),w=o.w,h=o.h;stT+=dt;const hcx=w*.5,hcy=h*.42,rx=Math.min(w*.3,150),ry=Math.min(h*.36,110);
+    c.fillStyle='#1c2638';rrect(c,hcx-12,hcy+ry-4,24,h-(hcy+ry)+4-6,8);c.fill();c.strokeStyle='#33435e';c.stroke();
+    c.fillStyle=Vc>2500?'#ff4d5e':'#552630';c.beginPath();c.arc(hcx,hcy+ry+24,4,0,TAU);c.fill();if(Vc>2500){c.globalCompositeOperation='lighter';glow(c,hcx,hcy+ry+24,12,RED,.8);c.globalCompositeOperation='source-over';}
+    c.save();c.beginPath();c.ellipse(hcx,hcy,rx,ry,0,0,TAU);c.clip();c.fillStyle='rgba(20,30,50,.6)';c.fillRect(hcx-rx,hcy-ry,rx*2,ry*2);
+    const bright=Vc/3000;for(let i=-20;i<=20;i++){const x=hcx+i*9;c.strokeStyle=i%2?'rgba(150,165,185,.45)':'rgba(255,181,60,'+(0.25+0.4*bright)+')';c.lineWidth=1;c.beginPath();c.moveTo(x,hcy-ry);c.lineTo(x,hcy+ry);c.stroke();}
+    for(let j=-14;j<=14;j++){c.strokeStyle='rgba(150,165,185,.25)';c.beginPath();c.moveTo(hcx-rx,hcy+j*9);c.lineTo(hcx+rx,hcy+j*9);c.stroke();}c.restore();
+    c.strokeStyle='#5a6b88';c.lineWidth=7;c.beginPath();c.ellipse(hcx,hcy,rx,ry,0,0,TAU);c.stroke();
+    const tx=hcx+rx*.15,ty=hcy-ry*.1;
+    if(st==='fly'){mx=hcx+Math.cos(t*1.3)*(rx+50)*.95+Math.sin(t*3.1)*12;my=hcy-ry*.2+Math.sin(t*2.1)*(ry+20)*.8;
+      if(Math.abs(mx-hcx)/rx<1.15&&Math.abs(my-hcy)/ry<1.15){mx+=(mx>hcx?1:-1)*30;}}
+    else if(st==='attack'){const u=Math.min(1,stT/.6),e=u*u*(3-2*u);mx=lerp(mx,tx,e*.25+.02);my=lerp(my,ty,e*.25+.02);if(u>=1||Math.hypot(mx-tx,my-ty)<3){st='zap';stT=0;kills++;$('#swCount').textContent=kills;}}
+    else if(st==='zap'){Vc=Math.max(150,Vc-dt*30000);if(Math.random()<.9){bolts=[];for(let k=0;k<5;k++){let x=mx,y=my;const pts=[[x,y]];const ang=Math.random()*TAU;for(let i=0;i<5;i++){x+=Math.cos(ang)*6+(Math.random()-.5)*10;y+=Math.sin(ang)*6+(Math.random()-.5)*10;pts.push([x,y]);}bolts.push(pts);}}
+      if(stT>.35){st='fall';stT=0;bolts=[];}}
+    else if(st==='fall'){my+=dt*140*(1+stT*2);if(stT>1.2){st='fly';stT=0;btn.disabled=false;btn.style.opacity=1;}}
+    if(st!=='zap')Vc=Math.min(3000,Vc+(3050-Vc)*dt*1.6);
+    if(st==='zap'){c.fillStyle='rgba(200,230,255,'+(0.18*(1-stT/.35))+')';c.fillRect(0,0,w,h);c.globalCompositeOperation='lighter';glow(c,mx,my,60,BLUE,1);glow(c,mx,my,24,'#ffffff',1);bolts.forEach((p,i)=>stroke(c,p,i%2?'#ffffff':'#9fe3ff',i%2?1.2:2.4));c.globalCompositeOperation='source-over';}
+    const alpha=st==='fall'?Math.max(0,1-stT/1.2):1;c.save();c.translate(mx,my);if(st==='fall')c.rotate(stT*6);c.globalAlpha=alpha;
+    const flap=Math.sin(t*60)*0.6;c.fillStyle='rgba(200,220,255,.35)';c.beginPath();c.ellipse(-3,-6,7,3,-0.6+flap,0,TAU);c.fill();c.beginPath();c.ellipse(3,-6,7,3,0.6-flap,0,TAU);c.fill();
+    c.fillStyle=st==='fall'?'#555':'#2a2a2a';c.beginPath();c.ellipse(0,0,3,8,0.2,0,TAU);c.fill();c.strokeStyle='#444';c.lineWidth=1;for(let i=-1;i<=1;i++){c.beginPath();c.moveTo(0,i*3);c.lineTo(-8,i*3+6);c.moveTo(0,i*3);c.lineTo(8,i*3+6);c.stroke();}
+    c.beginPath();c.moveTo(0,-8);c.lineTo(1,-14);c.stroke();c.restore();c.globalAlpha=1;
+    const gx=12,gy=16,gh=h-50;c.fillStyle='#93a6c2';c.font='11px sans-serif';c.textAlign='left';c.fillText('電容電壓',gx,gy);c.fillStyle='#1d2c45';rrect(c,gx,gy+8,12,gh,6);c.fill();
+    const fh=gh*Vc/3000;const gg=c.createLinearGradient(0,gy+8+gh,0,gy+8);gg.addColorStop(0,BLUE);gg.addColorStop(1,AMBER);c.fillStyle=gg;rrect(c,gx,gy+8+gh-fh,12,fh,6);c.fill();
+    c.fillStyle=AMBER;c.font='bold 12px ui-monospace,monospace';c.fillText(fmtN(Vc)+' V',gx+18,gy+8+gh-fh+4);
+    c.fillStyle='#93a6c2';c.font='11px sans-serif';c.textAlign='right';c.fillText(st==='zap'?'放電！電容能量瞬間釋放':(Vc<2900?'升壓電路重新充電中…':'待命：網上約 3000 V'),w-10,h-10);
+  });
+})();
+
+/* ================= CH8 BODY CURRENT ================= */
+(function(){const s=$('#bc');const LV=[[0.5,'通常沒有感覺','電流低於多數人的感覺閾值。','#2b7a55'],[5,'感覺到刺麻','約 0.5～1 mA 起多數人可察覺，屬輕微刺麻感，可以自行放手。','#3ee08f'],
+   [10,'疼痛、肌肉抽動','明顯疼痛與肌肉不自主收縮，但多數人仍能擺脫。','#c9d84a'],[30,'無法放手','超過「擺脫閾值」（約 10 mA），握住導體的手肌肉痙攣、無法鬆開，通電時間被迫延長，非常危險。','#ffb53c'],
+   [50,'呼吸困難、危險','強烈肌肉痙攣，可能呼吸困難；通電時間稍長就可能引發心室顫動。家用漏電斷路器常以 30 mA 動作，就是要在這之前切斷。','#ff8a00'],
+   [100,'心室顫動風險','通電約 1 秒以上就可能造成心室顫動：心臟只顫抖、無法泵血，數分鐘內致命。','#ff4d5e'],[1000,'高度致命','心室顫動機率很高；電流更大時還會造成心跳停止、呼吸停止與內部灼傷。','#d01c38'],[Infinity,'嚴重灼傷・心跳停止','安培級電流造成嚴重灼傷、神經與器官損傷，以及心跳停止。','#b0122a']];
+  const mA=()=>0.1*Math.pow(10,(+s.value)/250);let cur=1,lvl=LV[0];
+  const fm=x=>x>=1000?(x/1000).toFixed(1)+' A':(x<10?x.toFixed(1):Math.round(x))+' mA';
+  function upd(){cur=mA();lvl=LV.find(l=>cur<l[0]);$('#bcV').textContent=fm(cur);$('#lvNum').textContent=fm(cur);$('#lvNum').style.color=lvl[3];$('#lvTitle').textContent=lvl[1];$('#lvTitle').style.color=lvl[3];$('#lvDesc').textContent=lvl[2];
+    const card=$('#lvCard');card.style.borderColor=lvl[3];card.style.background='linear-gradient(135deg,'+hexA(lvl[3],.14)+',rgba(0,0,0,.25))';card.style.boxShadow=cur>=30?'0 0 30px '+hexA(lvl[3],.25):'none';
+    const p=$('#bodyPath');p.setAttribute('stroke',lvl[3]);p.setAttribute('stroke-width',(3+Math.log10(cur*10)*1.5).toFixed(1));}
+  s.addEventListener('input',upd);upd();
+  let off=0;const heart=$('#heart'),bp=$('#bodyPath');
+  anim($('#bodySvg'),(dt,t)=>{off-=dt*(10+Math.log10(cur*10+1)*40);bp.style.strokeDashoffset=off.toFixed(1);
+    let sc;if(cur>=50){sc=1+0.08*Math.sin(t*37)+0.05*Math.sin(t*23.3);heart.setAttribute('transform','translate('+(138+(Math.random()-.5)*2).toFixed(1)+' 118) translate(12 12) scale('+sc.toFixed(3)+') translate(-12 -12)');}
+    else{const ph=(t*1.2)%1;sc=1+0.18*Math.exp(-ph*12)+0.1*Math.exp(-Math.max(0,ph-.18)*12)*(ph>.18?1:0);heart.setAttribute('transform','translate(138 118) translate(12 12) scale('+sc.toFixed(3)+') translate(-12 -12)');}});
+  let V=110,R=100000;function calc(){const I=V/R*1000;const l=LV.find(x=>I<x[0]);$('#calcF').innerHTML='I = '+V+' V ÷ '+fmtN(R)+' Ω = <span class="v">'+fm(I)+'</span><br><span style="font-size:14px;color:'+l[3]+'">→ '+l[1]+'</span>';
+    s.value=clamp(Math.round(250*Math.log10(I/0.1)),0,1000);fillRange(s);upd();}
+  $$('#calcV button').forEach(b=>b.addEventListener('click',()=>{$$('#calcV button').forEach(x=>x.classList.toggle('on',x===b));V=+b.dataset.v;calc();}));
+  $$('#calcR button').forEach(b=>b.addEventListener('click',()=>{$$('#calcR button').forEach(x=>x.classList.toggle('on',x===b));R=+b.dataset.v;calc();}));
+  const l=LV.find(x=>V/R*1000<x[0]);$('#calcF').innerHTML='I = '+V+' V ÷ '+fmtN(R)+' Ω = <span class="v">'+fm(V/R*1000)+'</span><br><span style="font-size:14px;color:'+l[3]+'">→ '+l[1]+'（點選上方選項會同步到滑桿）</span>';
+  const CK=['浴室、廚房、陽台插座有漏電斷路器，並每月按測試鈕','插頭、插座沒有焦黑、變色、鬆動或發燙','不使用外皮破損、被壓扁或被寵物咬過的電線','延長線不串接，電暖器、吹風機等高功率電器直插牆壁插座','手濕、赤腳站在水中時不碰插頭與開關','三孔插頭的接地腳不拔除，電器外殼確實接地','有幼兒的家庭使用插座安全蓋','拔插頭握住插頭本體，不拉扯電線','更換燈具或維修前先關斷路器並驗電，複雜工作找合格電工','知道總開關位置，觸電時先斷電再救人並撥 119'];
+  const ul=$('#checklist');ul.innerHTML=CK.map((t,i)=>'<li><label><input type="checkbox" data-i="'+i+'"><span>'+t+'</span></label></li>').join('');
+  ul.addEventListener('change',()=>{const n=$$('input:checked',ul).length;$('#ckCount').textContent=n+' / '+CK.length+(n===CK.length?' 🎉 全部做到了！':'');$('#ckBar').style.width=(n/CK.length*100)+'%';});
+})();
+
+})();
+</script>
+</body>
+</html>

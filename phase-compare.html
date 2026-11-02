@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>單相三線 vs 三相四線｜互動比較</title>
+<meta name="description" content="互動動畫比較台灣家用單相三線 110/220 V 與三相四線 220/380 V：波形、相量、瞬時功率，以及歷史上的兩相制。">
+<meta name="theme-color" content="#060a13">
+<style>
+:root{
+  --bg:#060a13;--bg2:#0a1120;--panel:#0e1728;--panel2:#121e33;--line:#1d2c45;--line2:#28405f;
+  --blue:#3cc8ff;--blue2:#1e8fff;--amber:#ffb53c;--amber2:#ff8a00;--red:#ff4d5e;--green:#3ee08f;--pink:#ff5fa2;--violet:#b18cff;
+  --text:#e6eefb;--muted:#93a6c2;--dim:#5d708d;--radius:18px;
+  --sans:"Noto Sans TC","Noto Sans CJK TC","PingFang TC","Microsoft JhengHei","Heiti TC",system-ui,sans-serif;
+  --serif:"Noto Serif TC","Noto Serif CJK TC","Songti TC","PMingLiU",serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.75;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:radial-gradient(1200px 600px at 80% -10%,rgba(30,143,255,.10),transparent 60%),radial-gradient(900px 500px at -10% 40%,rgba(255,181,60,.05),transparent 60%);background-attachment:fixed}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:linear-gradient(rgba(60,200,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(60,200,255,.035) 1px,transparent 1px);background-size:40px 40px}
+a{color:var(--blue)}
+button,input{font-family:inherit}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+b,strong{color:#fff}
+.mono{font-family:var(--mono)}
+.hl-b{color:var(--blue)}.hl-a{color:var(--amber)}.hl-g{color:var(--green)}.hl-p{color:var(--pink)}.hl-r{color:var(--red)}
+main{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 28px 80px}
+
+/* hero */
+header.hero{padding:56px 0 24px}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.18em;color:var(--blue);font-weight:700;text-transform:uppercase}
+.kicker::before{content:"";width:22px;height:2px;background:var(--blue);box-shadow:0 0 8px var(--blue)}
+h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,4.6vw,52px);line-height:1.2;margin:12px 0 14px;letter-spacing:.02em}
+h1 .vs{color:var(--dim);font-size:.6em;margin:0 .3em;vertical-align:.12em}
+h1 .a{background:linear-gradient(90deg,#ffd27a,var(--amber2));-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 .b{background:linear-gradient(90deg,#8fe4ff,var(--blue2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);max-width:780px;font-size:17px;margin:0}
+.back{display:inline-block;margin-top:14px;font-size:14px;color:var(--muted);text-decoration:none;border-bottom:1px dashed var(--line2)}
+.back:hover{color:var(--blue)}
+
+/* sticky controls */
+.controls{position:sticky;top:0;z-index:30;margin:18px -8px 26px;padding:10px 12px;border-radius:16px;
+  background:rgba(8,14,27,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--line);
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(60,200,255,.45);background:rgba(60,200,255,.08);color:#dff4ff;
+  padding:8px 16px;border-radius:12px;cursor:pointer;font-size:15px;font-weight:500;transition:.2s;min-height:40px}
+.btn:hover{background:rgba(60,200,255,.16);box-shadow:0 0 18px rgba(60,200,255,.25)}
+.btn.amber{border-color:rgba(255,181,60,.5);background:rgba(255,181,60,.08);color:#ffe9c4}
+.btn.amber:hover{background:rgba(255,181,60,.16);box-shadow:0 0 18px rgba(255,181,60,.25)}
+.btn svg{width:16px;height:16px}
+.speed{display:flex;align-items:center;gap:10px;flex:1 1 260px;min-width:0}
+.speed label{font-size:14px;color:var(--muted);white-space:nowrap}
+input[type=range]{flex:1;min-width:80px;accent-color:var(--amber);height:28px}
+.speed output{font-family:var(--mono);font-size:13px;color:var(--amber);white-space:nowrap;min-width:70px}
+.slow{display:none;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.clock{font-family:var(--mono);font-size:13px;color:var(--muted);white-space:nowrap}
+.clock b{color:var(--blue);font-weight:500}
+.realnote{flex-basis:100%;font-size:12.5px;color:var(--dim);margin:-4px 2px 0}
+
+/* panels */
+section.panel{margin:0 0 34px;scroll-margin-top:120px}
+.card{background:linear-gradient(180deg,rgba(18,30,51,.85),rgba(14,23,40,.85));border:1px solid var(--line);border-radius:var(--radius);padding:24px;position:relative;
+  box-shadow:0 0 0 1px rgba(60,200,255,.08),0 20px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04)}
+.ptitle{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 14px;margin:0 0 6px}
+.ptitle .num{font-family:var(--mono);font-size:13px;color:var(--bg);background:var(--blue);border-radius:6px;padding:1px 8px;font-weight:700;box-shadow:0 0 12px rgba(60,200,255,.5)}
+.ptitle.amber .num{background:var(--amber);box-shadow:0 0 12px rgba(255,181,60,.5)}
+.ptitle.green .num{background:var(--green);box-shadow:0 0 12px rgba(62,224,143,.5)}
+.ptitle.violet .num{background:var(--violet);box-shadow:0 0 12px rgba(177,140,255,.5)}
+h2{font-family:var(--serif);font-size:clamp(22px,2.6vw,30px);margin:0;line-height:1.3}
+.sub{color:var(--muted);font-size:15px;margin:0 0 16px}
+.cv{display:block;width:100%;border-radius:14px;background:radial-gradient(ellipse at center,#0b1528,#060b16);border:1px solid var(--line)}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);gap:16px}
+.g2.even{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.readouts.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.g3{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:16px}
+.h-diag{height:300px}.h-wave{height:300px}.h-phasor{height:300px}.h-pow{height:360px}.h-two{height:260px}
+.readouts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.ro{background:rgba(6,11,22,.6);border:1px solid var(--line);border-radius:14px;padding:10px 14px;position:relative;overflow:hidden}
+.ro .k{font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:6px}
+.ro .v{font-family:var(--mono);font-size:24px;font-weight:600;line-height:1.3;font-variant-numeric:tabular-nums}
+.ro .s{font-size:12.5px;color:var(--dim)}
+.ro .bar{position:absolute;left:0;bottom:0;height:3px;background:currentColor;opacity:.85;box-shadow:0 0 8px currentColor;transition:width .05s linear}
+.ro.c-a{color:var(--amber)}.ro.c-b{color:var(--blue)}.ro.c-g{color:var(--green)}.ro.c-p{color:var(--pink)}.ro.c-w{color:#e6eefb}.ro.c-v{color:var(--violet)}
+.ro .k,.ro .s{color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:3px 10px;border-radius:999px;border:1px solid var(--line2);color:var(--dim);transition:.15s}
+.badge.on{color:#062014;background:var(--green);border-color:var(--green);box-shadow:0 0 16px rgba(62,224,143,.6)}
+.badge .d{width:7px;height:7px;border-radius:50%;background:currentColor}
+.statusline{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:12px;font-size:14px;color:var(--muted)}
+.caption{margin:18px 0 0;padding:14px 18px;border-left:3px solid var(--amber);background:linear-gradient(90deg,rgba(255,181,60,.08),transparent);border-radius:0 12px 12px 0}
+.caption .big{font-family:var(--serif);font-weight:900;font-size:clamp(19px,2.2vw,24px);color:#fff;letter-spacing:.03em}
+.caption .big .arr{color:var(--amber);margin:0 .3em}
+.caption p{margin:6px 0 0;color:var(--muted);font-size:15px}
+.caption.blue{border-left-color:var(--blue);background:linear-gradient(90deg,rgba(60,200,255,.08),transparent)}
+.caption.blue .big .arr{color:var(--blue)}
+.caption.green{border-left-color:var(--green);background:linear-gradient(90deg,rgba(62,224,143,.08),transparent)}
+.caption.violet{border-left-color:var(--violet);background:linear-gradient(90deg,rgba(177,140,255,.08),transparent)}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:16px}
+.fact{background:rgba(6,11,22,.45);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:14.5px;color:var(--muted)}
+.fact h4{margin:0 0 4px;color:#fff;font-size:15px}
+.meters{display:grid;gap:8px;margin-top:12px}
+.meter{display:grid;grid-template-columns:34px 1fr 74px;align-items:center;gap:10px;font-size:13px}
+.meter .lab{font-family:var(--mono);font-weight:700}
+.meter .track{height:10px;border-radius:6px;background:#0a1324;border:1px solid var(--line);overflow:hidden;position:relative}
+.meter .track i{position:absolute;left:0;top:0;bottom:0;border-radius:6px;background:currentColor;box-shadow:0 0 10px currentColor}
+.meter .track .thr{position:absolute;top:-2px;bottom:-2px;width:2px;background:rgba(255,255,255,.35);left:86.6%}
+.meter .val{font-family:var(--mono);text-align:right;color:var(--text)}
+.note{font-size:13px;color:var(--dim);margin:10px 0 0}
+.toggle{display:inline-flex;align-items:center;gap:12px;cursor:pointer;user-select:none;border:1px solid rgba(177,140,255,.45);background:rgba(177,140,255,.08);color:#ece4ff;border-radius:999px;padding:8px 16px 8px 8px;font-size:15px}
+.toggle .sw{width:42px;height:24px;border-radius:999px;background:#1a2440;position:relative;transition:.2s;border:1px solid var(--line2)}
+.toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#93a6c2;transition:.2s}
+.toggle[aria-pressed=true] .sw{background:rgba(177,140,255,.4)}
+.toggle[aria-pressed=true] .sw::after{left:20px;background:var(--violet);box-shadow:0 0 10px var(--violet)}
+#twoBody{display:none;margin-top:16px}
+#twoBody.show{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.obsolete{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.1em;color:#1a0f00;background:var(--amber);border-radius:6px;padding:0 8px;margin-left:6px;vertical-align:2px}
+table.cmp{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:6px}
+table.cmp th,table.cmp td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+table.cmp th{color:var(--muted);font-weight:500;font-size:13px}
+table.cmp td:first-child{color:var(--muted);white-space:nowrap}
+.tblwrap{overflow-x:auto}
+footer{color:var(--dim);font-size:13px;text-align:center;margin-top:30px}
+
+@media (max-width:860px){
+  main{padding:0 14px 60px}
+  header.hero{padding:32px 0 14px}
+  .lead{font-size:15.5px}
+  .g2,.g3{grid-template-columns:minmax(0,1fr)}
+  .card{padding:16px 14px}
+  .h-diag{height:250px}.h-wave{height:230px}.h-phasor{height:250px}.h-pow{height:330px}.h-two{height:220px}
+  .readouts{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .readouts .ro:last-child{grid-column:1/-1}
+  .ro .v{font-size:20px}
+  .facts{grid-template-columns:minmax(0,1fr)}
+  .controls{margin:12px -4px 20px;padding:8px 10px;gap:8px 10px}
+  .btn{padding:6px 12px;font-size:14px}
+  .g2.even,.readouts.two{grid-template-columns:minmax(0,1fr)}
+  .readouts.two .ro:last-child{grid-column:auto}
+  .speed{flex-basis:100%;order:3;gap:8px}
+  .speed output{min-width:0}
+  .slow{display:inline}
+  .clock{font-size:11.5px;line-height:1.35}
+  .clock .sep{display:block;height:0;overflow:hidden}
+  .realnote{display:none}
+  .ro .k{flex-direction:column;gap:0}
+  .ro{padding:8px 12px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+  <span class="kicker">AC Power · 互動比較</span>
+  <h1><span class="a">單相三線</span><span class="vs">vs</span><span class="b">三相四線</span></h1>
+  <p class="lead">家裡的 110 V 與 220 V 從哪裡來？工廠的「三相電」又差在哪裡？用同一個時間軸，把波形、相量和功率一起放慢來看。下方所有動畫共用同一條<b>時間游標</b>，可以暫停、慢放或一步一步前進。</p>
+  <a class="back" href="index.html">← 回到《電的旅程》主頁</a>
+</header>
+
+<div class="controls" role="group" aria-label="動畫控制">
+  <button class="btn amber" id="playBtn" aria-label="暫停"><svg viewBox="0 0 16 16" fill="currentColor" id="playIcon"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg><span id="playTxt">暫停</span></button>
+  <button class="btn" id="stepBtn" title="前進 15°（約 0.69 ms @ 60 Hz）"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M3 2.5v11l7-5.5z"/><rect x="11" y="2.5" width="2.5" height="11" rx="1"/></svg>單步 +15°</button>
+  <div class="speed">
+    <label for="speed">速度</label>
+    <input type="range" id="speed" min="0" max="100" value="45" aria-describedby="speedOut">
+    <output id="speedOut">0.30 Hz</output><span class="slow" id="slowTag"></span>
+  </div>
+  <div class="clock">相角 θ = <b id="clkDeg">0°</b><span class="sep">　｜　</span>換算 60 Hz：<b id="clkMs">0.00 ms</b></div>
+  <p class="realnote" id="realNote">慢動作示意：真實台灣電網是 <b>60 Hz</b>（每秒 60 個循環，一個循環 16.7 ms），目前約放慢 200 倍。</p>
+</div>
+
+<!-- 1 單相三線 -->
+<section class="panel" id="p1">
+  <div class="card">
+    <div class="ptitle amber"><span class="num">01</span><h2>單相三線：家用 110 V / 220 V</h2></div>
+    <p class="sub">桿上（或地下）變壓器的二次側線圈從<b>正中間抽頭</b>接地，當作中性線 N；線圈兩端各引出一條火線 L1、L2。</p>
+    <div class="g2">
+      <canvas id="cv1d" class="cv h-diag" aria-label="單相三線變壓器與中央抽頭示意圖，導線亮度隨瞬時電壓變化" role="img"></canvas>
+      <canvas id="cv1w" class="cv h-wave" aria-label="L1 與 L2 對中性線的電壓波形，互為鏡像" role="img"></canvas>
+    </div>
+    <div class="readouts">
+      <div class="ro c-a"><div class="k"><span>L1–N 瞬時電壓</span><span>有效值 110 V</span></div><div class="v" id="r1a">+0.0 V</div><div class="s">峰值 ±155.6 V（= 110 × √2）</div><i class="bar" id="b1a"></i></div>
+      <div class="ro c-b"><div class="k"><span>L2–N 瞬時電壓</span><span>有效值 110 V</span></div><div class="v" id="r1b">+0.0 V</div><div class="s">永遠與 L1–N 大小相同、正負相反</div><i class="bar" id="b1b"></i></div>
+      <div class="ro c-w"><div class="k"><span>L1–L2 瞬時電壓</span><span>有效值 220 V</span></div><div class="v" id="r1c">+0.0 V</div><div class="s">峰值 ±311 V，兩段 110 V 串起來</div><i class="bar" id="b1c"></i></div>
+    </div>
+    <div class="statusline">
+      <span class="badge" id="zeroBadge"><span class="d"></span>L1、L2 同時歸零</span>
+      <span class="badge" id="peakBadge"><span class="d"></span>同時到達峰值（一正一負）</span>
+      <span>綠色虛線＝兩條火線<b>同一瞬間</b>過零的時刻（每 8.33 ms 一次）。</span>
+    </div>
+    <div class="caption">
+      <div class="big">一種波形、一正一反<span class="arr">→</span>單相</div>
+      <p>L1 與 L2 只是從同一個線圈的兩端、以中點為基準去量，所以看起來「相差 180°」，其實是<b>同一個波形的正面與反面</b>：同時到頂、同時歸零，沒有任何時間上的錯開。因此台灣家用的 110/220 V 叫做「單相三線」，不是兩相、也不是三相。110 V 給插座與照明，220 V（L1–L2）給冷氣、電熱水器等大功率電器。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2 三相四線 -->
+<section class="panel" id="p2">
+  <div class="card">
+    <div class="ptitle"><span class="num">02</span><h2>三相四線：220 / 380 V（Y 接）</h2></div>
+    <p class="sub">發電機或變壓器有<b>三組線圈，彼此相隔 120°</b>，一端接在一起成為中性點 N，另一端分別引出 L1、L2、L3。</p>
+    <div class="g3">
+      <canvas id="cv2d" class="cv h-diag" aria-label="三組相隔 120 度的 Y 接線圈示意圖" role="img"></canvas>
+      <canvas id="cv2p" class="cv h-phasor" aria-label="三支旋轉的相量箭頭" role="img"></canvas>
+    </div>
+    <canvas id="cv2w" class="cv h-wave" style="margin-top:16px" aria-label="三個相隔 120 度的正弦波" role="img"></canvas>
+    <div class="g2 even" style="margin-top:4px" id="p2grid">
+      <div>
+        <div class="meters" id="meters">
+          <div class="meter" style="color:var(--amber)"><span class="lab">L1</span><span class="track"><i id="m1"></i><span class="thr"></span></span><span class="val" id="mv1">0 V</span></div>
+          <div class="meter" style="color:var(--green)"><span class="lab">L2</span><span class="track"><i id="m2"></i><span class="thr"></span></span><span class="val" id="mv2">0 V</span></div>
+          <div class="meter" style="color:var(--pink)"><span class="lab">L3</span><span class="track"><i id="m3"></i><span class="thr"></span></span><span class="val" id="mv3">0 V</span></div>
+        </div>
+        <p class="note">長條＝各相對 N 電壓的大小 |v|；白色刻線＝峰值的 86.6%。</p>
+      </div>
+      <div class="readouts two" style="margin-top:12px">
+        <div class="ro c-a"><div class="k"><span>此刻最強的一相</span></div><div class="v" id="r2max">L1 100%</div><div class="s">任何瞬間都 ≥ 86.6% 峰值</div></div>
+        <div class="ro c-w"><div class="k"><span>三相瞬時電壓和</span></div><div class="v" id="r2sum">0 V</div><div class="s">平衡時永遠為 0 → 中性線幾乎無電流</div></div>
+      </div>
+    </div>
+    <div class="facts">
+      <div class="fact"><h4>相線對 N：220 V</h4>峰值 ±311 V。三組波形各自都是 220 V 有效值。</div>
+      <div class="fact"><h4>相線之間：380 V</h4>兩相相差 120°，相減後有效值 = 220 × √3 ≈ 380 V。</div>
+      <div class="fact"><h4>台灣常見規格</h4>工廠、大樓常用 220/380 V 三相四線；也有 120/208 V 三相四線與 220 V 三相三線。</div>
+    </div>
+    <div class="caption blue">
+      <div class="big">三種錯開的波形、輪流接力<span class="arr">→</span>三相</div>
+      <p>三個波形依序晚 120°（60 Hz 下約 5.56 ms）出發：一相正在下降時，下一相正好接手衝上峰值。看上方虛線包絡：<b>任何瞬間至少有一相 ≥ 峰值的 86.6%</b>，永遠不會三條同時歸零。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 功率 -->
+<section class="panel" id="p3">
+  <div class="card">
+    <div class="ptitle green"><span class="num">03</span><h2>瞬時功率：脈動 vs 平直</h2></div>
+    <p class="sub">同樣平均送 3 kW 給<b>電阻性負載</b>（例如電熱器），看看每一瞬間實際送出的功率 p(t)。</p>
+    <canvas id="cv3" class="cv h-pow" aria-label="單相瞬時功率脈動與三相總功率平直的比較" role="img"></canvas>
+    <div class="readouts">
+      <div class="ro c-a"><div class="k"><span>單相 瞬時功率</span></div><div class="v" id="r3a">0.00 kW</div><div class="s">p = 2P·sin²θ，在 0 ～ 6 kW 間跳動</div><i class="bar" id="b3a"></i></div>
+      <div class="ro c-g"><div class="k"><span>三相 總瞬時功率</span></div><div class="v" id="r3b">3.00 kW</div><div class="s">三相 sin² 相加 = 常數</div><i class="bar" id="b3b"></i></div>
+      <div class="ro c-w"><div class="k"><span>兩者平均功率</span></div><div class="v">3.00 kW</div><div class="s">平均一樣，差在「平不平順」</div></div>
+    </div>
+    <div class="caption green">
+      <div class="big">單相一跳一跳，三相一路平穩</div>
+      <p>單相電阻負載的功率是 sin² 形狀：每個電壓週期<b>歸零兩次</b>（60 Hz 電網即每秒 120 次脈動）。三相平衡負載把三個錯開 120° 的 sin² 加起來，正好是一條<b>平直的線</b>。對馬達來說，功率平穩代表轉矩平順、振動和噪音小；三相電流還會自然形成「旋轉磁場」，讓感應馬達不需啟動電容或輔助線圈就能自己轉起來。這就是工廠、電梯、大型冷凍設備偏好三相電的原因。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 兩相 -->
+<section class="panel" id="p4">
+  <div class="card">
+    <div class="ptitle violet"><span class="num">04</span><h2>番外：兩相電<span class="obsolete">已淘汰</span></h2></div>
+    <p class="sub">歷史上曾經存在「真正的兩相」：兩個相差 <b>90°</b>（不是 180°）的波形。</p>
+    <button class="toggle" id="twoToggle" aria-pressed="false" aria-controls="twoBody"><span class="sw"></span><span id="twoTxt">顯示兩相（歷史）</span></button>
+    <div id="twoBody">
+      <canvas id="cv4" class="cv h-two" aria-label="兩個相差 90 度的正弦波與相量" role="img"></canvas>
+      <div class="caption violet">
+        <p style="margin:0">1890 年代交流電剛起步時，Tesla／Westinghouse 系統曾採用兩相制，例如 1895 年尼加拉瀑布水力電廠的發電機。兩相平衡負載的總功率（sin² + cos² = 1）其實也很平穩，但通常需要四條線（或三條線且共用線較粗）；三相用較少的銅就能送出相同功率，因此很快成為全球標準，兩相制<b>今日幾乎已不再使用</b>。</p>
+        <p>⚠ 常有人把家裡 L1–L2 的 220 V 叫「兩相」，這是誤稱：L1、L2 相差 180°、波形同步歸零（見第 1 區），本質仍是<b>單相</b>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="card">
+    <div class="ptitle"><span class="num">∑</span><h2>一張表看懂</h2></div>
+    <div class="tblwrap">
+    <table class="cmp">
+      <tr><th></th><th>單相三線（家用）</th><th>三相四線（工廠／大樓）</th></tr>
+      <tr><td>導線</td><td>L1、L2、N</td><td>L1、L2、L3、N</td></tr>
+      <tr><td>波形</td><td>一種波形，L1 與 L2 一正一反</td><td>三種波形，依序錯開 120°</td></tr>
+      <tr><td>電壓</td><td>110 V（L–N）／220 V（L1–L2）</td><td>220 V（L–N）／380 V（L–L）</td></tr>
+      <tr><td>會同時歸零嗎</td><td>會，每 8.33 ms 一次</td><td>不會，至少一相 ≥ 86.6%</td></tr>
+      <tr><td>瞬時功率</td><td>脈動，每週期歸零兩次</td><td>平衡時為定值</td></tr>
+      <tr><td>典型用途</td><td>住宅插座、照明、家用冷氣</td><td>馬達、電梯、中央空調、工業設備</td></tr>
+    </table>
+    </div>
+    <p class="note">動畫中的導線顏色僅為區分用，不代表實際配線色碼。實際電壓允許有些許偏差；任何線路都應由合格電工處理，碰觸前先驗電。</p>
+  </div>
+</section>
+<footer>電的旅程 · 單相 vs 三相互動比較</footer>
+</main>
+
+<script>
+(()=>{
+'use strict';
+const TAU=Math.PI*2, DEG=Math.PI/180;
+const C={amber:'#ffb53c',blue:'#3cc8ff',green:'#3ee08f',pink:'#ff5fa2',violet:'#b18cff',red:'#ff4d5e',white:'#e6eefb',muted:'#93a6c2',dim:'#5d708d',line:'#1d2c45',line2:'#28405f',zero:'#3ee08f'};
+const MONO='12px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace';
+const SANS='"Noto Sans TC","Noto Sans CJK TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif';
+const $=s=>document.querySelector(s);
+const V1=110*Math.SQRT2;   // 155.56
+const V3=220*Math.SQRT2;   // 311.13
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- state ---------- */
+const S={th:0,playing:!reduce,hz:0.3,two:false};
+const speedMap=v=>{const t=v/100;return 0.04*Math.pow(1.2/0.04,t);}; // 0.04 .. 1.2 Hz, log scale
+
+/* ---------- canvas registry ---------- */
+const canvases=[];
+function reg(id,draw){
+  const cv=document.getElementById(id),ctx=cv.getContext('2d');
+  const o={cv,ctx,w:0,h:0,draw,vis:true};
+  const fit=()=>{const r=cv.getBoundingClientRect();if(!r.width)return;const d=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(r.width*d);cv.height=Math.round(r.height*d);o.w=r.width;o.h=r.height;ctx.setTransform(d,0,0,d,0,0);o.dirty=true;};
+  new ResizeObserver(fit).observe(cv);fit();
+
+  canvases.push(o);return o;
+}
+
+/* ---------- drawing helpers ---------- */
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;}
+function path(ctx,pts){ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)ctx.lineTo(pts[i][0],pts[i][1]);}
+function wire(ctx,pts,col,I){ // I: 0..1 glow intensity
+  ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+  path(ctx,pts);ctx.strokeStyle='#162238';ctx.lineWidth=6;ctx.stroke();
+  path(ctx,pts);ctx.strokeStyle=rgba(col,.18+.82*I);ctx.lineWidth=1.6+2.6*I;ctx.shadowColor=col;ctx.shadowBlur=2+24*I;ctx.stroke();
+  if(I>.55){path(ctx,pts);ctx.strokeStyle=rgba('#ffffff',(I-.55)*1.2);ctx.lineWidth=1;ctx.shadowBlur=0;ctx.stroke();}
+  ctx.restore();
+}
+function coil(ctx,x1,y1,x2,y2,n,amp,col,I,side){ // loops between two points
+  const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L,nx=-uy*side,ny=ux*side;
+  const pts=[];const N=n*24;
+  for(let i=0;i<=N;i++){const t=i/N;const a=t*n*TAU;const along=t*L-Math.sin(a)*amp*.35;const off=(1-Math.cos(a))*.5*amp;
+    pts.push([x1+ux*along+nx*off,y1+uy*along+ny*off]);}
+  wire(ctx,pts,col,I);
+}
+function label(ctx,txt,x,y,col,opt={}){ctx.save();ctx.font=opt.font||`600 ${opt.size||13}px ${SANS}`;ctx.fillStyle=col;ctx.textAlign=opt.align||'left';ctx.textBaseline=opt.base||'middle';
+  if(opt.glow){ctx.shadowColor=col;ctx.shadowBlur=opt.glow;}ctx.fillText(txt,x,y);ctx.restore();}
+function pill(ctx,txt,x,y,col,align='right'){ctx.save();ctx.font=`600 12px ui-monospace,Menlo,Consolas,monospace`;const w=ctx.measureText(txt).width+12;const X=align==='right'?x-w:x;
+  ctx.fillStyle='rgba(6,11,22,.85)';ctx.strokeStyle=rgba(col,.6);ctx.lineWidth=1;rr(ctx,X,y-10,w,20,6);ctx.fill();ctx.stroke();
+  ctx.fillStyle=col;ctx.textBaseline='middle';ctx.fillText(txt,X+6,y+.5);ctx.restore();}
+function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function ground(ctx,x,y){ctx.save();ctx.strokeStyle=C.muted;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x,y+10);
+  for(let i=0;i<3;i++){const w=12-i*4;ctx.moveTo(x-w,y+10+i*4);ctx.lineTo(x+w,y+10+i*4);}ctx.stroke();ctx.restore();}
+const fmtV=v=>(v>=0?'+':'−')+Math.abs(v).toFixed(1)+' V';
+const fmtV0=v=>(v>=0?'+':'−')+Math.abs(v).toFixed(0)+' V';
+
+/* generic wave plot in a rect */
+function plot(ctx,R,o){
+  const {x,y,w,h}=R,cyc=o.cycles||2,span=cyc*TAU,ymin=o.ymin,ymax=o.ymax;
+  const X=t=>x+t/span*w, Y=v=>y+h-(v-ymin)/(ymax-ymin)*h;
+  ctx.save();
+  // grid
+  ctx.font=MONO;ctx.lineWidth=1;
+  (o.yt||[]).forEach(([v,lab])=>{ctx.strokeStyle=v===0?C.line2:rgba('#28405f',.45);ctx.setLineDash(v===0?[]:[3,4]);ctx.beginPath();ctx.moveTo(x,Y(v));ctx.lineTo(x+w,Y(v));ctx.stroke();
+    ctx.setLineDash([]);ctx.fillStyle=C.dim;ctx.textAlign='right';ctx.textBaseline='middle';if(lab)ctx.fillText(lab,x-6,Y(v));});
+  // x ticks: half cycles in ms @60Hz
+  ctx.textAlign='center';ctx.textBaseline='top';
+  for(let k=0;k<=cyc*4;k++){const t=k*TAU/4,xx=X(t);ctx.strokeStyle=rgba('#28405f',k%2?.25:.5);ctx.beginPath();ctx.moveTo(xx,y);ctx.lineTo(xx,y+h);ctx.stroke();
+    if(o.xlab!==false&&k%2===0&&(w>360||k%4===0)){ctx.fillStyle=C.dim;ctx.fillText((k/4/60*1000).toFixed(1).replace('.0','')+(k?'':' ms'),xx,y+h+5);}}
+  if(o.before)o.before(X,Y);
+  const cur=((S.th%span)+span)%span, cx=X(cur);
+  const N=Math.max(120,Math.round(w));
+  o.traces.forEach(tr=>{
+    const pts=[];for(let i=0;i<=N;i++){const t=i/N*span;pts.push([X(t),Y(tr.f(t))]);}
+    ctx.save();ctx.lineJoin='round';
+    if(tr.dash)ctx.setLineDash(tr.dash);
+    path(ctx,pts);ctx.strokeStyle=rgba(tr.c,tr.faint?0.22:.28);ctx.lineWidth=tr.lw||2;ctx.stroke();
+    // bright part up to cursor
+    const k=Math.round(cur/span*N);
+    if(k>0){path(ctx,pts.slice(0,k+1));ctx.strokeStyle=rgba(tr.c,tr.faint?.45:1);ctx.lineWidth=tr.lw||2.4;if(!tr.faint){ctx.shadowColor=tr.c;ctx.shadowBlur=10;}ctx.stroke();}
+    ctx.restore();
+  });
+  if(o.after)o.after(X,Y,cx);
+  // cursor
+  ctx.save();ctx.strokeStyle='rgba(255,255,255,.75)';ctx.lineWidth=1.2;ctx.shadowColor='#fff';ctx.shadowBlur=8;ctx.beginPath();ctx.moveTo(cx,y-4);ctx.lineTo(cx,y+h+2);ctx.stroke();ctx.restore();
+  o.traces.forEach(tr=>{if(tr.nodot)return;const v=tr.f(cur);ctx.save();ctx.fillStyle=tr.c;ctx.shadowColor=tr.c;ctx.shadowBlur=14;ctx.beginPath();ctx.arc(cx,Y(v),4.5,0,TAU);ctx.fill();ctx.restore();});
+  // legend
+  if(o.legend||o.title){ctx.save();ctx.font=`600 12px ${SANS}`;ctx.textBaseline='middle';ctx.textAlign='left';const ly=y-15;
+    const items=(o.legend||[]).map(([t,c])=>[t,c,ctx.measureText(t).width+18]);const tot=items.reduce((a,b)=>a+b[2],0)+Math.max(0,items.length-1)*14;
+    let lx=x+w-tot;
+    if(o.title){ctx.font=`500 11px ${SANS}`;const tw=ctx.measureText(o.title).width;if(tw+16<lx-x||!items.length){ctx.fillStyle=C.dim;ctx.fillText(o.title,x,ly);}ctx.font=`600 12px ${SANS}`;}
+    items.forEach(([t,c,wd])=>{ctx.fillStyle=c;ctx.fillRect(lx,ly-1.5,12,3);ctx.fillText(t,lx+17,ly+.5);lx+=wd+14;});ctx.restore();}
+  ctx.restore();
+  return {X,Y,cx,cur};
+}
+const nearZero=(th,tolDeg)=>{const m=((th%Math.PI)+Math.PI)%Math.PI;return Math.min(m,Math.PI-m)<tolDeg*DEG;};
+
+/* ================= PANEL 1 ================= */
+const v1a=t=>V1*Math.sin(t), v1b=t=>-V1*Math.sin(t);
+reg('cv1d',o=>{
+  const {ctx,w,h}=o;ctx.clearRect(0,0,w,h);
+  const a=v1a(S.th),Ia=Math.abs(a)/V1;
+  const xp=Math.max(30,w*.1), xs=Math.max(92,w*.29), top=h*.2, bot=h*.8, mid=(top+bot)/2, xe=w-12;
+  // core
+  ctx.save();ctx.strokeStyle='#33465f';ctx.lineWidth=3;const xc1=(xp+xs)/2-5,xc2=xc1+10;
+  [xc1,xc2].forEach(xx=>{ctx.beginPath();ctx.moveTo(xx,top-8);ctx.lineTo(xx,bot+8);ctx.stroke();});ctx.restore();
+  // primary (static glow to show energized)
+  coil(ctx,xp,top+10,xp,bot-10,6,14,'#7d8fb0',.25+.35*Ia,-1);
+  wire(ctx,[[xp,top+10],[xp,top-6],[6,top-6]],'#7d8fb0',.2);wire(ctx,[[xp,bot-10],[xp,bot+6],[6,bot+6]],'#7d8fb0',.2);
+  label(ctx,'一次側',xp-14,top-26,C.muted,{size:12});
+  label(ctx,'高壓 11.4 kV 等',xp-14,bot+26,C.dim,{size:11});
+  // secondary halves
+  coil(ctx,xs,top,xs,mid,4,14,C.amber,Ia,1);
+  coil(ctx,xs,mid,xs,bot,4,14,C.blue,Ia,1);
+  label(ctx,'二次側',xs+8,bot+26,C.muted,{size:12});
+  // loads x positions
+  const lx1=w*.56,lx2=w*.70,lx3=w*.85;
+  // wires
+  wire(ctx,[[xs,top],[xe,top]],C.amber,Ia);
+  wire(ctx,[[xs,mid],[xe,mid]],'#c9d4e6',.12);
+  wire(ctx,[[xs,bot],[xe,bot]],C.blue,Ia);
+  // center tap dot + ground
+  ctx.fillStyle='#e6eefb';ctx.beginPath();ctx.arc(xs,mid,4,0,TAU);ctx.fill();
+  ground(ctx,xs+26,mid);ctx.fillStyle='#e6eefb';ctx.beginPath();ctx.arc(xs+26,mid,2.5,0,TAU);ctx.fill();
+  // labels on wires
+  label(ctx,'L1 火線',xs+44,top-12,C.amber,{size:12});
+  label(ctx,'N 中性線（中央抽頭）',xs+44,mid-12,'#c9d4e6',{size:12});
+  label(ctx,'L2 火線',xs+44,bot+13,C.blue,{size:12});
+  // polarity signs
+  const sp=a>=0?'+':'−',sn=a>=0?'−':'+';
+  label(ctx,sp,xs-22,top+4,C.amber,{size:18,align:'center',glow:8*Ia});
+  label(ctx,sn,xs-22,bot-4,C.blue,{size:18,align:'center',glow:8*Ia});
+  // loads (bulbs) : glow ~ power ~ v^2
+  const P=Ia*Ia;
+  const bulb=(x,y1,y2,txt,col,hop)=>{
+    const ym=(y1+y2)/2,r=Math.min(11,(y2-y1)/5);
+    ctx.save();ctx.strokeStyle='#4a5f80';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(x,y1);
+    if(hop){ctx.lineTo(x,hop-6);ctx.arc(x,hop,6,-Math.PI/2,Math.PI/2,false);} // hop over N
+    ctx.lineTo(x,ym-r);ctx.moveTo(x,ym+r);
+    if(hop&&hop>ym){ctx.lineTo(x,hop-6);ctx.arc(x,hop,6,-Math.PI/2,Math.PI/2,false);}
+    ctx.lineTo(x,y2);ctx.stroke();
+    [y1,y2].forEach(yy=>{ctx.fillStyle='#8aa0c0';ctx.beginPath();ctx.arc(x,yy,2.5,0,TAU);ctx.fill();});
+    const g=ctx.createRadialGradient(x,ym,0,x,ym,r*3.2);g.addColorStop(0,rgba(col,.75*P));g.addColorStop(1,rgba(col,0));
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,ym,r*3.2,0,TAU);ctx.fill();
+    ctx.fillStyle=rgba('#fff4d6',.15+.85*P);ctx.strokeStyle=rgba(col,.8);ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(x,ym,r,0,TAU);ctx.fill();ctx.stroke();
+    label(ctx,txt,x+r+4,ym,C.muted,{size:11});
+    ctx.restore();
+  };
+  if(w>300){
+    bulb(lx1,top,mid,'110V',C.amber);
+    bulb(lx2,mid,bot,'110V',C.blue);
+    // 220 V load spans L1-L2, hops over N
+    const ym=mid+ (bot-mid)*.5;
+    ctx.save();ctx.strokeStyle='#4a5f80';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(lx3,top);ctx.lineTo(lx3,mid-6);ctx.arc(lx3,mid,6,-Math.PI/2,Math.PI/2,false);ctx.lineTo(lx3,ym-9);ctx.moveTo(lx3,ym+9);ctx.lineTo(lx3,bot);ctx.stroke();ctx.restore();
+    [top,bot].forEach(yy=>{ctx.fillStyle='#8aa0c0';ctx.beginPath();ctx.arc(lx3,yy,2.5,0,TAU);ctx.fill();});
+    const g=ctx.createRadialGradient(lx3,ym,0,lx3,ym,34);g.addColorStop(0,rgba('#ffffff',.55*P));g.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(lx3,ym,34,0,TAU);ctx.fill();
+    ctx.save();ctx.fillStyle=rgba('#ffffff',.08+.5*P);ctx.strokeStyle='#c9d4e6';ctx.lineWidth=1.5;rr(ctx,lx3-12,ym-9,24,18,4);ctx.fill();ctx.stroke();ctx.restore();
+    label(ctx,'220V',lx3+16,ym,C.muted,{size:11});
+  }
+  pill(ctx,fmtV0(a),xe,top+16,C.amber);
+  pill(ctx,fmtV0(-a),xe,bot-16,C.blue);
+  label(ctx,'0 V',xe-4,mid+14,C.dim,{size:11,align:'right',font:MONO});
+});
+reg('cv1w',o=>{
+  const {ctx,w,h}=o;ctx.clearRect(0,0,w,h);
+  const R={x:46,y:30,w:w-58,h:h-58};
+  plot(ctx,R,{ymin:-190,ymax:190,yt:[[V1,'+155'],[0,'0'],[-V1,'−155']],
+    traces:[{f:v1a,c:C.amber},{f:v1b,c:C.blue}],
+    legend:[['L1–N',C.amber],['L2–N',C.blue]],
+    before:(X,Y)=>{ // zero-crossing markers
+      const on=nearZero(S.th,7);
+      for(let k=0;k<=4;k++){const xx=X(k*Math.PI);const curk=Math.round((((S.th%(4*Math.PI))+4*Math.PI)%(4*Math.PI))/Math.PI)%5;
+        const hot=on&&(curk===k||(k===4&&curk===0)||(k===0&&curk===4));
+        ctx.save();ctx.strokeStyle=rgba(C.zero,hot?.95:.4);ctx.setLineDash([4,4]);ctx.lineWidth=hot?2:1;if(hot){ctx.shadowColor=C.zero;ctx.shadowBlur=14;}
+        ctx.beginPath();ctx.moveTo(xx,R.y);ctx.lineTo(xx,R.y+R.h);ctx.stroke();ctx.setLineDash([]);
+        ctx.fillStyle=rgba(C.zero,hot?1:.6);ctx.beginPath();ctx.arc(xx,Y(0),hot?6:3.5,0,TAU);ctx.fill();ctx.restore();}
+      // peak markers pairs
+      for(let k=0;k<4;k++){const t=(k+.5)*Math.PI,xx=X(t),s=k%2?-1:1;
+        ctx.save();ctx.strokeStyle='rgba(255,255,255,.18)';ctx.setLineDash([2,3]);ctx.beginPath();ctx.moveTo(xx,Y(V1*s));ctx.lineTo(xx,Y(-V1*s));ctx.stroke();ctx.restore();}
+    },
+    after:(X,Y,cx)=>{
+      if(nearZero(S.th,7)){label(ctx,'同時歸零！',Math.min(cx+8,R.x+R.w-70),R.y+R.h-12,C.zero,{size:13,glow:10});}
+      // L1-L2 bracket at cursor
+      const a=v1a(S.th);if(Math.abs(a)>20){ctx.save();ctx.strokeStyle='rgba(230,238,251,.55)';ctx.lineWidth=1;const bx=cx>R.x+R.w-60?cx-12:cx+12;
+        ctx.beginPath();ctx.moveTo(bx,Y(a));ctx.lineTo(bx,Y(-a));ctx.moveTo(bx-4,Y(a));ctx.lineTo(bx+4,Y(a));ctx.moveTo(bx-4,Y(-a));ctx.lineTo(bx+4,Y(-a));ctx.stroke();
+        label(ctx,'L1–L2 '+fmtV0(2*a),cx>R.x+R.w-60?bx-6:bx+6,Y(0)+(a>0?-14:14),'#e6eefb',{size:11,align:cx>R.x+R.w-60?'right':'left',font:'600 11px ui-monospace,Menlo,monospace'});ctx.restore();}
+    },title:'對中性線 N 的電壓（V）'});
+});
+
+/* ================= PANEL 2 ================= */
+const P3=[C.amber,C.green,C.pink], NM3=['L1','L2','L3'];
+const v3=(k,t)=>V3*Math.sin(t-k*TAU/3);
+reg('cv2d',o=>{
+  const {ctx,w,h}=o;ctx.clearRect(0,0,w,h);
+  const R=Math.min(w*.17,h*.33), cx=Math.max(R*1.15+14,w*.26), cy=h*.53, xe=w-12;
+  const ang=[180,60,300].map(d=>d*DEG); // L1 left, L2 upper-right, L3 lower-right (sequence L1→L2→L3)
+  const I=[0,1,2].map(k=>Math.abs(v3(k,S.th))/V3);
+  // coils
+  ang.forEach((a,k)=>{const ux=Math.cos(a),uy=-Math.sin(a);
+    wire(ctx,[[cx,cy],[cx+ux*R*.22,cy+uy*R*.22]],P3[k],I[k]);
+    coil(ctx,cx+ux*R*.22,cy+uy*R*.22,cx+ux*R*.86,cy+uy*R*.86,4,10,P3[k],I[k],1);
+    wire(ctx,[[cx+ux*R*.86,cy+uy*R*.86],[cx+ux*R,cy+uy*R]],P3[k],I[k]);});
+  // 120° arcs
+  ctx.save();ctx.strokeStyle='rgba(147,166,194,.35)';ctx.setLineDash([2,3]);ctx.beginPath();ctx.arc(cx,cy,R*.5,-180*DEG,-60*DEG);ctx.stroke();ctx.restore();
+  label(ctx,'120°',cx-R*.18,cy-R*.5-8,C.dim,{size:11,align:'center'});
+  // routing
+  const yL1=cy-R*1.17, yL2=cy-R*.866, yN=cy, yL3=cy+R*.866;
+  const tip=k=>[cx+Math.cos(ang[k])*R,cy-Math.sin(ang[k])*R];
+  const t1=tip(0),t2=tip(1),t3=tip(2);
+  wire(ctx,[t1,[t1[0],yL1],[xe,yL1]],P3[0],I[0]);
+  wire(ctx,[t2,[xe,yL2]],P3[1],I[1]);
+  wire(ctx,[t3,[xe,yL3]],P3[2],I[2]);
+  wire(ctx,[[cx,cy],[xe,yN]],'#c9d4e6',.1);
+  ctx.fillStyle='#e6eefb';ctx.beginPath();ctx.arc(cx,cy,4.5,0,TAU);ctx.fill();
+  ground(ctx,cx+R*.62,cy);ctx.beginPath();ctx.arc(cx+R*.62,cy,2.5,0,TAU);ctx.fill();
+  const lx=Math.max(t2[0]+10,cx+R*.75);
+  label(ctx,'L1',lx,yL1-11,P3[0],{size:12});
+  label(ctx,'L2',lx+(w>420?0:0),yL2+11,P3[1],{size:12});
+  label(ctx,'N 中性點',cx+R+8,yN-11,'#c9d4e6',{size:12});
+  label(ctx,'L3',lx,yL3+12,P3[2],{size:12});
+  [0,1,2].forEach(k=>pill(ctx,fmtV0(v3(k,S.th)),xe,[yL1,yL2,yL3][k]+(k===0?15:k===1?-0:-0)+(k===1?14:k===2?-14:0),P3[k]));
+  label(ctx,'0 V',xe-4,yN+14,C.dim,{size:11,align:'right',font:MONO});
+  label(ctx,'Y 接（星形）三組線圈',12,16,C.dim,{size:11});
+});
+reg('cv2p',o=>{
+  const {ctx,w,h}=o;ctx.clearRect(0,0,w,h);
+  const r=Math.min(h*.36,w*.3), cx=Math.min(w*.42,w-r-70), cy=h*.5, ax=cx+r+38;
+  ctx.save();
+  ctx.strokeStyle=C.line2;ctx.lineWidth=1;ctx.beginPath();ctx.arc(cx,cy,r,0,TAU);ctx.stroke();
+  ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(cx-r-8,cy);ctx.lineTo(ax+8,cy);ctx.moveTo(cx,cy-r-8);ctx.lineTo(cx,cy+r+8);ctx.stroke();ctx.setLineDash([]);
+  // projection axis
+  ctx.strokeStyle=C.muted;ctx.beginPath();ctx.moveTo(ax,cy-r);ctx.lineTo(ax,cy+r);ctx.stroke();
+  [[-1,'+311'],[1,'−311']].forEach(([s,t])=>{ctx.beginPath();ctx.moveTo(ax-4,cy+s*r);ctx.lineTo(ax+4,cy+s*r);ctx.stroke();label(ctx,t,ax+7,cy+s*r,C.dim,{size:10,font:'10px ui-monospace,Menlo,monospace'});});
+  // rotation hint arc
+  ctx.strokeStyle='rgba(255,255,255,.18)';ctx.beginPath();ctx.arc(cx,cy,r+12,-(S.th+.3),-(S.th-.3)-0,true);ctx.stroke();
+  [0,1,2].forEach(k=>{
+    const a=S.th-k*TAU/3, tx=cx+Math.cos(a)*r, ty=cy-Math.sin(a)*r, col=P3[k], I=Math.abs(Math.sin(a));
+    ctx.setLineDash([2,4]);ctx.strokeStyle=rgba(col,.45);ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(ax,ty);ctx.stroke();ctx.setLineDash([]);
+    ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=3;ctx.shadowColor=col;ctx.shadowBlur=6+12*I;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(tx,ty);ctx.stroke();
+    const hx=Math.cos(a),hy=-Math.sin(a);ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx-hx*12-hy*6,ty-hy*12+hx*6);ctx.lineTo(tx-hx*12+hy*6,ty-hy*12-hx*6);ctx.closePath();ctx.fill();
+    ctx.beginPath();ctx.arc(ax,ty,5,0,TAU);ctx.fill();ctx.shadowBlur=0;
+    label(ctx,NM3[k],cx+Math.cos(a)*(r+18),cy-Math.sin(a)*(r+18),col,{size:12,align:'center'});
+  });
+  ctx.lineWidth=1;ctx.fillStyle='#e6eefb';ctx.beginPath();ctx.arc(cx,cy,3.5,0,TAU);ctx.fill();
+  ctx.restore();
+  label(ctx,'旋轉相量（逆時針）',12,16,C.dim,{size:11});
+  label(ctx,'箭頭在垂直軸上的投影 = 瞬時電壓',12,h-14,C.dim,{size:11});
+});
+reg('cv2w',o=>{
+  const {ctx,w,h}=o;ctx.clearRect(0,0,w,h);
+  const R={x:46,y:30,w:w-58,h:h-58};
+  const env=t=>Math.max(...[0,1,2].map(k=>Math.abs(v3(k,t))));
+  plot(ctx,R,{ymin:-370,ymax:370,yt:[[V3,'+311'],[V3*.866,''],[0,'0'],[-V3,'−311']],
+    traces:[{f:t=>v3(0,t),c:P3[0]},{f:t=>v3(1,t),c:P3[1]},{f:t=>v3(2,t),c:P3[2]},{f:env,c:'#ffffff',dash:[5,4],lw:1.4,faint:true,nodot:true}],
+    legend:[['L1',P3[0]],['L2',P3[1]],['L3',P3[2]],['最強一相 |v|','#c9d4e6']],
+    before:(X,Y)=>{ctx.save();ctx.fillStyle='rgba(255,255,255,.04)';ctx.fillRect(R.x,Y(V3),R.w,Y(V3*.866)-Y(V3));
+      label(ctx,'≥ 86.6%',R.x+R.w-4,Y(V3*.866)+9,C.dim,{size:10,align:'right',font:'10px ui-monospace,Menlo,monospace'});ctx.restore();}
+  ,title:'對中性線 N 的電壓（V）'});
+});
+
+/* ================= PANEL 3 ================= */
+const Pavg=3; // kW
+const p1=t=>2*Pavg*Math.sin(t)**2;
+const p3k=(k,t)=>2*(Pavg/3)*Math.sin(t-k*TAU/3)**2;
+const p3=t=>p3k(0,t)+p3k(1,t)+p3k(2,t);
+reg('cv3',o=>{
+  const {ctx,w,h}=o;ctx.clearRect(0,0,w,h);
+  const gap=34, hh=(h-30-gap-26)/2;
+  const R1={x:46,y:30,w:w-58,h:hh}, R2={x:46,y:30+hh+gap,w:w-58,h:hh};
+  const yt=[[6,'6'],[3,'3'],[0,'0']];
+  plot(ctx,R1,{ymin:0,ymax:6.6,yt,xlab:false,traces:[{f:p1,c:C.amber,lw:2.6}],
+    before:(X,Y)=>{ctx.save();const g=ctx.createLinearGradient(0,Y(6),0,Y(0));g.addColorStop(0,rgba(C.amber,.25));g.addColorStop(1,rgba(C.amber,0.02));ctx.fillStyle=g;
+      ctx.beginPath();ctx.moveTo(X(0),Y(0));const N=200;for(let i=0;i<=N;i++){const t=i/N*4*Math.PI;ctx.lineTo(X(t),Y(p1(t)));}ctx.lineTo(X(4*Math.PI),Y(0));ctx.closePath();ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,.4)';ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(R1.x,Y(3));ctx.lineTo(R1.x+R1.w,Y(3));ctx.stroke();ctx.restore();
+      for(let k=0;k<=4;k++){ctx.save();ctx.fillStyle=rgba(C.red,.8);ctx.beginPath();ctx.arc(X(k*Math.PI),Y(0),3.5,0,TAU);ctx.fill();ctx.restore();}},
+    after:(X,Y,cx)=>{if(nearZero(S.th,9))label(ctx,'功率歸零！',Math.min(cx+8,R1.x+R1.w-70),Y(0)-14,C.red,{size:13,glow:10});}});
+  label(ctx,'單相（電阻負載）  kW',R1.x,14,C.amber,{size:12});
+  label(ctx,'平均 3 kW',R1.x+R1.w-4,R1.y+R1.h*(1-3/6.6)-10,C.muted,{size:11,align:'right'});
+  plot(ctx,R2,{ymin:0,ymax:6.6,yt,traces:[{f:t=>p3k(0,t),c:P3[0],faint:true,lw:1.4,nodot:true},{f:t=>p3k(1,t),c:P3[1],faint:true,lw:1.4,nodot:true},{f:t=>p3k(2,t),c:P3[2],faint:true,lw:1.4,nodot:true},{f:p3,c:C.green,lw:3}],
+    before:(X,Y)=>{ctx.save();ctx.fillStyle=rgba(C.green,.08);ctx.fillRect(R2.x,Y(3),R2.w,Y(0)-Y(3));ctx.restore();}});
+  label(ctx,'三相平衡負載  kW（細線為各相，粗線為總和）',R2.x,R2.y-12,C.green,{size:12});
+});
+
+/* ================= PANEL 4 ================= */
+reg('cv4',o=>{
+  const {ctx,w,h}=o;ctx.clearRect(0,0,w,h);if(!S.two)return;
+  const small=w<520, r=Math.min(h*.32,small?w*.16:90), pcx=r+24, pcy=h*.5;
+  const A=S.th, B=S.th-Math.PI/2;
+  ctx.save();ctx.strokeStyle=C.line2;ctx.beginPath();ctx.arc(pcx,pcy,r,0,TAU);ctx.stroke();
+  [[A,C.violet,'A'],[B,C.blue,'B']].forEach(([a,c,n])=>{const tx=pcx+Math.cos(a)*r,ty=pcy-Math.sin(a)*r;ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=3;ctx.shadowColor=c;ctx.shadowBlur=10;
+    ctx.beginPath();ctx.moveTo(pcx,pcy);ctx.lineTo(tx,ty);ctx.stroke();ctx.beginPath();ctx.arc(tx,ty,4,0,TAU);ctx.fill();ctx.shadowBlur=0;
+    label(ctx,n,pcx+Math.cos(a)*(r+12),pcy-Math.sin(a)*(r+12),c,{size:12,align:'center'});});
+  ctx.restore();
+  label(ctx,'90°',pcx,pcy+r+16,C.dim,{size:11,align:'center'});
+  const x0=pcx+r+40;
+  const R={x:x0,y:26,w:w-x0-12,h:h-52};
+  plot(ctx,R,{ymin:-1.25,ymax:1.25,yt:[[1,''],[0,''],[-1,'']],traces:[{f:t=>Math.sin(t),c:C.violet},{f:t=>Math.sin(t-Math.PI/2),c:C.blue}],legend:[['A 相',C.violet],['B 相（晚 90°）',C.blue]]});
+});
+
+/* ---------- readouts ---------- */
+const el=id=>document.getElementById(id);
+const R1a=el('r1a'),R1b=el('r1b'),R1c=el('r1c'),B1a=el('b1a'),B1b=el('b1b'),B1c=el('b1c'),zb=el('zeroBadge'),pb=el('peakBadge');
+const M=[el('m1'),el('m2'),el('m3')],MV=[el('mv1'),el('mv2'),el('mv3')],R2max=el('r2max'),R2sum=el('r2sum'),R3a=el('r3a'),R3b=el('r3b'),B3a=el('b3a'),B3b=el('b3b');
+const clkDeg=el('clkDeg'),clkMs=el('clkMs');
+function readouts(){
+  const th=S.th,a=v1a(th);
+  R1a.textContent=fmtV(a);R1b.textContent=fmtV(-a);R1c.textContent=fmtV(2*a);
+  B1a.style.width=B1b.style.width=(Math.abs(a)/V1*100)+'%';B1c.style.width=(Math.abs(a)/V1*100)+'%';
+  zb.classList.toggle('on',nearZero(th,7));
+  const pm=((th%Math.PI)+Math.PI)%Math.PI;pb.classList.toggle('on',Math.abs(pm-Math.PI/2)<7*DEG);
+  let best=0,bi=0,sum=0;
+  for(let k=0;k<3;k++){const v=v3(k,th);sum+=v;const f=Math.abs(v)/V3;if(f>best){best=f;bi=k;}M[k].style.width=(f*100)+'%';MV[k].textContent=fmtV0(v);}
+  R2max.textContent=`${NM3[bi]} ${(best*100).toFixed(1)}%`;R2max.parentElement.style.color=P3[bi];
+  R2sum.textContent=(Math.abs(sum)<0.05?'0':sum.toFixed(1))+' V';
+  const pa=p1(th);R3a.textContent=pa.toFixed(2)+' kW';B3a.style.width=(pa/6*100)+'%';
+  R3b.textContent=p3(th).toFixed(2)+' kW';B3b.style.width='50%';
+  const deg=((th/DEG)%360+360)%360;clkDeg.textContent=deg.toFixed(0).padStart(3,'\u2007')+'°';
+  clkMs.textContent=(deg/360*1000/60).toFixed(2)+' ms';
+}
+
+/* ---------- controls ---------- */
+const playBtn=el('playBtn'),playTxt=el('playTxt'),playIcon=el('playIcon'),speed=el('speed'),speedOut=el('speedOut'),realNote=el('realNote');
+function setPlay(p){S.playing=p;playTxt.textContent=p?'暫停':'播放';playBtn.setAttribute('aria-label',p?'暫停':'播放');
+  playIcon.innerHTML=p?'<rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/>':'<path d="M4 2.5v11l9-5.5z"/>';}
+playBtn.addEventListener('click',()=>setPlay(!S.playing));
+el('stepBtn').addEventListener('click',()=>{setPlay(false);const st=15*DEG;S.th=(Math.floor(S.th/st+1e-6)+1)*st;});
+function setSpeed(){S.hz=speedMap(+speed.value);speedOut.textContent=S.hz.toFixed(S.hz<.1?3:2)+' Hz';
+  el('slowTag').textContent=`（慢 ${Math.round(60/S.hz)} 倍；實際 60 Hz）`;realNote.innerHTML=`慢動作示意：真實台灣電網是 <b>60 Hz</b>（每秒 60 個循環，一個循環 16.7 ms），目前約放慢 <b>${Math.round(60/S.hz).toLocaleString('zh-TW')}</b> 倍。`;}
+speed.addEventListener('input',setSpeed);setSpeed();
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'&&e.target.type!=='range')return;
+  if(e.code==='Space'&&e.target===document.body){e.preventDefault();setPlay(!S.playing);}
+  if(e.key==='.'||e.key==='ArrowRight'&&e.target===document.body){el('stepBtn').click();}});
+const tt=el('twoToggle'),tb=el('twoBody');
+tt.addEventListener('click',()=>{S.two=!S.two;tt.setAttribute('aria-pressed',S.two);tb.classList.toggle('show',S.two);el('twoTxt').textContent=S.two?'隱藏兩相':'顯示兩相（歷史）';});
+setPlay(S.playing);
+
+/* ---------- loop ---------- */
+let last=performance.now();
+function frame(now){
+  const dt=Math.max(0,Math.min(.1,(now-last)/1000));last=now;
+  if(S.playing){S.th+=TAU*S.hz*dt;if(S.th>TAU*1e4)S.th%=TAU*2;}
+  canvases.forEach(o=>{if(o.w)o.draw(o);});
+  readouts();
+  requestAnimationFrame(frame);
+}
+// expose for testing
+window.__phase={S,setPlay};
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
