@@ -406,7 +406,7 @@ footer .disc{display:inline-block;padding:12px 18px;border-radius:12px;border:1p
 
     <div class="card glow reveal" id="ohmCard">
       <div class="card-title"><span class="dot"></span>歐姆定律模擬器</div>
-      <canvas id="ohmCv" class="cv" style="height:250px" aria-label="電路動畫：電池、燈泡、電阻"></canvas>
+      <canvas id="ohmCv" class="cv" style="height:250px" aria-label="電路動畫：電池與燈泡（燈泡電阻 R）串成一圈，電流表"></canvas>
       <div class="ctrl"><div class="ctrl-row"><span>電壓 V</span><span class="val" id="ohmVv">12.0 V</span></div><input type="range" id="ohmV" class="amber" min="0" max="24" step="0.5" value="12" aria-label="電壓"></div>
       <div class="ctrl"><div class="ctrl-row"><span>電阻 R</span><span class="val" id="ohmRv" style="color:var(--pink)">60 Ω</span></div><input type="range" id="ohmR" min="10" max="400" step="5" value="60" aria-label="電阻"></div>
       <div class="ctrl"><div class="ctrl-row"><span>電流 I <span class="locked">🔒 由 V ÷ R 自動算出</span></span><span class="val" id="ohmIv" style="color:var(--blue)">0.200 A</span></div><input type="range" id="ohmI" min="0" max="2.4" step="0.001" value="0.2" disabled aria-label="電流（自動計算）" style="opacity:.75;cursor:not-allowed"></div>
@@ -977,11 +977,11 @@ $$('.quiz').forEach(box=>{const d=QUIZ[box.dataset.quiz];if(!d)return;
     if(V>0)flow(c,P,phase,24,BLUE,.25+.75*V/24,4+5*V/24);
     c.globalCompositeOperation='source-over';
     drawBattery(c,L,cy,true,fmt(V,1)+' V');
-    const b=1-Math.exp(-(V*I)/3);drawBulb(c,(L+Rr)/2,Tp,b,18);
-    drawZig(c,Rr,cy-34,Rr,cy+34,PINK);c.fillStyle='#ff9cc8';c.font='bold 13px ui-monospace,monospace';c.textAlign='right';c.fillText(R+' Ω',Rr-16,cy+5);
+    const b=1-Math.exp(-(V*I)/3);drawBulb(c,Rr,cy,b,20);
+    c.fillStyle='#ff9cc8';c.font='bold 13px ui-monospace,monospace';c.textAlign='right';c.fillText('燈泡 R = '+R+' Ω',Rr-30,cy-2);
     const ax=(L+Rr)/2;c.beginPath();c.arc(ax,B,17,0,TAU);c.fillStyle='#0a1222';c.fill();c.strokeStyle=BLUE;c.lineWidth=2;c.stroke();c.fillStyle=BLUE;c.font='bold 14px sans-serif';c.textAlign='center';c.fillText('A',ax,B+5);
     c.font='bold 13px ui-monospace,monospace';c.fillText(fmt(I,3)+' A',ax,B+34>h?B-24:B+32);
-    c.fillStyle='#93a6c2';c.font='12px sans-serif';c.textAlign='center';c.fillText('燈泡功率 P = '+fmt(V*I,1)+' W',(L+Rr)/2,Tp-26<12?14:Tp-26);
+    c.fillStyle='#93a6c2';c.font='12px sans-serif';c.textAlign='right';c.fillText('功率 P = '+fmt(V*I,1)+' W',Rr-30,cy+17);
     c.textAlign='left';c.fillStyle='#5d708d';c.fillText('● 電子',L+10,B-10);
   });
 })();
